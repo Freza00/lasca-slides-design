@@ -1,0 +1,17 @@
+{
+  "brand": "linear",
+  "category": "devtool",
+  "aesthetic": "Obsidian — gem-like dark layers, European grotesque, monochrome glow",
+  "colors": { "primary": "#5e6ad2", "accent": "#26b5ce", "bg": "#08090a", "text": "#f7f8f8" },
+  "typography": { "display": "var(--font-familjen-grotesk)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Depth via luminance stepping: #08090a → #141414 → #1a1a1a → #23252a",
+    "No drop shadows on dark surfaces — use 1px borders instead",
+    "Purple-blue #5e6ad2 only for highlights and interaction states",
+    "Changelog voice:陈述句, no exclamations, technical terms welcome",
+    "One visual focus per page, rest is breathing space"
+  ],
+  "preferLayouts": ["big-number", "cover", "two-column", "quote"],
+  "avoidLayouts": ["three-cards", "grid-cards", "stacked-bars"],
+  "promptGuide": "Apply the Obsidian aesthetic: Familjen Grotesk display (weight 500, letter-spacing -0.03em), dark layers via luminance (#08090a base → #141414 cards → #1a1a1a hover), #5e6ad2 purple-blue only for highlights (never fills), 1px top border gradient (#5e6ad2 → transparent) on cards for 'liquid light' effect, text #f7f8f8 (not pure white), changelog tone (no 'we', no exclamations, backticks for tech terms)."
+}

@@ -1,0 +1,2387 @@
+{
+  "id": "deck-cre-replica-1777519062047",
+  "name": "2026 Q1 美国 CRE 多品类季度报告 / US Multi-Sector CRE Quarterly Review",
+  "theme": "analyst-dark",
+  "slides": [
+    {
+      "layout": "cover",
+      "data": {
+        "title": "美国多种类商业地产\n   季度报告",
+        "titleEn": "US Multi-Sector Commercial Real Estate · Quarterly Review",
+        "subtitle": "估值企稳 · 交易回归 · 局部信贷改善 · 公募持续分化",
+        "footnote": "2026 年 4 月 · 面向 LP 与机构投资者 · 47 页",
+        "author": "Wan Bridge Research · 万桥研究"
+      }
+    },
+    {
+      "layout": "stat-row",
+      "data": {
+        "title": "Q1 2026：从重定价周期走出的第一季",
+        "stats": [
+          {
+            "value": "+2.6%",
+            "label": "Green Street CPPI YoY · 估值触底（新信号）",
+            "change": "连续 4 月正增长 · 核心 4 类全部转正"
+          },
+          {
+            "value": "$32B",
+            "label": "MSCI RCA Apartment Q1 · 交易回归（延续）",
+            "change": "+1% YoY · CBRE 全年预测 $562B (+16%)"
+          },
+          {
+            "value": "+20.5%",
+            "label": "FHFA 2026 多户 cap 至 $176B · 信贷边际改善（新信号）",
+            "change": "multifamily SLOOS 边际转松"
+          },
+          {
+            "value": "-12.8%",
+            "label": "Office REIT Q1 vs All REIT +3.8% · 公募分化（延续）",
+            "change": "公募已显著贴现 Office 结构性压力"
+          }
+        ],
+        "footnote": "三个新信号叠加一个延续警告 → 不均衡修复，非全面反转 · 来源：Green Street · MSCI RCA · Fed SLOOS · FHFA · S&P Global MI"
+      },
+      "notes": "Executive summary · 一页看懂 Q1 2026"
+    },
+    {
+      "layout": "three-cards",
+      "data": {
+        "title": "每个数据点都回答同一个问题：延续、扰动，还是新信号？",
+        "cards": [
+          {
+            "label": "PART 1-2 · 大趋势 + 机构焦点",
+            "title": "3 阶段周期 + 六大驱动因素",
+            "desc": "机构共识 + 买方资金流向 + 学术分歧"
+          },
+          {
+            "label": "PART 3 · 八大品类深度",
+            "title": "每类 3 页 = 大趋势 · 跨国对比 · 买方动向",
+            "desc": "信号全部打框架标签"
+          },
+          {
+            "label": "PART 4-5 · 横向 + 前瞻",
+            "title": "再融资墙 / 公募 vs 私募 / 全球资金流",
+            "desc": "6-12 月盯盘矩阵 · LP 行动清单"
+          }
+        ]
+      },
+      "notes": "READING GUIDE · 阅读框架（基于 image1.png 三卡）"
+    },
+    {
+      "layout": "section-break",
+      "data": {
+        "title": "大周期：我们在哪",
+        "subtitle": "Where We Are · Three-Phase Cycle from Rate Shock to Uneven Recovery",
+        "number": "PART 1"
+      }
+    },
+    {
+      "layout": "steps",
+      "data": {
+        "title": "2022–2026 三阶段周期：从利率冲击演变到不均衡修复",
+        "items": [
+          {
+            "label": "阶段 1",
+            "text": "利率冲击 2022-H2 → 2023-H2",
+            "desc": "Fed 加息周期 · cap rate 重新定价 · 交易冻结"
+          },
+          {
+            "label": "阶段 2",
+            "text": "底部震荡 2024 → 2025-H1",
+            "desc": "估值找底 · 流动性紧 · sector 分化加深"
+          },
+          {
+            "label": "阶段 3",
+            "text": "不均衡修复 2025-H2 → ",
+            "desc": "估值企稳 + 交易回归 + 局部信贷改善 + 公募分化"
+          }
+        ],
+        "footnote": "本轮冲击是利率 + WFH 双因素；2009-2011 主要是信贷冲击 · 来源：CBRE 2026 Outlook · C&W Q1 2026 · S&P Global MI · FDIC QBP"
+      },
+      "notes": "Three-Phase Cycle · 当前处于阶段 3（基于 image2.png 横向 timeline 改 steps）"
+    },
+    {
+      "layout": "heatmap",
+      "data": {
+        "title": "影响因素力量变化：约束类边际减弱，但利率与信贷仍非全面顺风",
+        "rows": [
+          "利率（10Y）",
+          "信贷",
+          "供给",
+          "WFH 稳态化",
+          "AI/DC",
+          "再融资墙"
+        ],
+        "cols": [
+          "2023 强度",
+          "2026 强度"
+        ],
+        "cells": [
+          [
+            -2,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "scaleMin": -2,
+        "scaleMax": 2,
+        "colorScale": "diverging",
+        "footnote": "正值 = 顺风/扩张力量；负值 = 约束/逆风力量。来源：Fed SLOOS · FDIC QBP · CBRE · C&W · OFR 2025"
+      },
+      "notes": "原 PPTX image3 = 6×4 heatmap；本页保留 driver × 时点（2023→2026）的核心叙事，信号类型/量化细节移到 footnote 避免格子过密"
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "2026 下半年到 2027 上半年：CRE 行业要盯的 7 条主线",
+        "headers": [
+          "主线",
+          "为什么盯",
+          "兑现指标",
+          "信号类型"
+        ],
+        "rows": [
+          [
+            "Fed 利率路径",
+            "10Y < 4% 是否成立 · cap rate 进一步压缩前提",
+            "10Y Treasury 月均 < 4%",
+            "新信号"
+          ],
+          [
+            "multifamily 资本结构出清",
+            "2021-22 vintage 浮息贷款再融资完成度",
+            "CMBS MF 违约 < 6%",
+            "扰动"
+          ],
+          [
+            "Office Class A 租金转正",
+            "trophy 重定价是否真的触底",
+            "Gateway prime rent YoY > 0",
+            "新信号"
+          ],
+          [
+            "Industrial 空置率",
+            "供应消化是否落地",
+            "全美 vacancy < 6.5%",
+            "新信号"
+          ],
+          [
+            "Retail 在建放量",
+            "稀缺溢价是否被供给侵蚀",
+            "在建 > 80 msf 持续 2Q+",
+            "扰动"
+          ],
+          [
+            "DC 电力交付",
+            "AI 需求 vs 供给瓶颈",
+            "primary vacancy < 1.2%",
+            "新信号"
+          ],
+          [
+            "公募 vs 私募 价差收敛",
+            "appraisal smoothing 是否补完",
+            "NPI vs REIT 总回报差 < 5pp",
+            "新信号"
+          ]
+        ],
+        "footnote": "决定「修复 vs 反转」叙事 · 任何一条 6 月内反向 → 推回底部震荡 · 3 条以上兑现 → 2027 全面扩张 · 来源：CBRE · Blackstone · PwC/ULI · MBA · NAIOP · Fed"
+      }
+    },
+    {
+      "layout": "section-break",
+      "data": {
+        "title": "主流机构与学术焦点",
+        "subtitle": "What They Are Watching · Cross-Firm Focus, Buyside Flow, Academic Divergence",
+        "number": "PART 2"
+      }
+    },
+    {
+      "layout": "heatmap",
+      "data": {
+        "title": "Q1 2026 八家主流机构在谈什么 · 焦点强度 vs 情绪",
+        "rows": [
+          "CBRE",
+          "JLL",
+          "C&W",
+          "PwC/ULI",
+          "Blackstone",
+          "Brookfield",
+          "KKR",
+          "Nareit/S&P"
+        ],
+        "cols": [
+          "Office",
+          "Industrial",
+          "Data Center",
+          "Multifamily",
+          "Retail",
+          "SH",
+          "Bank CRE",
+          "Intl Rotation"
+        ],
+        "cells": [
+          [
+            "●●●",
+            "●●●",
+            "●●●",
+            "●●",
+            "●●",
+            "●",
+            "●",
+            "●●"
+          ],
+          [
+            "●●",
+            "●●●",
+            "●●",
+            "●●",
+            "●",
+            "●",
+            "●●",
+            "●●●"
+          ],
+          [
+            "●●●",
+            "●●●",
+            "●",
+            "●●●",
+            "●●",
+            "●",
+            "●",
+            "●"
+          ],
+          [
+            "●●●",
+            "●●",
+            "●●●",
+            "●●",
+            "●●●",
+            "●●●",
+            "●●",
+            "●●"
+          ],
+          [
+            "●●",
+            "●●●",
+            "●●●",
+            "●●",
+            "●",
+            "●",
+            "●●",
+            "●●●"
+          ],
+          [
+            "●●",
+            "●●●",
+            "●●●",
+            "●●",
+            "●",
+            "●●",
+            "●●",
+            "●●●"
+          ],
+          [
+            "●",
+            "●●●",
+            "●●●",
+            "●●●",
+            "●",
+            "●",
+            "●",
+            "●●"
+          ],
+          [
+            "●●●",
+            "●●",
+            "●●●",
+            "●●●",
+            "●●",
+            "●●",
+            "●",
+            "●"
+          ]
+        ],
+        "sentiment": [
+          [
+            "positive",
+            "positive",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative",
+            "positive"
+          ],
+          [
+            "negative",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative",
+            "negative",
+            "positive"
+          ],
+          [
+            "positive",
+            "positive",
+            "negative",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative"
+          ],
+          [
+            "positive",
+            "negative",
+            "positive",
+            "negative",
+            "positive",
+            "positive",
+            "negative",
+            "negative"
+          ],
+          [
+            "negative",
+            "positive",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative",
+            "positive"
+          ],
+          [
+            "negative",
+            "positive",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative",
+            "positive"
+          ],
+          [
+            "negative",
+            "positive",
+            "positive",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "negative"
+          ],
+          [
+            "positive",
+            "negative",
+            "positive",
+            "positive",
+            "negative",
+            "negative",
+            "negative",
+            "positive"
+          ]
+        ],
+        "cellMode": "text",
+        "footnote": "● 数量 = 焦点强度（1-3 档）· 绿色 = 看多 · 红色 = 看空 / 警示 · 来源：CBRE · JLL · C&W · PwC/ULI · Blackstone · Brookfield · KKR · Nareit/S&P 公开 outlook 与季度披露"
+      }
+    },
+    {
+      "layout": "heatmap",
+      "data": {
+        "title": "买方公开披露 · 9 家主流机构 × 8 个赛道",
+        "rows": [
+          "Blackstone",
+          "Brookfield",
+          "KKR",
+          "Starwood",
+          "Ares",
+          "Apollo",
+          "PGIM",
+          "Nuveen",
+          "GIC / Temasek"
+        ],
+        "cols": [
+          "Office",
+          "Industrial",
+          "Retail",
+          "Multifamily",
+          "Data Center",
+          "Hospitality",
+          "Self-Storage",
+          "Sr Housing"
+        ],
+        "cells": [
+          [
+            "回避",
+            "核心",
+            "选择性",
+            "核心",
+            "超配",
+            "核心",
+            "选择性",
+            "选择性"
+          ],
+          [
+            "回避",
+            "超配",
+            "选择性",
+            "核心",
+            "超配",
+            "核心",
+            "选择性",
+            "选择性"
+          ],
+          [
+            "选择性",
+            "核心",
+            "选择性",
+            "超配",
+            "超配",
+            "选择性",
+            "核心",
+            "核心"
+          ],
+          [
+            "选择性",
+            "选择性",
+            "选择性",
+            "核心",
+            "选择性",
+            "选择性",
+            "选择性",
+            "选择性"
+          ],
+          [
+            "核心",
+            "核心",
+            "选择性",
+            "核心",
+            "核心",
+            "选择性",
+            "选择性",
+            "核心"
+          ],
+          [
+            "核心",
+            "核心",
+            "选择性",
+            "核心",
+            "核心",
+            "选择性",
+            "选择性",
+            "核心"
+          ],
+          [
+            "选择性",
+            "超配",
+            "核心",
+            "超配",
+            "核心",
+            "选择性",
+            "选择性",
+            "核心"
+          ],
+          [
+            "选择性",
+            "核心",
+            "选择性",
+            "核心",
+            "核心",
+            "选择性",
+            "选择性",
+            "超配"
+          ],
+          [
+            "回避",
+            "超配",
+            "回避",
+            "核心",
+            "超配",
+            "选择性",
+            "选择性",
+            "选择性"
+          ]
+        ],
+        "sentiment": [
+          [
+            "negative",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral"
+          ],
+          [
+            "negative",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral"
+          ],
+          [
+            "neutral",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "neutral",
+            "positive",
+            "positive"
+          ],
+          [
+            "neutral",
+            "neutral",
+            "neutral",
+            "positive",
+            "neutral",
+            "neutral",
+            "neutral",
+            "neutral"
+          ],
+          [
+            "positive",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral",
+            "positive"
+          ],
+          [
+            "positive",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral",
+            "positive"
+          ],
+          [
+            "neutral",
+            "positive",
+            "positive",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral",
+            "positive"
+          ],
+          [
+            "neutral",
+            "positive",
+            "neutral",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral",
+            "positive"
+          ],
+          [
+            "negative",
+            "positive",
+            "negative",
+            "positive",
+            "positive",
+            "neutral",
+            "neutral",
+            "neutral"
+          ]
+        ],
+        "cellMode": "text",
+        "footnote": "超配 / 核心 = 配置；选择性 = 偏中性；回避 = 减配 · 不是系统性配置数据库 · 来源：Blackstone 1Q26 · Brookfield 2026 Outlook · KKR · Starwood · Ares · Apollo · PGIM · Nuveen · GIC / Temasek 公开披露"
+      }
+    },
+    {
+      "layout": "versus",
+      "data": {
+        "title": "学术界对结构性风险仍比业界谨慎一到两档",
+        "left": {
+          "heading": "业界（CBRE / JLL / Blackstone / Brookfield）",
+          "points": [
+            "Office：flight-to-quality，prime/Class A 已触底",
+            "银行/信贷：CRE 监管口径缓释，敞口可控",
+            "Multifamily：2026 cap +20.5% 主动政策对冲生效",
+            "Data Center：AI 需求 + 电力约束 = 头部 operator 受益"
+          ]
+        },
+        "right": {
+          "heading": "学术（NBER / AER / Wharton / Columbia）",
+          "points": [
+            "Office：Gupta AER 2026 -46% 长期贬值；conversion 11% 物理可行（financial 远低）",
+            "银行：Acharya NBER 33590 大行 CRE 敞口 +40%（含 REIT credit lines）· 地区银行 4-5× 集中度",
+            "Multifamily：CMBS MF 违约 7.15% 创新高 · 2021-22 vintage 浮息再融资风险未出清",
+            "DC：Knittel NBER 34065 电网约束开始硬定价 · 头尾分化加大"
+          ]
+        },
+        "footnote": "三条横向比较：业界乐观不等于风险消失；LP 拿到的 debt spread 溢价相当一部分仍在补偿未消化的长期风险"
+      },
+      "notes": "原 PPTX image7 = diverging horizontal bar (业界 vs 学术 mirror)。slide11.md 回查后确认源是定性论述（业界全部正向 / 学术全部负向或中性），并无每议题的成对评分；强行做 diverging bar 必须 fabricate 序数评分，违反 1:1 原则。保留 versus —— 文本与源 100% 一致，结构差异已记录"
+    },
+    {
+      "layout": "section-break",
+      "data": {
+        "title": "八大品类深度",
+        "subtitle": "Eight-Sector Deep Dive · 结构性故事 · 跨国对比 · 买方动向",
+        "number": "PART 3"
+      }
+    },
+    {
+      "layout": "line-chart",
+      "data": {
+        "title": "Office 不是一个市场，而是两个市场",
+        "labels": [
+          "22Q4",
+          "23Q1",
+          "23Q2",
+          "23Q3",
+          "23Q4",
+          "24Q1",
+          "24Q2",
+          "24Q3",
+          "24Q4",
+          "25Q1",
+          "25Q2",
+          "25Q3",
+          "25Q4",
+          "26Q1"
+        ],
+        "series": [
+          {
+            "name": "全美 vacancy（C&W）",
+            "values": [
+              17.0,
+              17.6,
+              18.2,
+              18.7,
+              19.1,
+              19.4,
+              19.6,
+              19.8,
+              19.9,
+              20.0,
+              20.1,
+              20.2,
+              20.2,
+              20.2
+            ]
+          },
+          {
+            "name": "CBRE prime vacancy",
+            "values": [
+              11.0,
+              11.3,
+              11.6,
+              11.8,
+              12.0,
+              12.2,
+              12.4,
+              12.5,
+              12.6,
+              12.7,
+              12.7,
+              12.7,
+              12.7,
+              12.7
+            ]
+          }
+        ],
+        "unit": "%",
+        "annotations": [
+          {
+            "type": "callout",
+            "at": "26Q1",
+            "text": "Q1 2026：全美 20.2% 企稳；prime 仅 12.7%（已企稳更早）"
+          },
+          {
+            "type": "reference-line",
+            "value": 18.0,
+            "label": "周期均值参考线"
+          }
+        ],
+        "footnote": "Two Markets, Not One · prime / trophy 先稳定，commodity 仍在重定价。JLL Q1 2026: leasing YoY +7.6%, single-asset sales $11.5B（2020 来最高）· 4Q 滚动净吸纳 +5.2 msf 与单季 -4.0 msf 同时存在 · 来源：Cushman & Wakefield Q1 2026 · CBRE · JLL · Nareit REITWatch Jan 2026 · NBER 30526"
+      },
+      "notes": "结构性故事 · 信号标签：WFH 稳态继续 · commodity office 贬值（延续）· 空置率基本企稳 · Class A 复苏（新信号）· 本季 absolute -4 msf · 不是拐点（扰动）"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球办公 · Prime 租金 YoY vs 空置率（8 大门户城市）",
+        "labels": [
+          "NYC",
+          "SF CBD",
+          "London",
+          "Paris",
+          "Frankfurt",
+          "Tokyo",
+          "Singapore",
+          "Sydney"
+        ],
+        "leftSeries": {
+          "name": "Prime 租金 YoY",
+          "values": [
+            3.5,
+            2.0,
+            17.0,
+            13.0,
+            4.0,
+            18.2,
+            8.0,
+            -3.0
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "空置率",
+          "values": [
+            15.8,
+            19.5,
+            7.5,
+            8.8,
+            12.3,
+            3.5,
+            2.4,
+            13.8
+          ],
+          "unit": "%"
+        },
+        "footnote": "Tokyo prime 租金 YoY +18.2% / 空置率 3.5% 领先；Sydney prime 租金 YoY -3.0% 仍下行 · 来源：Colliers · Savills · JLL Asia Pacific · CBRE Europe 2026 Outlook · 各市场口径不完全可比，请勿横向排名"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Office · 买方普遍回避 commodity，只挑 Class A + adaptive reuse",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Blackstone / Brookfield · 公开 outlook",
+            "Office 选择性、等 trophy 重定价后再进；具体 deal pipeline 以 IR 季度披露为准",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "CMBS Office 违约率（新信号）",
+            "是否破 12%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Class A Gateway 租金 YoY（新信号）",
+            "是否转正",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "私募买家 · 市场观察",
+            "部分私募只做已折价 trophy 或 adaptive reuse 机会",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Office → Apt 转换项目（新信号）",
+            "名单是否放量",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "大型 Office REIT 并购 / 私有化（扰动）",
+            "动向是否升温",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Core 基金 / 保险 · Analyst inference",
+            "Core open-end 基金对 Office 权重多年下降趋势延续",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Gupta NBER 31530（延续）",
+            "~11% Office 物理适配 conversion · financial viability 远低",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "GIC / Temasek · Analyst inference",
+            "公开 deal pipeline 中 Office 大单稀少；具体配置变化以官方披露",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "NYC 商业地产税改政策（新信号）",
+            "2027 版本",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "联邦雇员 RTO 扩面（扰动）",
+            "扩面情况",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "地区银行 Office CRE 敞口 bulk sale（新信号）",
+            "成交量",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：Blackstone 1Q26 · Brookfield 2026 Outlook · 私募公开披露 / 行业观察 · NBER 31530 · Trepp"
+      },
+      "notes": "Buyside · 9/9 大型买方在 Office 上都是「选择性」或更保守"
+    },
+    {
+      "layout": "three-cards",
+      "data": {
+        "title": "Industrial 从「过热回落」转向「供应消化」",
+        "cards": [
+          {
+            "label": "不是再过热，是再平衡",
+            "title": "不是再过热，是再平衡",
+            "desc": "工业并不是重新进入过热阶段；2020-2022 集中释放的新供给正在被消化，Q1 2026 空置首次 -10bps 是供需再平衡的信号，不是新增需求驱动。"
+          },
+          {
+            "label": "Q1 2026 已落定数据",
+            "title": "Q1 2026 已落定数据",
+            "desc": "C&W Q1 2026：净吸纳 40 msf YoY +52% · 全美 vacancy 7.0%（低于 2025 Q3 峰值）· 新供给降至 2017 来最低季度水平 · NAIOP 预测 FY26 净吸纳 345.9 msf 接近 2019 长期均值。"
+          },
+          {
+            "label": "胜负手已切换",
+            "title": "胜负手已切换",
+            "desc": "物流资产的胜负手从「有没有需求」转向「区位、租户质量和再融资可得性」 · 港口邻近租金溢价 ~55% · Reshoring 与冷链（COLD/LINE）是结构性增量。"
+          }
+        ]
+      },
+      "notes": "结构性故事 · 信号标签：空置率 2022 来首次回落（新信号） · Reshoring 叙事继续推动需求（延续） · 全年 YoY 租金 +2% 仍低于 2021-22 +20%（扰动） · 来源：Cushman & Wakefield Q1 2026 Industrial MarketBeat · NAIOP Industrial Space Demand Forecast Q1 2026"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球工业 · Prime 租金 YoY vs 空置率",
+        "labels": [
+          "US 全美",
+          "US 港口",
+          "UK",
+          "欧陆",
+          "日本",
+          "新加坡",
+          "澳洲",
+          "印度"
+        ],
+        "leftSeries": {
+          "name": "Prime 租金 YoY",
+          "values": [
+            2.1,
+            4.5,
+            3.0,
+            3.5,
+            4.2,
+            5.0,
+            2.0,
+            12.0
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "空置率",
+          "values": [
+            7.0,
+            6.0,
+            5.5,
+            3.8,
+            3.0,
+            2.5,
+            4.0,
+            2.0
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · 美国全国数据与海外核心物流节点同框，口径不可横比 · 印度 prime +12% 是周期最强子段 · 来源：JLL · CBRE · C&W · Colliers · Savills · NAIOP"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Industrial · Prologis 扩张、Core 资金偏好、GIC 跨境长期资本",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Prologis · 公开 deal",
+            "2026-03-19 与 GIC 成立 $1.6B build-to-suit 物流 JV",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "全美空置（新信号）",
+            "是否跌破 6.8%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "港口溢价（延续）",
+            "是否继续扩大 50%+",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Blackstone / Brookfield",
+            "Brookfield Mileway（欧洲）+ IDI Logistics（美国）；Blackstone Link Industrial",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Prime 租金 YoY（新信号）",
+            "是否回到 +3%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Trump 关税对 reshoring（扰动）",
+            "是否边际加速",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Core 基金 / 保险资金",
+            "对现代物流（infill、冷链）的持续偏好",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "NAIOP FY 吸纳 345 msf（新信号）",
+            "是否达成",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "GIC / Temasek / ADIA · 跨境长期资本",
+            "Prologis-GIC JV 是明确信号；其他配置 analyst inference",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Amazon 新建 FC 速度（扰动）",
+            "vs 2021 峰值",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "冷链 LINE/COLD 市值扩张（新信号）",
+            "市值变化",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "印度 Mumbai 是否继续领跑 +10%+（延续）",
+            "增速持续性",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：Prologis IR · GIC press release · CBRE / C&W Industrial · NAIOP Q1 2026 · JLL APAC"
+      },
+      "notes": "Buyside · Industrial 是 2026 年大型买方超配最集中的板块之一"
+    },
+    {
+      "layout": "three-cards",
+      "data": {
+        "title": "Retail 的强，核心来自低供给而不是全面需求过热",
+        "cards": [
+          {
+            "label": "主线：空间稀缺",
+            "title": "主线：空间稀缺",
+            "desc": "零售的主线是空间稀缺与租户选择性扩张，而不是广泛的消费狂热 · 在建 64.2 msf 远低于十年常态 >90 msf · Colliers FY26 空置峰值预期 <4.4%。"
+          },
+          {
+            "label": "真正变强的子类型",
+            "title": "真正变强的子类型",
+            "desc": "grocery-anchored、value、service-oriented 与优质 open-air 资产是当前真正变强的部分；扩张主力是 grocery / discount / services 三类。"
+          },
+          {
+            "label": "mall 不应被写成全面复苏",
+            "title": "mall 不应被写成全面复苏",
+            "desc": "更准确表述：mall 仍分化，但不再拖累全行业 · Strip REIT Q1 +8.6% 领涨大盘；mall 内部 A-tier 与 B/C-tier 仍是两个市场。"
+          }
+        ]
+      },
+      "notes": "结构性故事 · 信号标签：Strip / 必需品零售强劲（延续） · 在建面积首次跌破 65 msf（新信号） · Mall 板块仍分化，非一致复苏（扰动） · 来源：CoStar · Colliers Q1 2026 US Retail · S&P Global MI · Management Science 2024"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球零售 · Prime 租金 YoY vs 空置率",
+        "labels": [
+          "US Strip",
+          "US Urban",
+          "UK High",
+          "伦敦",
+          "巴黎",
+          "东京",
+          "新加坡",
+          "悉尼"
+        ],
+        "leftSeries": {
+          "name": "Prime 零售租金 YoY",
+          "values": [
+            1.5,
+            -1.0,
+            0.5,
+            5.0,
+            8.0,
+            3.5,
+            2.0,
+            1.0
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "空置率",
+          "values": [
+            4.4,
+            11.0,
+            7.0,
+            1.5,
+            2.0,
+            2.5,
+            3.5,
+            5.0
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · prime high street / strip / urban prime 不是同一物业格式，参考数字不横排 · 巴黎 prime +8.0% 来自奢侈品与入境游 · 来源：Colliers · Savills · JLL · ICSC 2026 Retail Predictions · Chava et al. MS 2024"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Retail · 私募买家关注 necessity strip，Simon 稳 mall",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Simon Property Group",
+            "稳守 top-tier mall · 资本开支聚焦翻新与 mixed-use 转型 · 股价相对稳定",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Strip vacancy（新信号）",
+            "是否创新低",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Grocery 租户扩张名单（延续）",
+            "Aldi / Lidl / HEB",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "私募买家",
+            "关注 grocery-anchored / necessity strip · 回避 B/C mall",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Luxury 奢侈品消费在美（扰动）",
+            "是否转负",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Mall C-tier 清仓速度（延续）",
+            "出清节奏",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Kimco / Regency / PECO",
+            "Grocery-anchored 核心 REITs · FFO 持续增长 · 分红稳定",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "New store 净开店数（新信号）",
+            "vs 2019 水平",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "跨境买家",
+            "偏好 prime high street；具体交易以 deal release 为准",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "必需品零售 REIT cap rate（新信号）",
+            "压缩幅度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Omnichannel 租户结构性变化（延续）",
+            "持续性",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "奢侈品 + 入境游 prime 高街 reset（扰动）",
+            "调整深度",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：ICSC · Colliers · CoStar · 公募 REIT 财报 · 各机构公开披露"
+      },
+      "notes": "Buyside · 高街 / grocery-anchored 受欢迎，大型 mall 仍在整合"
+    },
+    {
+      "layout": "bar-chart",
+      "data": {
+        "title": "Multifamily 基本面企稳，但资本结构分化仍是主风险",
+        "items": [
+          {
+            "label": "Q1 20",
+            "value": 48
+          },
+          {
+            "label": "Q1 21",
+            "value": 122
+          },
+          {
+            "label": "Q1 22",
+            "value": 85
+          },
+          {
+            "label": "Q1 23",
+            "value": 5
+          },
+          {
+            "label": "Q1 24",
+            "value": 98
+          },
+          {
+            "label": "Q1 25",
+            "value": 99
+          },
+          {
+            "label": "Q1 26",
+            "value": 65
+          }
+        ],
+        "unit": "千套",
+        "annotations": [
+          {
+            "type": "reference-line",
+            "value": 64,
+            "label": "Q1 历史均值 ~64k"
+          },
+          {
+            "type": "callout",
+            "at": "Q1 26",
+            "text": "Q1 26 = 65k · 回到均值 = 稳态信号，非弱势"
+          }
+        ],
+        "footnote": "Operations Stabilizing, Capital Structure Risk Persists · C&W Q1 2026: new construction 2016 来最低 · deliveries -30% YoY · vacancy 9.4% · asking rent YoY +0.9% · SLOOS 多户首次边际转松 · FHFA cap +20.5% 至 $176B · 但 CMBS MF 违约 7.15% 创历史新高 · 公募 -7.6% / 私募 +0.8% 反映 appraisal smoothing 而非真实差距 · 来源：C&W Q1 2026 Multifamily MarketBeat · Fed SLOOS · FHFA · Trepp · NBER 30041"
+      },
+      "notes": "结构性故事 · 信号标签：私募基本面稳 · Sun Belt 人口流入（延续）· SLOOS 首次放宽 · FHFA cap +20.5%（新信号）· CMBS MF 违约 7.15% 创新高（扰动）"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球多户 / Living · 同店租金 YoY vs 空置率",
+        "labels": [
+          "US Sun Belt",
+          "US Coastal",
+          "UK BTR",
+          "柏林",
+          "东京",
+          "悉尼",
+          "多伦多",
+          "首尔"
+        ],
+        "leftSeries": {
+          "name": "同店租金 YoY",
+          "values": [
+            -1.5,
+            3.5,
+            4.2,
+            2.8,
+            2.5,
+            4.0,
+            3.0,
+            3.5
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "空置率",
+          "values": [
+            8.5,
+            4.8,
+            3.5,
+            2.5,
+            3.0,
+            2.5,
+            2.0,
+            4.0
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · asking / effective / same-store / market-average rent 不是同一指标 · Sun Belt 仍在去供给（YoY -1.5%，vacancy 8.5%）· 来源：C&W · JLL APAC · Savills Living · RealPage · Yardi Matrix · NBER 30041"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Multifamily · Core funds 精准挑盘，跨境资金关注 living",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Blackstone / Brookfield · 公开 outlook",
+            "2026 Outlook 公开表态从 all-in 转为精准挑盘；具体 coastal + urban class A 配置规模以 IR 季度披露",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Sun Belt 完工峰（延续）",
+            "是否过",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "同店租金 YoY（新信号）",
+            "是否全面回正",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Core 基金 / 保险资金",
+            "Core open-end 基金对 multifamily 的长期权重稳定，2026 倾向 Sun Belt 去供给后品质资产",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "SLOOS 放宽（新信号）",
+            "是否扩到非多户",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "CMBS MF 违约（扰动）",
+            "是否突破 7.3%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "部分全球平台 · 公开 outlook",
+            "Multifamily / BTR / specialty housing 是多家全球平台公开提及长期主题",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "FHFA cap $176B 放量节奏（新信号）",
+            "实际放出量",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "GIC / Temasek / ADIA · 行业观察",
+            "JLL APAC Capital Tracker 显示跨境流入加速；具体国别 / 板块配置量未做完整公开披露",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "BTR / SFR 在公募市场扩表（新信号）",
+            "扩表节奏",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Coastal vs SB 剪刀差（延续）",
+            "是否收敛",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "2021-22 浮息贷款重组完成度（扰动）",
+            "完成进度",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：Blackstone / Brookfield outlook · FHFA · Fed SLOOS · Trepp · 各基金披露"
+      },
+      "notes": "Buyside · 2026 最热门的「精准挑盘」板块"
+    },
+    {
+      "layout": "three-cards",
+      "data": {
+        "title": "Data Centers 的核心约束已从需求转向电力与交付能力",
+        "cards": [
+          {
+            "label": "最新完整数据期",
+            "title": "最新完整数据期",
+            "desc": "截至目前公开可得的最完整市场数据仍主要来自 2025 H2 / FY2025（CBRE NA Data Center Trends H2 2025），不是 Q1 2026 完整数据。"
+          },
+          {
+            "label": "结构性事实（FY2025 口径）",
+            "title": "结构性事实（FY2025 口径）",
+            "desc": "primary markets 空置 1.4% 历史新低 · FY25 新建吸纳 2,497.6 MW 创纪录 · NoVa 单地 1,102 MW · 在建 5,994 MW 自 2020 来首次回落。"
+          },
+          {
+            "label": "更关键的结论",
+            "title": "更关键的结论",
+            "desc": "谁能拿到电、土地、变电站和交付能力，谁才拿到真正稀缺的产能 · CBRE 2026-04 Investor Intentions Survey 继续确认 power availability 是首要瓶颈 · NBER 34065 给出电网约束的学术依据。"
+          }
+        ]
+      },
+      "notes": "结构性故事 · 信号标签：AI 驱动需求未减（延续） · 在建容量首次回落 · 供给约束硬化（新信号） · 部分地区电力 moratoria（扰动） · 来源：CBRE North America Data Center Trends H2 2025 · NBER 34065 · 注：核心市场数据期为 2025H2 / FY2025（原 PPTX image16 为 area + bar 双图，Lasca 单页单图，因此降级为叙事）"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球 Data Center · FY25 新建吸纳 vs 空置率",
+        "labels": [
+          "NoVa",
+          "Dallas",
+          "SiliconV",
+          "Frankfurt",
+          "Dublin",
+          "London",
+          "新加坡",
+          "东京",
+          "悉尼"
+        ],
+        "leftSeries": {
+          "name": "FY25 新建吸纳",
+          "values": [
+            1102,
+            480,
+            230,
+            180,
+            150,
+            120,
+            95,
+            110,
+            85
+          ],
+          "unit": "MW"
+        },
+        "rightSeries": {
+          "name": "空置率",
+          "values": [
+            1.1,
+            1.5,
+            2.0,
+            2.0,
+            1.5,
+            2.5,
+            0.5,
+            2.5,
+            3.5
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · provider 与 primary-market definition 不一致 · NoVa 1,102 MW 是全球核心数据中心集群 · 来源：CBRE Data Center Trends H2 2025 · JLL Data Center · Knight Frank"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Data Centers · hyperscaler demand 强，但买方动作以 IR 披露为准",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Blackstone",
+            "QTS 私有化后继续扩张 · 与 Microsoft / AWS 长期合作 · Intra-quarter realization 本季正贡献",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Primary vacancy（新信号）",
+            "是否继续跌破 1.2%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "PPA / 变电站落地进度（新信号）",
+            "主要市场进度",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Brookfield · 公开 deal",
+            "Ascenty / DataBank 平台；2026 Outlook 公开表态 DC 超配",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "AI 推理侧需求 vs 训练侧（新信号）",
+            "结构变化",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "电力 moratoria 扩面（扰动）",
+            "Dublin / Santa Clara 等",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "部分全球平台 · 公开 deal",
+            "Global Technical Realty（GTR）平台；hyperscaler sale-leaseback",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "在建 MW（新信号）",
+            "是否继续回落",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "GIC / Temasek",
+            "公开来源显示长期资本关注 APAC data centers",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Hyperscaler capex 2026-27 指引（延续）",
+            "指引方向",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "新兴市场（印度/东南亚）扩张速度（延续）",
+            "扩张节奏",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Nvidia/TSMC 供应瓶颈对 DC 吸纳（扰动）",
+            "影响程度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "公募 EQIX + DLR",
+            "占公募侧绝大多数；具体市值与 Q1 表现以 dated market-data 为准",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：CBRE DC H2 2025 · Blackstone 1Q26 · NBER 34065 · Hyperscaler 10-K filings"
+      },
+      "notes": "Buyside · 最一致超配板块 · 公募纯 play 仅 EQIX + DLR"
+    },
+    {
+      "layout": "line-chart",
+      "data": {
+        "title": "Hospitality 要把经营面和融资面分开看",
+        "labels": [
+          "23Q4",
+          "24Q2",
+          "24Q4",
+          "25Q2",
+          "25Q4",
+          "26Q1",
+          "26-03"
+        ],
+        "series": [
+          {
+            "name": "CMBS Lodging 违约率",
+            "values": [
+              3.5,
+              4.2,
+              5.0,
+              5.5,
+              5.8,
+              5.94,
+              7.31
+            ]
+          }
+        ],
+        "unit": "%",
+        "annotations": [
+          {
+            "type": "callout",
+            "at": "26-03",
+            "text": "+137 bps MoM · 本季急升"
+          },
+          {
+            "type": "reference-line",
+            "value": 6.0,
+            "label": "8% 警戒线 / 6% 中位"
+          }
+        ],
+        "footnote": "Operations vs Financing · CoStar/STR Q1 2026: US RevPAR +3.6% beat -0.2% forecast · upper-midscale 2024 来首次转正 · 但 CMBS Lodging 违约 7.31% 是本季 CMBS 最差的一条；2021-22 vintage 浮息酒店贷款再融资压力 · 分化发生在资产类型/城市结构/资本结构三个维度 · 来源：Trepp CMBS Delinquency · CoStar/STR Q1 2026 · Skift Hotel Earnings Preview"
+      },
+      "notes": "结构性故事 · 信号标签：休闲度假入住率创纪录（延续）· RevPAR Q1 +3.6% beat forecast（新信号）· CMBS Lodging +137bps 急升（扰动）"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球酒店 · RevPAR YoY vs 入住率",
+        "labels": [
+          "US 整体",
+          "US Luxury",
+          "US 中端",
+          "UK Lux",
+          "日本",
+          "西班牙",
+          "迪拜",
+          "新加坡",
+          "澳洲"
+        ],
+        "leftSeries": {
+          "name": "RevPAR YoY",
+          "values": [
+            2.5,
+            4.5,
+            0.5,
+            3.5,
+            15.0,
+            7.0,
+            6.5,
+            9.0,
+            3.0
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "入住率",
+          "values": [
+            62.5,
+            72.0,
+            58.0,
+            78.0,
+            76.0,
+            72.0,
+            85.0,
+            77.0,
+            68.0
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · 跨国 RevPAR 需要 same-period / same-currency / same-room universe · 日本 RevPAR YoY +15.0% 由入境游 + 汇率支持 · 来源：STR · CoStar Hospitality · Amadeus · ForwardKeys · JLL Hotels"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Hospitality · 私募选择性配置，大多数买方谨慎",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "公开 / 私募平台 · outlook",
+            "2026 outlooks 普遍强调 selective opportunistic；luxury / resort 与 urban limited-service 是方向性主题",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "RevPAR YoY（扰动）",
+            "是否回落到 <3%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "CMBS Lodging（扰动）",
+            "是否破 8%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "酒店私募买家 · 行业观察",
+            "聚焦 luxury / resort 与 urban limited-service",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "入境游美国 2026 夏季（新信号）",
+            "是否回暖",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "日本酒店进入整合期（延续）",
+            "整合节奏",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "公募酒店 REITs",
+            "普遍弱势；资产出售 / 去杠杆进度是 2026 关键观察点",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "地缘冲突对入境游影响（扰动）",
+            "影响程度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "日本本土",
+            "J-REITs 日本入境游红利下持续扩表 · 海外资本补充配置",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "酒店 REIT 资产出售 / 去杠杆（新信号）",
+            "节奏",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "2021-22 浮息贷款违约清理完成度（延续）",
+            "完成度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "中国出境游（新信号）",
+            "是否回到 2019",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：Trepp · STR / CoStar · Blackstone / Brookfield outlook · 各酒店 REIT 财报"
+      },
+      "notes": "Buyside · 2026 仍是「selective opportunistic」而非广泛配置"
+    },
+    {
+      "layout": "three-cards",
+      "data": {
+        "title": "Self-Storage 公募表现强，但个股异动和底层经营要分开看",
+        "cards": [
+          {
+            "label": "Q1 领涨 ≠ 基本面全面反转",
+            "title": "Q1 领涨 ≠ 基本面全面反转",
+            "desc": "板块 REIT 回报 +9.2% · 但 NSA 单股 +36% 主要来自 2026-03-16 PSA 全股票收购公告，不是行业经营突然回到高增长。"
+          },
+          {
+            "label": "行业经营偏稳",
+            "title": "行业经营偏稳",
+            "desc": "PSA / EXR / CUBE 三家大体经营驱动回报 +6-9% · 同店租金温和 · 信用端无压力 · 与 2021-2022 高增长期不可同日而语。"
+          },
+          {
+            "label": "更准确写法",
+            "title": "更准确写法",
+            "desc": "「行业经营偏稳，资本市场主线是整合」而非「板块强势反转」 · 2026 主题是 sector consolidation 与整合估值溢价。"
+          }
+        ]
+      },
+      "notes": "结构性故事 · 信号标签：经营基本面稳态（延续） · 整合并购主线强化（新信号） · NSA 个股异动 · 非板块普涨（扰动） · 来源：S&P Global MI · Nareit T-Tracker · 公募 self-storage REITs 财报"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "Self-Storage · 供给增速 vs 人均面积",
+        "labels": [
+          "US 全美",
+          "US Top-25",
+          "加拿大",
+          "英国",
+          "澳洲",
+          "西班牙",
+          "新加坡",
+          "日本"
+        ],
+        "leftSeries": {
+          "name": "供给增速 YoY",
+          "values": [
+            3.2,
+            2.0,
+            4.0,
+            8.0,
+            6.0,
+            12.0,
+            10.0,
+            9.0
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "人均面积",
+          "values": [
+            10.7,
+            8.5,
+            2.2,
+            0.7,
+            1.1,
+            0.1,
+            0.1,
+            0.7
+          ],
+          "unit": "sqft/人"
+        },
+        "footnote": "ALERT · 渗透率与供给增速来自不同 provider / 定义 / 年份，不可同框排序 · 美国 10.7 sqft/人 是成熟天花板；西班牙 / 新加坡 仍在早期扩张 · 来源：FEDESSA · Inside Self-Storage · Nareit · 各上市公司披露"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Self-Storage · PSA 公告收购 NSA，整合主线强化",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "PSA · 公开 deal",
+            "2026-03-16 PSA 公告全股票收购 NSA · 整合主线最直接证据",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "PSA-NSA 交易（延续）",
+            "是否交割",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "NSA 股东 / 监管 approvals（新信号）",
+            "进度",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "NSA 同店租金 YoY（延续）",
+            "是否维持正值",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "并购溢价驱动 Q1 +36% 回报",
+            "2026 交易交割进度成为主线",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "新建项目贷款（新信号）",
+            "是否恢复",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Self-Storage 专项基金 · 行业观察",
+            "多家专项基金 2026 公开表态关注非 Sun Belt 次级市场",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "板块集中度（延续）",
+            "是否进一步上升",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "跨境资金 · 行业观察",
+            "海外 self-storage 上市公司（Shurgard / Big Yellow）公开披露资本市场活跃度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "UK / 欧陆 self-storage IPO（新信号）",
+            "新公司上市",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "亚太新加坡 / 日本供给扩张（新信号）",
+            "扩张节奏",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Baby boomer downsizing 需求释放（延续）",
+            "释放速度",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：PSA acquisition release · S&P Global MI · Nareit / REIT IR"
+      },
+      "notes": "Buyside · 美国内部整合主线，跨境 SSE 新兴市场兴趣上升"
+    },
+    {
+      "layout": "line-chart",
+      "data": {
+        "title": "Senior Housing 长期向好，MOB 提供稳现金流",
+        "labels": [
+          "23Q4",
+          "24Q2",
+          "24Q4",
+          "25Q2",
+          "25Q4"
+        ],
+        "series": [
+          {
+            "name": "DHC SHOP SS-NOI YoY（单家 turnaround，非行业平均）",
+            "values": [
+              6.0,
+              9.5,
+              15.0,
+              22.0,
+              27.6
+            ]
+          }
+        ],
+        "unit": "%",
+        "area": true,
+        "annotations": [
+          {
+            "type": "callout",
+            "at": "25Q4",
+            "text": "+27.6% YoY · DHC turnaround 加速"
+          }
+        ],
+        "footnote": "本图为 Diversified Healthcare Trust 单家口径，非行业平均 · NIC Q1 2026 occupancy 89.5%（连 19 季度上升）· new units construction 2012 来最低 · Welltower / Ventas 2025Q4 SHOP SS-NOI 维持双位数 YoY（具体值见各家 IR）· MOB occupancy 92.7%（JLL 2026 MOB Perspective）· 来源：DHC 4Q25 · Welltower / Ventas 4Q25 · NIC MAP Vision Q1 2026 · Nareit T-Tracker"
+      },
+      "notes": "结构性故事 · 信号标签：80+ 人口慢变量推动（延续）· DHC SHOP NOI +27.6% 单家 turnaround（新信号）· 新供给受限持续（延续）"
+    },
+    {
+      "layout": "dual-axis-bar",
+      "data": {
+        "title": "全球养老 · 80+ 人口 CAGR vs 新供给 CAGR（2025-30）",
+        "labels": [
+          "US",
+          "加拿大",
+          "英国",
+          "德国",
+          "日本",
+          "澳洲",
+          "韩国",
+          "中国"
+        ],
+        "leftSeries": {
+          "name": "80+ 人口 CAGR",
+          "values": [
+            4.2,
+            5.0,
+            3.8,
+            3.5,
+            2.5,
+            4.5,
+            6.8,
+            7.5
+          ],
+          "unit": "%"
+        },
+        "rightSeries": {
+          "name": "新供给 CAGR",
+          "values": [
+            2.5,
+            2.2,
+            3.0,
+            2.0,
+            1.8,
+            3.5,
+            4.5,
+            3.0
+          ],
+          "unit": "%"
+        },
+        "footnote": "ALERT · care model / supply definition / national statistics 不一致 · 韩国 + 中国 80+ 人口 CAGR ~7% 是全球最快段，但供给端 < 人口端 · 来源：UN Population Division · OECD · NIC MAP Vision · 各国统计局"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "Senior Housing · 2026 买方重新发现长线人口故事",
+        "headers": [
+          "盯盘对象",
+          "观察点 / 信号",
+          "时间窗"
+        ],
+        "rows": [
+          [
+            "Welltower / Ventas · 公开披露",
+            "2025Q4 SHOP SS-NOI 维持双位数 YoY；DHC +27.6% 为 turnaround 单家口径，不能外推为行业平均",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "SHOP NOI（延续）",
+            "是否持续 +20%+",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "入住率（新信号）",
+            "是否破 90%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Core 基金 / 保险资金",
+            "Healthcare CRE（含 senior housing 与 MOB）是 core open-end 基金长线仓位",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "新供给 CAGR（延续）",
+            "是否继续 <2.5%",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "NIC 数据（延续）",
+            "是否显示 MOB 稳态",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "部分全球平台 · 公开 outlook",
+            "Healthcare-adjacent 策略出现在多家 real estate outlook",
+            "6 个月（≤ 2026-10）"
+          ],
+          [
+            "Welltower / Ventas 2026 acquisition pipeline（延续）",
+            "节奏",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "跨境资金 · 行业观察",
+            "亚洲长期资本对老龄化相关资产关注度上升",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "Healthcare REIT 估值重定价（新信号）",
+            "重定价幅度",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "亚洲人口老龄化首波产品上市（新信号）",
+            "产品发布",
+            "12 个月（≤ 2027-04）"
+          ],
+          [
+            "联邦医疗补助 reform 对 NOI 影响（扰动）",
+            "影响范围",
+            "12 个月（≤ 2027-04）"
+          ]
+        ],
+        "footnote": "来源：Welltower / Ventas 财报 · Nareit · NIC MAP Vision · UN Population"
+      },
+      "notes": "Buyside · Welltower / Ventas 上涨带动 REIT 板块，私募加仓"
+    },
+    {
+      "layout": "section-break",
+      "data": {
+        "title": "横向主题",
+        "subtitle": "Cross-Cutting Themes · Refi Wall · Public vs Private · Global Flows · REIT Ranking",
+        "number": "PART 4"
+      }
+    },
+    {
+      "layout": "bar-chart",
+      "data": {
+        "title": "再融资压力集中在 multifamily 与 office",
+        "labels": [
+          "2025",
+          "2026",
+          "2027",
+          "2028",
+          "2029",
+          "2030+"
+        ],
+        "series": [
+          {
+            "name": "Office",
+            "values": [
+              180,
+              240,
+              210,
+              150,
+              100,
+              200
+            ]
+          },
+          {
+            "name": "Multifamily",
+            "values": [
+              220,
+              300,
+              260,
+              180,
+              120,
+              280
+            ]
+          },
+          {
+            "name": "Industrial",
+            "values": [
+              90,
+              110,
+              100,
+              80,
+              60,
+              130
+            ]
+          },
+          {
+            "name": "Retail",
+            "values": [
+              85,
+              100,
+              95,
+              80,
+              55,
+              120
+            ]
+          },
+          {
+            "name": "Lodging",
+            "values": [
+              45,
+              55,
+              50,
+              40,
+              30,
+              60
+            ]
+          },
+          {
+            "name": "Other",
+            "values": [
+              60,
+              80,
+              70,
+              55,
+              45,
+              90
+            ]
+          }
+        ],
+        "unit": "B",
+        "footnote": "Refi Wall · 2026-2028 集中到期约 $1.5T；multifamily 与 office 是最值得盯的两类。Trepp Q1 2026：私募 CMBS 发行 $32.74B · CRE CLO $14.5B（YoY +76%）。CRED iQ 4 月：loan spreads 跨品类 tightened，office 仍显著宽于 multifamily/industrial · 来源：MBA CRE/MF Debt Outstanding Q4 2025 · Trepp"
+      },
+      "notes": "原 PPTX image24 = grouped vertical bar 6×6；P1 引擎升级到 6 series 后完整还原"
+    },
+    {
+      "layout": "versus",
+      "data": {
+        "title": "公募与私募反映同一主题，但价格发现速度不同",
+        "left": {
+          "heading": "Public REIT total return（实时定价）",
+          "points": [
+            "来源：S&P Global Market Intelligence US REIT Performance",
+            "时间窗：Q1 2026 (2026-01-01 → 2026-03-31)",
+            "收益定义：Total return = price + dividends, mark-to-market",
+            "Universe：13 equity REIT sectors（Nareit / FTSE Nareit）",
+            "代表数据：Office REIT -12.8% · All REIT +3.8% · Self-Storage +9.2%",
+            "反应：实时；对利率、增长预期、再融资风险快速反应"
+          ]
+        },
+        "right": {
+          "heading": "Private appraisal-based return（appraisal smoothing）",
+          "points": [
+            "来源：NCREIF Property Index (NPI) / ODCE",
+            "时间窗：1Q2026 已发布",
+            "收益定义：Income return + capital return；基于独立 appraisal",
+            "Universe：~10,000 NPI properties；仅含 Apt / Hotel / Industrial / Office / Retail（不含 DC / SS / Healthcare）",
+            "代表数据：1Q2026 NPI Expanded total +1.23% · NFI-ODCE Preliminary +1.24% · Office 仍是唯一负值",
+            "反应：估值按季 appraisal；smoothing 效应明显"
+          ]
+        },
+        "footnote": "对 LP 的取舍：公募反应快但波动大、私募稳定但反应滞后；用前者监测短期信号，用后者评估稳态资产；不应用任一者去「证实」另一者的判断 · 来源：S&P Global MI US REIT Q1 2026 · NCREIF Index Returns 1Q2026"
+      }
+    },
+    {
+      "layout": "bar-chart",
+      "data": {
+        "title": "全球 PE Real Estate 募资分布 · 2023 → 2026 Q1 大幅切向 Debt/Credit",
+        "labels": [
+          "Opportunistic\nEquity",
+          "Core Equity",
+          "Value-add\nEquity",
+          "Debt / Credit"
+        ],
+        "series": [
+          {
+            "name": "2023",
+            "values": [
+              35,
+              28,
+              22,
+              15
+            ]
+          },
+          {
+            "name": "2026 Q1",
+            "values": [
+              22,
+              24,
+              19,
+              35
+            ]
+          }
+        ],
+        "unit": "%",
+        "footnote": "区域投资量 · 美国 $562B（FY26 +16% 预测）· 欧洲 $258B（+13% FY25）· 亚太 $188B（Q1 +31%）· ALERT: forecast / actual / fundraising mix 是三种不同指标，不可同框 · 来源：CBRE · JLL APAC Capital Tracker · CBRE Europe · PERE · Preqin"
+      },
+      "notes": "原 PPTX image25 = 双 chart 并列（左：3 区域成交量 / 右：4 策略 × 2 时点）。Lasca 单页选右侧主线，左侧区域数值进 footnote"
+    },
+    {
+      "layout": "horizontal-bar-chart",
+      "data": {
+        "title": "Office 市值跌到第 10 位 — 公募已显著折价，是否充分定价仍待观察",
+        "items": [
+          {
+            "label": "Health Care",
+            "value": 235.2
+          },
+          {
+            "label": "Retail",
+            "value": 215.8
+          },
+          {
+            "label": "Industrial",
+            "value": 174.9
+          },
+          {
+            "label": "Residential",
+            "value": 174.2
+          },
+          {
+            "label": "Telecom",
+            "value": 141.7
+          },
+          {
+            "label": "Data Centers",
+            "value": 128.1
+          },
+          {
+            "label": "Self-Storage",
+            "value": 84.6
+          },
+          {
+            "label": "Specialty",
+            "value": 54.4
+          },
+          {
+            "label": "Gaming",
+            "value": 42.7
+          },
+          {
+            "label": "Office",
+            "value": 42.0,
+            "color": "#dc2626"
+          },
+          {
+            "label": "Lodging",
+            "value": 31.7
+          },
+          {
+            "label": "Diversified",
+            "value": 25.1
+          },
+          {
+            "label": "Timberland",
+            "value": 23.7
+          }
+        ],
+        "unit": "B",
+        "footnote": "REIT Market Cap by Sector · start-of-2026 snapshot, data as of 2025-12-31 · Office (红色) 跌至第 10，被 Self-Storage / Data Centers / Telecom 全面甩开；折价 ≠ 充分定价，后续取决于 refinancing / asset sales / capex / leasing recovery · 来源：Nareit REITWatch Jan 2026"
+      },
+      "notes": "原 PPTX image26 = 13-sector horizontal bar ranking; M2-B3 后 Lasca 直接还原；Office 用 per-bar color override 标记结构性折价"
+    },
+    {
+      "layout": "section-break",
+      "data": {
+        "title": "前瞻与行动清单",
+        "subtitle": "Looking Forward · LP Playbook · Sector Watchlist",
+        "number": "PART 5"
+      }
+    },
+    {
+      "layout": "stat-row",
+      "data": {
+        "title": "LP Playbook：三条高确定性主题 + 三条需要对冲的风险",
+        "stats": [
+          {
+            "value": "✓ DC",
+            "label": "高确定性 · Data Centers",
+            "change": "需求强不是争议；电力/土地/变电站是 2026 关键约束"
+          },
+          {
+            "value": "✓ Logistics",
+            "label": "高确定性 · 现代物流",
+            "change": "供给压力减弱；偏向区位强、租户质量高、再融资清晰"
+          },
+          {
+            "value": "✓ SH",
+            "label": "高确定性 · Senior Housing",
+            "change": "NIC occupancy 89.5% · DHC SHOP +27.6%（单家 turnaround）"
+          },
+          {
+            "value": "⚠ MF",
+            "label": "对冲 · Multifamily 资本结构",
+            "change": "避开 2021-22 vintage 浮息 + lease-up 风险"
+          },
+          {
+            "value": "⚠ Office",
+            "label": "对冲 · Office 分裂市场",
+            "change": "只在高品质、可改造、需求验证资产择机进入"
+          },
+          {
+            "value": "⚠ Debt",
+            "label": "条件性 · Debt > Equity",
+            "change": "提高信用 / 债权策略权重反映 downside protection 偏好"
+          }
+        ],
+        "footnote": "本页为基于前文分析的综合判断；具体基金选择请结合 LP 自身风险偏好与现有敞口 · 每条主题的运营数据时间窗见 Part 3 各品类页"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "每个品类未来 6-12 个月要盯什么",
+        "headers": [
+          "品类",
+          "6 个月盯盘",
+          "12 个月盯盘"
+        ],
+        "rows": [
+          [
+            "Office",
+            "CMBS 违约率是否破 12%",
+            "Gateway trophy 重定价"
+          ],
+          [
+            "Industrial",
+            "全美 vacancy 是否跌破 6.8%",
+            "NAIOP FY 吸纳达 345 msf"
+          ],
+          [
+            "Retail",
+            "Strip vacancy 创新低",
+            "New store 扩张名单"
+          ],
+          [
+            "Multifamily",
+            "Sun Belt 租金回正",
+            "Coastal vs SB 剪刀差"
+          ],
+          [
+            "Data Centers",
+            "PPA / 电网落地进度",
+            "Primary vacancy <1.2%"
+          ],
+          [
+            "Hospitality",
+            "RevPAR 是否继续 <3%",
+            "CMBS Lodging 是否 <6%"
+          ],
+          [
+            "Self-Storage",
+            "M&A 落地与整合",
+            "人均面积跨国追赶"
+          ],
+          [
+            "Sr Hs/MOB",
+            "NIC 入住率破 90%",
+            "新供给 CAGR 是否超 2.5%"
+          ]
+        ],
+        "footnote": "8 品类 × 2 时间窗 = 16 观察点；观察这些指标比观察指数本身更能判断「趋势兑现 vs 扰动 vs 新信号」 · 与第 7 页全行业盯盘互为补充"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "证据分级 · 框架 · 数据缺口",
+        "headers": [
+          "证据级别",
+          "来源类型",
+          "代表机构 / 数据集"
+        ],
+        "rows": [
+          [
+            "T1",
+            "政府 / 央行 / 监管",
+            "BEA · BLS · Fed (SLOOS / Beige / Z.1 / H.8) · FDIC · Census · OFR · 地区联储"
+          ],
+          [
+            "T2",
+            "头部机构",
+            "CBRE · JLL · C&W · Colliers · PwC/ULI · NAIOP · Nareit · S&P Global MI · MSCI · Green Street · Trepp · Moody's · Blackstone · Brookfield"
+          ],
+          [
+            "T3",
+            "学术",
+            "NBER · AER · JEP · JPE Macro · Management Science · SSRN · Wharton / MIT / Columbia RE 中心"
+          ],
+          [
+            "T4",
+            "新闻 / 第三方",
+            "Commercial Observer · Multifamily Dive · EACCNY 转载 · 降级为 B 级证据，待升级到一手"
+          ],
+          [
+            "缺口",
+            "Multifamily 运营",
+            "RealPage / Yardi Matrix 补效租金、优惠、lease-up 速度"
+          ],
+          [
+            "缺口",
+            "Hotel 运营",
+            "STR / CoStar Hospitality occupancy / ADR / RevPAR"
+          ],
+          [
+            "缺口",
+            "Senior Housing 运营",
+            "NIC MAP Vision 入住率、NOI 分层、new supply"
+          ],
+          [
+            "缺口",
+            "银行 CRE Segmentation",
+            "FFIEC Call Reports 按大/小行、建造 vs 多户 vs 非农非住宅分层"
+          ],
+          [
+            "缺口",
+            "开放式核心基金",
+            "NCREIF ODCE 净回报、资金流入/赎回、gating 状态"
+          ]
+        ],
+        "footnote": "四条纪律：口径不混 · 二手媒体不标 A · 每个数据点必须有框架标签 · 每季补齐运营/监管缺口 · 主线资料索引详见配套 Excel 工作簿"
+      }
+    },
+    {
+      "layout": "table",
+      "data": {
+        "title": "全 deck 术语小词典",
+        "headers": [
+          "术语",
+          "中文 / 释义"
+        ],
+        "rows": [
+          [
+            "REIT",
+            "上市地产公司，主要持有并经营房地产，并把大部分利润分红给股东"
+          ],
+          [
+            "All Equity REITs",
+            "只看权益型 REIT，不含抵押贷款 REIT"
+          ],
+          [
+            "Cap rate",
+            "房产年净经营收入除以资产价格，可理解为不加杠杆的资产收益率"
+          ],
+          [
+            "Vacancy / Availability / Net absorption",
+            "空置率 / 可租面积占比（更宽，包括即将空出）/ 实际被租出去的净面积变化"
+          ],
+          [
+            "NOI / Same-store NOI / SHOP",
+            "净经营收入 / 持续持有资产之间比较 / REIT 直接参与 senior housing 经营的模式"
+          ],
+          [
+            "MOB / CMBS / CRE CLO",
+            "Medical Office Building / 把商业地产贷款打包后的证券 / 底层是 CRE 贷款的结构化融资"
+          ],
+          [
+            "Refi wall / Bridge loan / Lease-up",
+            "未来几年集中到期的贷款高峰 / 过桥贷款，期限短、利率高 / 新项目从交付到稳定出租的阶段"
+          ],
+          [
+            "RevPAR / ADR",
+            "酒店每间可售房收入 = 入住率 × ADR / 酒店平均房价"
+          ],
+          [
+            "Hyperscaler",
+            "超大云厂商，如 AWS / Microsoft / Google / Meta"
+          ],
+          [
+            "PPA",
+            "Power Purchase Agreement，长期购电协议"
+          ],
+          [
+            "Adaptive reuse",
+            "把旧楼改成另一种用途，如办公改住宅"
+          ],
+          [
+            "Trophy / Commodity office",
+            "Trophy 为质量最好、地段最核心的办公楼；Commodity 为可替代性强的普通办公楼"
+          ]
+        ],
+        "footnote": "Glossary 整理自 Nareit · CBRE · NCREIF · STR · 各机构通用定义 · 与各页 speaker notes 的 Plain-English terms 互相一致"
+      }
+    },
+    {
+      "layout": "closing",
+      "data": {
+        "title": "重要披露 · Important Disclosures",
+        "subtitle": "Confidentiality · Not investment advice · Third-party data limitations · Data as of 2026-04-27",
+        "signature": "Wan Bridge Research · 万桥研究",
+        "role": "披露页 · 本页适用于本报告全文 · 接收即表示同意保密 / 非投资建议 / 第三方数据 / 跨国对比口径限制"
+      },
+      "notes": "Confidentiality / Forward-looking / Data as of / Not investment advice / Third-party data / Limitations / Distribution / Past performance 八条标准 disclosure 块；详见 slide47.md 原文"
+    }
+  ],
+  "pageSize": "slide-16:9",
+  "texture": true,
+  "ambient": true
+}

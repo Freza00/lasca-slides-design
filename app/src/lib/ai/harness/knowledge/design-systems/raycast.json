@@ -1,0 +1,15 @@
+{
+  "brand": "raycast",
+  "category": "devtool",
+  "aesthetic": "Sleek Launcher — dark chrome, vibrant gradients, keyboard-first precision",
+  "colors": { "primary": "#ff6363", "accent": "#6e56cf", "bg": "#1c1c1e", "text": "#ebebf0" },
+  "typography": { "display": "var(--font-display-sans)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Dark chrome: #1c1c1e base, layered with subtle gradients",
+    "Vibrant accent gradients: red-to-purple for hero moments",
+    "Keyboard shortcut aesthetic: monospace labels, precise alignment",
+    "Speed-focused copy: short, action-oriented, no fluff"
+  ],
+  "preferLayouts": ["cover", "big-number", "two-column", "three-cards"],
+  "promptGuide": "Apply the aesthetic: Bricolage Grotesque display (weight 700), Plus Jakarta Sans body, dark chrome bg #1c1c1e, text #ebebf0, red-to-purple gradient (#ff6363 → #6e56cf) for hero/cover moments, monospace labels for shortcuts/commands, 10px border-radius, subtle inner glow on cards (rgba(255,255,255,0.05)), speed-focused copy: imperative verbs, ≤6 words per headline, no passive voice."
+}

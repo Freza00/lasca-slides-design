@@ -1,0 +1,17 @@
+{
+  "brand": "vercel",
+  "category": "devtool",
+  "aesthetic": "Monument — brutalist architecture, weight-800 monumentality, pure black & white",
+  "colors": { "primary": "#000000", "accent": "#0070f3", "bg": "#000000", "text": "#ffffff" },
+  "typography": { "display": "var(--font-display-sans)", "body": "var(--font-familjen-grotesk)" },
+  "principles": [
+    "Weight 800 titles — the heaviest, most architectural",
+    "Whitespace ≥55% — monuments need empty plazas",
+    "Only black #000 and white #fff — no grays (gray is compromise)",
+    "Electric blue #0070f3 for one highlight per page only",
+    "Manifesto tone: declarative, no questions, no exclamations"
+  ],
+  "preferLayouts": ["cover", "big-number", "two-column", "quote"],
+  "avoidLayouts": ["three-cards", "grid-cards", "stacked-bars"],
+  "promptGuide": "Apply the Monument aesthetic: Bricolage Grotesque weight 800 display (80-120px on covers), Familjen Grotesk weight 400 body, extreme weight contrast (800 vs 400), letter-spacing -0.04em (most aggressive negative tracking), titles can split 2-3 lines (2-3 words each) for monumental stacking, left-aligned (never center), 0-2px border-radius, shadow-as-border (0 0 0 1px ring), only #000 and #fff (blue #0070f3 for one element only), manifesto tone: verb-first, ≤5 words, no questions/exclamations."
+}

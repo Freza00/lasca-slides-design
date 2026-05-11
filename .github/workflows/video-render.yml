@@ -1,0 +1,58 @@
+name: Video Render
+
+# Manual-trigger only. Never runs on push.
+on:
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: video
+    env:
+      # Inputs sourced via env so they are never interpolated into run: commands.
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: video/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Remotion install
+        run: npx remotion versions
+
+      - name: Sync design tokens from Lasca app
+        run: npm run prerender
+
+      - name: Render master 1080p
+        run: npm run render
+
+      - name: Render square 1x1
+        run: npm run render:sq
+
+      - name: Render vertical 9x16
+        run: npm run render:v
+
+      - name: Render README WebM
+        run: npm run render:webm
+
+      - name: Render thumbnail
+        run: npm run thumbnail
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lasca-video
+          path: video/out/*
+          retention-days: 30
+          if-no-files-found: error

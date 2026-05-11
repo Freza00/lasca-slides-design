@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "cd app && npm ci",
+  "buildCommand": "cd app && npm run build",
+  "devCommand": "cd app && npm run dev",
+  "outputDirectory": "app/.next",
+  "functions": {
+    "app/src/app/api/ai/generate/route.ts": {
+      "maxDuration": 300
+    },
+    "app/src/app/api/ai/edit/route.ts": {
+      "maxDuration": 60
+    },
+    "app/src/app/api/ai/polish/route.ts": {
+      "maxDuration": 120
+    },
+    "app/src/app/api/ai/redesign/route.ts": {
+      "maxDuration": 120
+    }
+  }
+}

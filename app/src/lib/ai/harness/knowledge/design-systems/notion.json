@@ -1,0 +1,16 @@
+{
+  "brand": "notion",
+  "category": "productivity",
+  "aesthetic": "Washi — wabi-sabi lightness, handmade paper texture, organic asymmetry",
+  "colors": { "primary": "#0075de", "accent": "#eb5757", "bg": "#faf8f4", "text": "#37352f" },
+  "typography": { "display": "var(--font-display-serif)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Lightness is soul: weight 400 display (not 600/700), weight 300 body",
+    "Asymmetry: titles left-aligned, large right whitespace",
+    "Red #eb5757 appears once per page — like a seal stamp",
+    "No dividers — use whitespace ≥40% to separate",
+    "Writing tone: like a letter to a trusted colleague"
+  ],
+  "preferLayouts": ["two-column", "quote", "cover", "three-cards", "title-body"],
+  "promptGuide": "Apply the Washi aesthetic: Fraunces weight 400 + SOFT 100 (organic curves), Plus Jakarta Sans weight 300 body, warm brown-black #37352f text (not pure black), warm white #faf8f4 bg (like washi paper), red #eb5757 accent once per page only (like a seal), asymmetric layouts (title left, 40%+ right whitespace), 1px warm borders rgba(55,53,47,0.08) instead of shadows, 6-8px border-radius, writing tone: 'we'/'you'/'together' allowed, no hype."
+}

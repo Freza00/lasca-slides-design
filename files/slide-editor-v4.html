@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slides v4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    #root { width: 100%; height: 100%; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d4d2ca; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b0aea5; }
+    /* Reveal-style arrow idle bounce */
+    @keyframes arrow-bounce-left {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-50%) translateX(-5px); }
+    }
+    @keyframes arrow-bounce-right {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-50%) translateX(5px); }
+    }
+    .nav-arrow-left { animation: arrow-bounce-left 2s ease-in-out infinite; }
+    .nav-arrow-right { animation: arrow-bounce-right 2s ease-in-out infinite; }
+    .nav-arrow:hover { animation: none !important; }
+    /* Thinking dot pulse */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Style panel inputs */
+    .style-panel input[type="range"] { height: 4px; }
+    .style-panel select:focus, .style-panel input:focus { border-color: #d97757 !important; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useRef, useEffect, useLayoutEffect, useCallback } = React;
+
+    // ========================================================================
+    // SLIDE DATA — 每页幻灯片就是一段 HTML
+    // ========================================================================
+    const SLIDES = [
+      {
+        id: 'slide-1',
+        html: `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif;">
+            <h1 style="font-size:52px; font-weight:700; color:#d97757; margin-bottom:16px; letter-spacing:-1px;">AI 不是 Magic</h1>
+            <p style="font-size:22px; color:#141413; margin-bottom:8px;">给普通员工的一张 AI 自学路线图</p>
+            <p style="font-size:15px; color:#b0aea5;">从 Chatbox，到 Workflow，到 Agent 与 System</p>
+            <div style="width:200px; height:3px; background:#d97757; margin:28px 0 16px;"></div>
+            <p style="font-size:13px; color:#b0aea5;">Lasca Team · 2026</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-2',
+        html: `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif;">
+            <span style="font-size:140px; font-weight:700; color:#d97757; line-height:1;">84%</span>
+            <p style="font-size:28px; color:#141413; margin-top:16px;">的人从未真正与 AI 对话过</p>
+            <div style="width:120px; height:2px; background:#e8e6dc; margin:24px 0;"></div>
+            <p style="font-size:14px; color:#b0aea5;">用过 AI 16% · 听说过 AI 60% · 从未对话过 84%</p>
+            <p style="font-size:17px; color:#6a9bcc; margin-top:20px; font-weight:500;">认知鸿沟比技术鸿沟更大</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-3',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:36px 40px;">
+            <h2 style="font-size:34px; font-weight:700; color:#d97757; margin-bottom:28px;">三个阶段</h2>
+            <div style="display:flex; gap:20px; flex:1;">
+              <div style="flex:1; background:#fff; border-radius:12px; padding:28px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:52px; font-weight:700; color:#d97757;">01</span>
+                <p style="font-size:16px; color:#141413; text-align:center; margin-top:16px; font-weight:500;">Chatbox / Copilot</p>
+                <p style="font-size:13px; color:#b0aea5; text-align:center; margin-top:6px;">先会用，再协作</p>
+              </div>
+              <div style="flex:1; background:#fff; border-radius:12px; padding:28px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:52px; font-weight:700; color:#6a9bcc;">02</span>
+                <p style="font-size:16px; color:#141413; text-align:center; margin-top:16px; font-weight:500;">Workflow / Agent</p>
+                <p style="font-size:13px; color:#b0aea5; text-align:center; margin-top:6px;">让 AI 参与流程</p>
+              </div>
+              <div style="flex:1; background:#fff; border-radius:12px; padding:28px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:52px; font-weight:700; color:#788c5d;">03</span>
+                <p style="font-size:16px; color:#141413; text-align:center; margin-top:16px; font-weight:500;">Harness / System</p>
+                <p style="font-size:13px; color:#b0aea5; text-align:center; margin-top:6px;">让 AI 进入系统</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'slide-4',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:36px 40px;">
+            <h2 style="font-size:30px; font-weight:700; color:#d97757; margin-bottom:24px;">这门课不是…… 而是交付……</h2>
+            <div style="display:flex; gap:32px; flex:1;">
+              <div style="flex:1;">
+                <p style="font-size:20px; font-weight:600; color:#b0aea5; margin-bottom:16px;">✕ 不是</p>
+                <p style="font-size:17px; color:#141413; line-height:2;">✕ 不是工具盘点 — 工具每月都在变<br>✕ 不是 Prompt 秘籍 — 那只是表层技巧<br>✕ 不是让你变成 AI 专家 — 你不需要</p>
+              </div>
+              <div style="width:1px; background:#e8e6dc;"></div>
+              <div style="flex:1;">
+                <p style="font-size:20px; font-weight:600; color:#d97757; margin-bottom:16px;">✓ 而是交付</p>
+                <p style="font-size:17px; color:#141413; line-height:2;">✓ 位置感 — 你在 AI 使用的哪一层<br>✓ 路线图 — 下一步该往哪里走<br>✓ 动作清单 — 每一步该投入什么<br>✓ 心态 — 不需要准备好，现在就开始</p>
+              </div>
+            </div>
+            <p style="font-size:13px; text-align:center; color:#b0aea5; margin-top:12px;">三个阶段逐步递进 — 从个人工具，到团队协作，再到系统级落地</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-5',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:32px 40px;">
+            <h2 style="font-size:30px; font-weight:700; color:#d97757; margin-bottom:20px;">AI 世界总地图</h2>
+            <div style="display:flex; flex-direction:column; gap:8px; flex:1; justify-content:center;">
+              <div style="background:#d97757; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">模型层 — GPT / Claude / Gemini / Kimi / 豆包</div>
+              <div style="background:#6a9bcc; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">产品入口层 — ChatGPT / Claude App / 豆包 / Kimi</div>
+              <div style="background:#788c5d; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">搜索层 — Perplexity / 秘塔搜索</div>
+              <div style="background:#b0aea5; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">工作台层 — Cherry Studio / CC Switch</div>
+              <div style="background:#d97757; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">Agent 层 — Manus / OpenClaw / Claude Code / Coze</div>
+              <div style="background:#141413; color:#fff; padding:14px 24px; border-radius:8px; font-size:16px; text-align:center;">系统接入层 — API / MCP / 中转站 / 企业系统</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'slide-6',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:36px 40px;">
+            <h2 style="font-size:30px; font-weight:700; color:#d97757; margin-bottom:24px;">从搜索思维到实习生思维</h2>
+            <div style="display:flex; gap:32px; flex:1;">
+              <div style="flex:1;">
+                <p style="font-size:20px; font-weight:600; color:#b0aea5; margin-bottom:12px;">✕ 搜索思维</p>
+                <p style="font-size:17px; color:#141413; line-height:1.8;">"帮我写个方案。"</p>
+                <p style="font-size:14px; color:#b0aea5; margin-top:12px; line-height:1.8;">没有目标、没有受众<br>没有材料、没有格式要求</p>
+              </div>
+              <div style="width:1px; background:#e8e6dc;"></div>
+              <div style="flex:1;">
+                <p style="font-size:20px; font-weight:600; color:#d97757; margin-bottom:12px;">✓ 实习生思维</p>
+                <p style="font-size:17px; color:#141413; line-height:1.8;">"给老板做10页汇报，受众是管理层，材料是这3份会议纪要，风格要克制，输出成页纲+每页一句观点。"</p>
+              </div>
+            </div>
+            <p style="font-size:15px; font-weight:500; text-align:center; color:#6a9bcc; margin-top:16px;">本质变化：不是 AI 更懂你了，而是你更会交代任务了</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-7',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:32px 40px;">
+            <h2 style="font-size:28px; font-weight:700; color:#d97757; margin-bottom:20px;">Prompt 不是玄学，Context 才是核心</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; flex:1;">
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#d97757;">01</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">目标</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#6a9bcc;">02</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">受众 / 场景</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#788c5d;">03</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">材料</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#d97757;">04</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">规则</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#6a9bcc;">05</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">输出格式</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:32px; font-weight:700; color:#788c5d;">06</span>
+                <p style="font-size:15px; color:#141413; margin-top:8px; font-weight:500;">评价标准</p>
+              </div>
+            </div>
+            <p style="font-size:13px; text-align:center; color:#b0aea5; margin-top:12px;">六要素越完整，AI 越不容易「自作聪明」</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-8',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:32px 40px;">
+            <h2 style="font-size:28px; font-weight:700; color:#d97757; margin-bottom:20px;">AI 的四个常见弱点</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1;">
+              <div style="background:#fff; border-radius:10px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:36px; font-weight:700; color:#d97757;">01</span>
+                <p style="font-size:16px; color:#141413; margin-top:10px; font-weight:500;">幻觉</p>
+                <p style="font-size:13px; color:#b0aea5; margin-top:4px;">会一本正经地编造事实</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:36px; font-weight:700; color:#6a9bcc;">02</span>
+                <p style="font-size:16px; color:#141413; margin-top:10px; font-weight:500;">信息不及时</p>
+                <p style="font-size:13px; color:#b0aea5; margin-top:4px;">训练数据滞后</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:36px; font-weight:700; color:#788c5d;">03</span>
+                <p style="font-size:16px; color:#141413; margin-top:10px; font-weight:500;">数字不稳</p>
+                <p style="font-size:13px; color:#b0aea5; margin-top:4px;">模型不擅长心算</p>
+              </div>
+              <div style="background:#fff; border-radius:10px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <span style="font-size:36px; font-weight:700; color:#b0aea5;">04</span>
+                <p style="font-size:16px; color:#141413; margin-top:10px; font-weight:500;">写作太飘</p>
+                <p style="font-size:13px; color:#b0aea5; margin-top:4px;">像标准答案不像你</p>
+              </div>
+            </div>
+            <p style="font-size:14px; font-weight:500; text-align:center; color:#141413; margin-top:12px;">真正专业的使用者，不是「相信 AI」，而是会给 AI 设护栏</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-9',
+        html: `
+          <div style="display:flex; flex-direction:column; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:36px 40px;">
+            <h2 style="font-size:28px; font-weight:700; color:#d97757; margin-bottom:24px;">为什么只会 Chatbox 还不够</h2>
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:24px;">
+              <div>
+                <p style="font-size:20px; font-weight:600; color:#b0aea5; margin-bottom:8px;">同步模式</p>
+                <p style="font-size:16px; color:#141413; line-height:1.7;">你 → AI → 你 → AI → 你 → AI<br>每次只能处理一个任务，效率取决于你等的速度</p>
+              </div>
+              <div style="height:1px; background:#e8e6dc;"></div>
+              <div>
+                <p style="font-size:20px; font-weight:600; color:#d97757; margin-bottom:8px;">异步并行 ✦</p>
+                <p style="font-size:16px; color:#141413; line-height:1.7;">AI-1 → 汇总 ｜ AI-2 → 分析 ｜ AI-3 → 周报 → 你审核拍板<br>三条线同时跑，你只在最后一步介入</p>
+              </div>
+            </div>
+            <p style="font-size:15px; font-weight:500; text-align:center; color:#6a9bcc; margin-top:16px;">从「问 AI」走向「编排 AI」— 提效真正发生在 workflow 层面</p>
+          </div>
+        `
+      },
+      {
+        id: 'slide-10',
+        html: `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#faf9f5; font-family:'Poppins','Noto Sans SC',sans-serif; padding:60px;">
+            <span style="font-size:100px; color:#e8e6dc; font-weight:700; line-height:0.8; margin-bottom:8px;">"</span>
+            <h2 style="font-size:34px; font-weight:700; color:#d97757; margin-bottom:16px;">AI 不是许愿机</h2>
+            <p style="font-size:20px; color:#141413; line-height:1.8; text-align:center;">真正的 Magic，是你如何设计它进入工作。<br>从会聊天，到会工作，到会重构工作方式。</p>
+            <p style="font-size:18px; font-weight:500; color:#6a9bcc; margin-top:24px;">现在就开始，不要等准备好。</p>
+            <div style="width:200px; height:3px; background:#d97757; margin:32px 0 16px;"></div>
+            <p style="font-size:13px; color:#b0aea5;">AI 不是 Magic · Lasca Team · 2026</p>
+          </div>
+        `
+      },
+    ];
+
+    // ========================================================================
+    // EDITOR APP
+    // ========================================================================
+    const CANVAS_W = 960;
+    const CANVAS_H = 540;
+
+    function App() {
+      // Multi-tab: each tab is a deck { name, slides }
+      const [decks, setDecks] = useState([{ id: 'deck-1', name: 'AI 不是 Magic', slides: SLIDES }]);
+      const [activeDeckId, setActiveDeckId] = useState('deck-1');
+      const activeDeck = decks.find(d => d.id === activeDeckId) || decks[0];
+
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const slides = activeDeck.slides;
+      const [isPresenting, setIsPresenting] = useState(false);
+      const [presMode, setPresMode] = useState('full');
+      const [isPdfExporting, setIsPdfExporting] = useState(false);
+
+      // Update slides for the active deck
+      const setSlides = (updater) => {
+        setDecks(prev => prev.map(d => {
+          if (d.id !== activeDeckId) return d;
+          const newSlides = typeof updater === 'function' ? updater(d.slides) : updater;
+          return { ...d, slides: newSlides };
+        }));
+      };
+
+      // Import HTML file as a new tab
+      const importHtmlTab = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.html,.htm,.lasca';
+        input.onchange = async (e) => {
+          try {
+            const file = e.target.files[0];
+            const text = await file.text();
+            const extracted = parseHtmlToSlides(text, file.name);
+            const newId = 'deck-' + Date.now();
+            const name = file.name.replace(/\.(html?|lasca)$/i, '');
+            setDecks(prev => [...prev, { id: newId, name, slides: extracted }]);
+            setActiveDeckId(newId);
+            setCurrentIndex(0);
+          } catch { alert('导入失败'); }
+        };
+        input.click();
+      };
+
+      // Close a tab
+      const closeDeck = (id) => {
+        if (decks.length <= 1) return;
+        const remaining = decks.filter(d => d.id !== id);
+        setDecks(remaining);
+        if (activeDeckId === id) {
+          setActiveDeckId(remaining[0].id);
+          setCurrentIndex(0);
+        }
+      };
+
+      // switchDeck is defined after syncSlideHtml below
+      const [editingEl, setEditingEl] = useState(null); // DOM element currently being text-edited
+      const [selectedEl, setSelectedEl] = useState(null); // DOM element ref for selection highlight
+      const [showToolbar, setShowToolbar] = useState(false);
+      const [toolbarPos, setToolbarPos] = useState({ x: 0, y: 0 });
+      const [contextMenu, setContextMenu] = useState(null); // { x, y, el }
+      const [guides, setGuides] = useState([]); // alignment guide lines [{type:'h'|'v', pos, label?}]
+      // AI Chat state
+      const [chatMessages, setChatMessages] = useState([
+        { id: 'welcome', role: 'ai', type: 'greeting', text: '你好！告诉我你想做什么。', ts: Date.now() },
+        { id: 'hint', role: 'ai', type: 'hint', text: '比如 "帮我做一个关于 AI 趋势的 pitch deck" 或 "把第3页标题改成红色"', ts: Date.now() },
+      ]);
+      const [chatInput, setChatInput] = useState('');
+      // Notes state: map slideId → notes text
+      const [slideNotes, setSlideNotes] = useState({});
+      // Per-slide AI action log: map slideId → [{id, text, color, ts}]
+      const [slideActions, setSlideActions] = useState({});
+      const chatEndRef = useRef(null);
+      const presentRef = useRef(null);
+      const canvasRef = useRef(null);
+      const dragState = useRef(null);
+
+      // Sync edits from contentEditable back to state
+      const syncSlideHtml = useCallback(() => {
+        if (canvasRef.current) {
+          // Remove any selection outlines before saving
+          const el = canvasRef.current.querySelector('[data-selected="true"]');
+          if (el) { el.style.outline = ''; el.removeAttribute('data-selected'); }
+          const newHtml = canvasRef.current.innerHTML;
+          setSlides(prev => prev.map((s, i) => i === currentIndex ? { ...s, html: newHtml } : s));
+        }
+      }, [currentIndex]);
+
+      // Show floating toolbar on text selection (only when text-editing)
+      const handleSelect = useCallback(() => {
+        if (!editingEl) { setShowToolbar(false); return; }
+        const sel = window.getSelection();
+        if (sel && sel.toString().length > 0 && canvasRef.current?.contains(sel.anchorNode)) {
+          const range = sel.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          const canvasRect = canvasRef.current.getBoundingClientRect();
+          setToolbarPos({ x: rect.left - canvasRect.left + rect.width / 2, y: rect.top - canvasRect.top - 44 });
+          setShowToolbar(true);
+        } else {
+          setShowToolbar(false);
+        }
+      }, [editingEl]);
+
+      useEffect(() => {
+        document.addEventListener('selectionchange', handleSelect);
+        return () => document.removeEventListener('selectionchange', handleSelect);
+      }, [handleSelect]);
+
+      // Format commands
+      const execFormat = (cmd, val) => {
+        document.execCommand(cmd, false, val);
+        syncSlideHtml();
+      };
+
+      // Clear selection highlight
+      const clearSelected = () => {
+        if (canvasRef.current) {
+          const prev = canvasRef.current.querySelector('[data-selected="true"]');
+          if (prev) { prev.style.outline = ''; prev.style.outlineOffset = ''; prev.removeAttribute('data-selected'); }
+        }
+        setSelectedEl(null);
+      };
+
+      // Enter text editing mode
+      const enterTextEditing = (el) => {
+        clearSelected();
+        el.setAttribute('contenteditable', 'true');
+        el.style.outline = '2px solid #6a9bcc';
+        el.style.outlineOffset = '2px';
+        el.focus();
+        setEditingEl(el);
+      };
+
+      // Exit text editing mode
+      const exitTextEditing = () => {
+        if (editingEl) {
+          editingEl.removeAttribute('contenteditable');
+          editingEl.style.outline = '';
+          editingEl.style.outlineOffset = '';
+        }
+        setEditingEl(null);
+        setShowToolbar(false);
+        syncSlideHtml();
+      };
+
+      // Switch tab
+      const switchDeck = (id) => {
+        if (id === activeDeckId) return;
+        syncSlideHtml();
+        setActiveDeckId(id);
+        setCurrentIndex(0);
+        clearSelected();
+      };
+
+      // Is element the slide root container? (should never be dragged)
+      const isRootContainer = (el) => {
+        if (!canvasRef.current) return false;
+        // Direct child of canvas = root. Also skip if it covers ≥90% of canvas area.
+        if (el === canvasRef.current.firstElementChild) return true;
+        if (el.parentElement === canvasRef.current) {
+          const r = el.getBoundingClientRect();
+          const c = canvasRef.current.getBoundingClientRect();
+          if (r.width >= c.width * 0.9 && r.height >= c.height * 0.9) return true;
+        }
+        return false;
+      };
+
+      // Find the meaningful block element from a click target (skip root containers)
+      const findBlock = (target) => {
+        if (!canvasRef.current) return null;
+        let el = target;
+        while (el && el !== canvasRef.current) {
+          const parent = el.parentElement;
+          if (!parent) break;
+          // A "block" = child of a flex/grid parent, or direct child of slide root
+          const isChild = parent === canvasRef.current || parent === canvasRef.current.firstElementChild;
+          const pDisp = getComputedStyle(parent).display;
+          const isFlexGridChild = pDisp.includes('flex') || pDisp.includes('grid');
+          if (isChild || isFlexGridChild) {
+            // Skip if this element IS the root container (background)
+            if (isRootContainer(el)) {
+              el = el.parentElement;
+              continue;
+            }
+            return el;
+          }
+          el = parent;
+        }
+        return null;
+      };
+
+      // Hover highlight — show element outline on hover (skip when text-editing or dragging)
+      const hoverElRef = useRef(null);
+      const handleCanvasHover = useCallback((e) => {
+        if (editingEl || dragState.current) return;
+        const block = findBlock(e.target);
+        // Clear previous hover
+        if (hoverElRef.current && hoverElRef.current !== block && hoverElRef.current.getAttribute('data-selected') !== 'true') {
+          hoverElRef.current.style.outline = '';
+          hoverElRef.current.style.outlineOffset = '';
+        }
+        if (block && block.getAttribute('data-selected') !== 'true') {
+          block.style.outline = '1.5px dashed rgba(106,155,204,0.6)';
+          block.style.outlineOffset = '2px';
+          hoverElRef.current = block;
+          if (canvasRef.current) canvasRef.current.style.cursor = 'grab';
+        } else {
+          hoverElRef.current = null;
+          if (canvasRef.current) canvasRef.current.style.cursor = 'default';
+        }
+      }, [editingEl]);
+
+      // Snap / alignment guide calculation
+      const SNAP_THRESHOLD = 5;
+      const calcGuides = useCallback((block) => {
+        if (!canvasRef.current || !block) return { guides: [], snapDx: 0, snapDy: 0 };
+        const canvasRect = canvasRef.current.getBoundingClientRect();
+        const blockRect = block.getBoundingClientRect();
+        // Block edges relative to canvas
+        const bLeft = blockRect.left - canvasRect.left;
+        const bRight = blockRect.right - canvasRect.left;
+        const bTop = blockRect.top - canvasRect.top;
+        const bBottom = blockRect.bottom - canvasRect.top;
+        const bCx = (bLeft + bRight) / 2;
+        const bCy = (bTop + bBottom) / 2;
+
+        // Canvas center
+        const cCx = CANVAS_W / 2;
+        const cCy = CANVAS_H / 2;
+
+        // Collect snap targets: canvas edges, canvas center, other elements
+        const vTargets = [{ pos: 0, label: 'edge' }, { pos: cCx, label: 'center' }, { pos: CANVAS_W, label: 'edge' }];
+        const hTargets = [{ pos: 0, label: 'edge' }, { pos: cCy, label: 'center' }, { pos: CANVAS_H, label: 'edge' }];
+
+        // Other sibling elements
+        const root = canvasRef.current.firstElementChild;
+        if (root) {
+          const siblings = root.querySelectorAll('*');
+          siblings.forEach(sib => {
+            if (sib === block || sib.contains(block) || block.contains(sib)) return;
+            if (sib.tagName === 'STYLE' || sib.tagName === 'SCRIPT') return;
+            const r = sib.getBoundingClientRect();
+            if (r.width < 10 || r.height < 10) return;
+            const sLeft = r.left - canvasRect.left;
+            const sRight = r.right - canvasRect.left;
+            const sTop = r.top - canvasRect.top;
+            const sBottom = r.bottom - canvasRect.top;
+            const sCx = (sLeft + sRight) / 2;
+            const sCy = (sTop + sBottom) / 2;
+            vTargets.push({ pos: sLeft, label: 'el' }, { pos: sRight, label: 'el' }, { pos: sCx, label: 'el-center' });
+            hTargets.push({ pos: sTop, label: 'el' }, { pos: sBottom, label: 'el' }, { pos: sCy, label: 'el-center' });
+          });
+        }
+
+        // Find closest snap for vertical lines (affect X position)
+        const blockVEdges = [bLeft, bRight, bCx];
+        const blockHEdges = [bTop, bBottom, bCy];
+        let snapDx = 0, snapDy = 0;
+        const foundGuides = [];
+
+        // Vertical guides (X alignment)
+        let bestVDist = SNAP_THRESHOLD + 1;
+        for (const edge of blockVEdges) {
+          for (const target of vTargets) {
+            const dist = Math.abs(edge - target.pos);
+            if (dist < SNAP_THRESHOLD && dist < bestVDist) {
+              bestVDist = dist;
+              snapDx = target.pos - edge;
+            }
+          }
+        }
+        // After snapping, find all matching guides
+        for (const edge of blockVEdges) {
+          const snappedEdge = edge + snapDx;
+          for (const target of vTargets) {
+            if (Math.abs(snappedEdge - target.pos) < 1) {
+              foundGuides.push({ type: 'v', pos: target.pos });
+            }
+          }
+        }
+
+        // Horizontal guides (Y alignment)
+        let bestHDist = SNAP_THRESHOLD + 1;
+        for (const edge of blockHEdges) {
+          for (const target of hTargets) {
+            const dist = Math.abs(edge - target.pos);
+            if (dist < SNAP_THRESHOLD && dist < bestHDist) {
+              bestHDist = dist;
+              snapDy = target.pos - edge;
+            }
+          }
+        }
+        for (const edge of blockHEdges) {
+          const snappedEdge = edge + snapDy;
+          for (const target of hTargets) {
+            if (Math.abs(snappedEdge - target.pos) < 1) {
+              foundGuides.push({ type: 'h', pos: target.pos });
+            }
+          }
+        }
+
+        // Deduplicate guides
+        const unique = [];
+        const seen = new Set();
+        foundGuides.forEach(g => {
+          const key = `${g.type}-${Math.round(g.pos)}`;
+          if (!seen.has(key)) { seen.add(key); unique.push(g); }
+        });
+
+        return { guides: unique, snapDx, snapDy };
+      }, []);
+
+      // Drag logic — higher threshold (6px) to avoid accidental drags
+      const handleCanvasMouseDown = (e) => {
+        // Context menu is dismissed by backdrop click, so just skip if it was open
+        if (contextMenu) { setContextMenu(null); return; }
+        // If clicking while text-editing, check if click is outside the editing element
+        if (editingEl) {
+          if (!editingEl.contains(e.target)) {
+            exitTextEditing();
+          }
+          return; // Don't start drag while editing text
+        }
+        const block = findBlock(e.target);
+        if (!block) { clearSelected(); return; }
+
+        // Select it
+        clearSelected();
+        block.style.outline = '2px solid #d97757';
+        block.style.outlineOffset = '2px';
+        block.setAttribute('data-selected', 'true');
+        setSelectedEl(block);
+
+        // Prepare for potential drag
+        const comp = getComputedStyle(block);
+        if (comp.position === 'static') {
+          block.style.position = 'relative';
+        }
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const origLeft = parseFloat(block.style.left) || 0;
+        const origTop = parseFloat(block.style.top) || 0;
+
+        dragState.current = { block, startX, startY, origLeft, origTop, moved: false };
+
+        const onMove = (ev) => {
+          if (!dragState.current) return;
+          const dx = ev.clientX - dragState.current.startX;
+          const dy = ev.clientY - dragState.current.startY;
+          // Higher threshold: only start dragging after 6px movement
+          if (!dragState.current.moved && Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+          if (!dragState.current.moved) {
+            dragState.current.moved = true;
+            dragState.current.block.style.transition = 'none';
+            dragState.current.block.style.cursor = 'grabbing';
+          }
+          // Apply position first (before snap calc)
+          dragState.current.block.style.left = (dragState.current.origLeft + dx) + 'px';
+          dragState.current.block.style.top = (dragState.current.origTop + dy) + 'px';
+          // Calculate snap guides
+          const { guides: g, snapDx, snapDy } = calcGuides(dragState.current.block);
+          // Apply snap offset
+          if (snapDx !== 0 || snapDy !== 0) {
+            dragState.current.block.style.left = (dragState.current.origLeft + dx + snapDx) + 'px';
+            dragState.current.block.style.top = (dragState.current.origTop + dy + snapDy) + 'px';
+          }
+          setGuides(g);
+          dragState.current.block.style.opacity = '0.85';
+          dragState.current.block.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+        };
+        const onUp = () => {
+          if (dragState.current) {
+            dragState.current.block.style.opacity = '';
+            dragState.current.block.style.boxShadow = '';
+            dragState.current.block.style.cursor = '';
+            dragState.current.block.style.transition = '';
+            if (dragState.current.moved) {
+              pushHistory();
+            }
+          }
+          dragState.current = null;
+          setGuides([]);
+          syncSlideHtml();
+          window.removeEventListener('mousemove', onMove);
+          window.removeEventListener('mouseup', onUp);
+        };
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        e.preventDefault();
+      };
+
+      // Double-click to enter text editing
+      const handleCanvasDblClick = (e) => {
+        if (editingEl) return; // already editing
+        const block = findBlock(e.target);
+        if (block) {
+          enterTextEditing(block);
+        }
+      };
+
+      // Insert image as base64
+      const insertImage = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = reader.result;
+            if (editingEl && canvasRef.current) {
+              // Insert at cursor when text-editing
+              document.execCommand('insertImage', false, dataUrl);
+              syncSlideHtml();
+            } else {
+              // Append to slide HTML
+              const imgHtml = `<img src="${dataUrl}" style="max-width:400px; max-height:300px; display:block; margin:20px auto; border-radius:8px;" />`;
+              setSlides(prev => prev.map((s, i) => {
+                if (i !== currentIndex) return s;
+                // Insert before closing tag of root div
+                const lastClose = s.html.lastIndexOf('</div>');
+                const newHtml = s.html.slice(0, lastClose) + imgHtml + s.html.slice(lastClose);
+                return { ...s, html: newHtml };
+              }));
+            }
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+      };
+
+      // Insert text box
+      const insertTextBox = () => {
+        pushHistory();
+        const textBox = '<div style="position:absolute;left:100px;top:100px;padding:12px 16px;min-width:120px;min-height:40px;font-size:18px;color:#141413;background:rgba(255,255,255,0.9);border:1px dashed #b0aea5;border-radius:4px;cursor:text;" contenteditable="true">在此输入文字</div>';
+        setSlides(prev => prev.map((s, i) => {
+          if (i !== currentIndex) return s;
+          // Insert text box inside the first child div (or append to end)
+          let html = s.html;
+          const lastDivClose = html.lastIndexOf('</div>');
+          if (lastDivClose >= 0) {
+            html = html.slice(0, lastDivClose) + textBox + html.slice(lastDivClose);
+          } else {
+            html += textBox;
+          }
+          return { ...s, html };
+        }));
+      };
+
+      // Undo/Redo history
+      const historyRef = useRef([]);
+      const historyIdxRef = useRef(-1);
+
+      const pushHistory = useCallback(() => {
+        const snapshot = JSON.stringify(slides);
+        const h = historyRef.current;
+        // Trim future states
+        historyRef.current = h.slice(0, historyIdxRef.current + 1);
+        historyRef.current.push(snapshot);
+        historyIdxRef.current = historyRef.current.length - 1;
+      }, [slides]);
+
+      // Save snapshot on meaningful changes
+      useEffect(() => {
+        pushHistory();
+      }, [slides.length]); // track slide additions/deletions
+
+      const undo = () => {
+        if (historyIdxRef.current <= 0) return;
+        historyIdxRef.current--;
+        const prev = JSON.parse(historyRef.current[historyIdxRef.current]);
+        setSlides(() => prev); // bypass the setSlides wrapper
+        setDecks(d => d.map(dk => dk.id === activeDeckId ? { ...dk, slides: prev } : dk));
+      };
+
+      const redo = () => {
+        if (historyIdxRef.current >= historyRef.current.length - 1) return;
+        historyIdxRef.current++;
+        const next = JSON.parse(historyRef.current[historyIdxRef.current]);
+        setDecks(d => d.map(dk => dk.id === activeDeckId ? { ...dk, slides: next } : dk));
+      };
+
+      // Keyboard navigation — only when not editing text in canvas
+      useEffect(() => {
+        const handler = (e) => {
+          // Skip if user is typing in any input/textarea
+          const tag = document.activeElement?.tagName;
+          const isInInput = tag === 'TEXTAREA' || tag === 'INPUT' || document.activeElement?.contentEditable === 'true';
+          const isEditing = editingEl !== null;
+
+          // Undo/Redo shortcuts
+          if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
+            e.preventDefault(); undo(); return;
+          }
+          if ((e.metaKey || e.ctrlKey) && (e.key === 'Z' || (e.key === 'z' && e.shiftKey))) {
+            e.preventDefault(); redo(); return;
+          }
+
+          // Delete selected element (not while editing text or in input)
+          if (selectedEl && !editingEl && !isInInput && (e.key === 'Delete' || e.key === 'Backspace')) {
+            e.preventDefault();
+            selectedEl.remove();
+            clearSelected();
+            syncSlideHtml();
+            return;
+          }
+
+          if (e.key === 'Escape') {
+            if (contextMenu) { setContextMenu(null); return; }
+            if (editingEl) { exitTextEditing(); return; }
+            if (selectedEl) { clearSelected(); return; }
+            setIsPresenting(false);
+            return;
+          }
+          if (isEditing || isInInput) return;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            setCurrentIndex(i => Math.min(i + 1, slides.length - 1));
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            setCurrentIndex(i => Math.max(i - 1, 0));
+          }
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+      }, [slides.length, syncSlideHtml, selectedEl, editingEl, contextMenu, exitTextEditing]);
+
+      // Fullscreen present
+      useEffect(() => {
+        if (isPresenting && presentRef.current) {
+          presentRef.current.requestFullscreen?.();
+        }
+      }, [isPresenting]);
+      useEffect(() => {
+        const onFs = () => { if (!document.fullscreenElement) setIsPresenting(false); };
+        document.addEventListener('fullscreenchange', onFs);
+        return () => document.removeEventListener('fullscreenchange', onFs);
+      }, []);
+
+      // Move slide
+      const moveSlide = (from, dir) => {
+        const to = from + dir;
+        if (to < 0 || to >= slides.length) return;
+        const arr = [...slides];
+        [arr[from], arr[to]] = [arr[to], arr[from]];
+        setSlides(arr);
+        setCurrentIndex(to);
+      };
+
+      // Delete slide
+      const deleteSlide = (idx) => {
+        if (slides.length <= 1) return;
+        const arr = slides.filter((_, i) => i !== idx);
+        setSlides(arr);
+        setCurrentIndex(Math.min(idx, arr.length - 1));
+      };
+
+      // Add slide
+      const addSlide = () => {
+        const newSlide = {
+          id: `slide-${Date.now()}`,
+          html: `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#faf9f5;font-family:'Poppins','Noto Sans SC',sans-serif;"><h1 style="font-size:32px;color:#b0aea5;">New Slide</h1></div>`
+        };
+        const arr = [...slides];
+        arr.splice(currentIndex + 1, 0, newSlide);
+        setSlides(arr);
+        setCurrentIndex(currentIndex + 1);
+      };
+
+      // Export PDF
+      const exportPdf = async () => {
+        setIsPdfExporting(true);
+        try {
+          // Dynamically load html2canvas + jsPDF
+          if (!window.html2canvas) {
+            await new Promise((res, rej) => {
+              const s = document.createElement('script');
+              s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+              s.onload = res; s.onerror = rej; document.head.appendChild(s);
+            });
+          }
+          if (!window.jspdf) {
+            await new Promise((res, rej) => {
+              const s = document.createElement('script');
+              s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+              s.onload = res; s.onerror = rej; document.head.appendChild(s);
+            });
+          }
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [CANVAS_W, CANVAS_H] });
+
+          for (let i = 0; i < slides.length; i++) {
+            // Render offscreen
+            const container = document.createElement('div');
+            container.style.cssText = `position:fixed;left:-9999px;top:0;width:${CANVAS_W}px;height:${CANVAS_H}px;overflow:hidden;`;
+            container.innerHTML = slides[i].html;
+            document.body.appendChild(container);
+
+            const canvas = await window.html2canvas(container, { width: CANVAS_W, height: CANVAS_H, scale: 2, useCORS: true });
+            const imgData = canvas.toDataURL('image/png');
+            if (i > 0) pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, 0, CANVAS_W, CANVAS_H);
+            document.body.removeChild(container);
+          }
+          pdf.save('presentation.pdf');
+        } catch (err) {
+          alert('导出失败: ' + err.message);
+        }
+        setIsPdfExporting(false);
+      };
+
+      // ---- Shared HTML parser (reused by importFile and importHtmlTab) ----
+      const parseHtmlToSlides = (text, fileName) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        let allStyles = '';
+        doc.querySelectorAll('style').forEach(s => { allStyles += s.outerHTML + '\n'; });
+
+        let extractedSlides = [];
+
+        // Try 1: SLIDES array in script (our own format / .lasca)
+        const scripts = doc.querySelectorAll('script');
+        for (const script of scripts) {
+          const match = script.textContent.match(/const SLIDES\s*=\s*\[([\s\S]*?)\];/);
+          if (match) {
+            try {
+              const fn = new Function('return [' + match[1] + ']');
+              extractedSlides = fn();
+            } catch {}
+          }
+        }
+
+        // Try 2: .slide / section divs
+        if (extractedSlides.length === 0) {
+          const slideDivs = doc.querySelectorAll('.slide, [data-slide], section');
+          if (slideDivs.length > 0) {
+            let cssW = 0, cssH = 0;
+            const wMatch = allStyles.match(/\.slide\s*\{[^}]*width\s*:\s*(\d+)px/);
+            const hMatch = allStyles.match(/\.slide\s*\{[^}]*height\s*:\s*(\d+)px/);
+            if (wMatch) cssW = parseInt(wMatch[1]);
+            if (hMatch) cssH = parseInt(hMatch[1]);
+            const slideW = cssW || 1600;
+            const slideH = cssH || 900;
+            const scale = Math.min(CANVAS_W / slideW, CANVAS_H / slideH, 1);
+            const scaleStyle = scale < 1
+              ? `transform:scale(${scale.toFixed(4)});transform-origin:0 0;width:${slideW}px;height:${slideH}px;`
+              : `width:100%;height:100%;`;
+            slideDivs.forEach((div, i) => {
+              extractedSlides.push({ id: `imp-${Date.now()}-${i}`, html: `<div style="${scaleStyle}overflow:hidden;position:relative;">${allStyles}${div.outerHTML}</div>` });
+            });
+          }
+        }
+
+        // Try 3: entire body as one slide
+        if (extractedSlides.length === 0) {
+          extractedSlides = [{ id: `imp-${Date.now()}`, html: `<div style="width:100%;height:100%;overflow:hidden;position:relative;">${allStyles}${doc.body.innerHTML}</div>` }];
+        }
+
+        return extractedSlides;
+      };
+
+      // ---- Unified Import (HTML / .lasca / PPTX / JSON) ----
+      const importFile = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.html,.htm,.lasca,.pptx,.json';
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const ext = file.name.split('.').pop().toLowerCase();
+
+          try {
+            // ---- HTML / .lasca ----
+            if (ext === 'html' || ext === 'htm' || ext === 'lasca') {
+              const text = await file.text();
+              const extracted = parseHtmlToSlides(text, file.name);
+              const newId = 'deck-' + Date.now();
+              const name = file.name.replace(/\.(html?|lasca)$/i, '');
+              setDecks(prev => [...prev, { id: newId, name, slides: extracted }]);
+              setActiveDeckId(newId);
+              setCurrentIndex(0);
+            }
+
+            // ---- JSON ----
+            else if (ext === 'json') {
+              const text = await file.text();
+              const data = JSON.parse(text);
+              if (Array.isArray(data) && data[0]?.html) {
+                const newId = 'deck-' + Date.now();
+                const name = file.name.replace(/\.json$/i, '');
+                setDecks(prev => [...prev, { id: newId, name, slides: data }]);
+                setActiveDeckId(newId);
+                setCurrentIndex(0);
+              } else { alert('JSON 格式不匹配。需要 [{id, html}, ...] 格式。'); }
+            }
+
+            // ---- PPTX ----
+            else if (ext === 'pptx' || ext === 'ppt') {
+              if (ext === 'ppt') { alert('暂不支持旧版 .ppt 格式，请转换为 .pptx 后重试。'); return; }
+              // Load JSZip
+              if (!window.JSZip) {
+                await new Promise((res, rej) => {
+                  const s = document.createElement('script');
+                  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                  s.onload = res; s.onerror = rej; document.head.appendChild(s);
+                });
+              }
+              const zip = await window.JSZip.loadAsync(file);
+
+              // Find slide XML files (ppt/slides/slide1.xml, slide2.xml, ...)
+              const slideFiles = Object.keys(zip.files)
+                .filter(f => /^ppt\/slides\/slide\d+\.xml$/i.test(f))
+                .sort((a, b) => {
+                  const na = parseInt(a.match(/slide(\d+)/)[1]);
+                  const nb = parseInt(b.match(/slide(\d+)/)[1]);
+                  return na - nb;
+                });
+
+              if (slideFiles.length === 0) { alert('PPTX 中未找到幻灯片。'); return; }
+
+              const extractedSlides = [];
+              for (let i = 0; i < slideFiles.length; i++) {
+                const xml = await zip.files[slideFiles[i]].async('text');
+                const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
+
+                // Extract all text runs
+                const texts = [];
+                const tNodes = xmlDoc.querySelectorAll('t');
+                let currentPara = [];
+                let lastParent = null;
+                tNodes.forEach(t => {
+                  const para = t.closest('p') || t.parentElement;
+                  if (para !== lastParent && currentPara.length > 0) {
+                    texts.push(currentPara.join(''));
+                    currentPara = [];
+                  }
+                  lastParent = para;
+                  currentPara.push(t.textContent || '');
+                });
+                if (currentPara.length > 0) texts.push(currentPara.join(''));
+
+                // Build simple slide HTML from extracted text
+                const title = texts[0] || `Slide ${i + 1}`;
+                const body = texts.slice(1);
+                let slideHtml = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#faf9f5;font-family:'Poppins','Noto Sans SC',sans-serif;padding:40px;">`;
+                slideHtml += `<h2 style="font-size:32px;font-weight:700;color:#d97757;margin-bottom:20px;text-align:center;">${title.replace(/</g,'&lt;')}</h2>`;
+                if (body.length > 0) {
+                  slideHtml += `<div style="font-size:18px;color:#141413;line-height:1.8;text-align:center;">`;
+                  body.forEach(line => {
+                    if (line.trim()) slideHtml += `<p style="margin-bottom:8px;">${line.replace(/</g,'&lt;')}</p>`;
+                  });
+                  slideHtml += `</div>`;
+                }
+                slideHtml += `</div>`;
+
+                extractedSlides.push({ id: `pptx-${Date.now()}-${i}`, html: slideHtml });
+              }
+
+              const newId = 'deck-' + Date.now();
+              const name = file.name.replace(/\.pptx?$/i, '');
+              setDecks(prev => [...prev, { id: newId, name, slides: extractedSlides }]);
+              setActiveDeckId(newId);
+              setCurrentIndex(0);
+            }
+
+            else {
+              alert(`不支持的文件格式: .${ext}`);
+            }
+          } catch (err) {
+            console.error(err);
+            alert('导入失败: ' + err.message);
+          }
+        };
+        input.click();
+      };
+
+      // Export .lasca (HTML)
+      const exportLasca = () => {
+        const slideData = JSON.stringify(slides, null, 2);
+        const SC = '<' + '/script>'; // avoid breaking outer script tag
+        const html = [
+          '<!DOCTYPE html>',
+          '<html lang="zh-CN"><head><meta charset="UTF-8">',
+          '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '<title>' + activeDeck.name + '</title>',
+          '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">',
+          '<style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;background:#f0efe9;font-family:"Poppins","Noto Sans SC",sans-serif}',
+          '.slide-container{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;position:relative}',
+          '.slide-inner{width:960px;height:540px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12);border-radius:4px}',
+          '.nav{position:fixed;top:50%;transform:translateY(-50%);cursor:pointer;opacity:0.4;transition:opacity 0.3s;z-index:10;padding:16px}.nav:hover{opacity:0.8}',
+          '.nav-l{left:16px}.nav-r{right:16px}',
+          '.counter{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:13px;color:#b0aea5;z-index:10}',
+          '.progress{position:fixed;bottom:0;left:0;height:2px;background:#d97757;transition:width 0.4s;z-index:10}',
+          '</style></head><body>',
+          '<div class="slide-container"><div class="slide-inner" id="slide"></div></div>',
+          '<div class="nav nav-l" id="prev" onclick="go(-1)"><svg width="32" height="48" viewBox="0 0 32 48" fill="none"><path d="M24 4L8 24L24 44" stroke="#141413" stroke-width="2.5" stroke-linecap="round"/></svg></div>',
+          '<div class="nav nav-r" id="next" onclick="go(1)"><svg width="32" height="48" viewBox="0 0 32 48" fill="none"><path d="M8 4L24 24L8 44" stroke="#141413" stroke-width="2.5" stroke-linecap="round"/></svg></div>',
+          '<div class="counter" id="counter"></div>',
+          '<div class="progress" id="progress"></div>',
+          '<script>',
+          'var SLIDES=' + slideData + ';',
+          'var idx=0;',
+          'function render(){document.getElementById("slide").innerHTML=SLIDES[idx].html;document.getElementById("counter").textContent=(idx+1)+" / "+SLIDES.length;document.getElementById("progress").style.width=((idx+1)/SLIDES.length*100)+"%";document.getElementById("prev").style.display=idx>0?"":"none";document.getElementById("next").style.display=idx<SLIDES.length-1?"":"none";}',
+          'function go(d){idx=Math.max(0,Math.min(SLIDES.length-1,idx+d));render();}',
+          'document.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key===" ")go(1);if(e.key==="ArrowLeft")go(-1);});',
+          'render();',
+          SC,
+          '</body></html>',
+        ].join('\n');
+        const blob = new Blob([html], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = activeDeck.name + '.lasca';
+        a.click();
+      };
+
+      // Export JSON (secondary)
+      const exportJson = () => {
+        const blob = new Blob([JSON.stringify(slides, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = activeDeck.name + '.json';
+        a.click();
+      };
+
+      // Context menu handler — use page coordinates for accurate positioning
+      const handleCanvasContextMenu = (e) => {
+        e.preventDefault();
+        const block = findBlock(e.target);
+        setContextMenu({
+          x: e.pageX,
+          y: e.pageY,
+          el: block,
+        });
+      };
+
+      // ---- Page detection from text (no AI, pure regex) ----
+      const detectPages = (text) => {
+        if (!text) return null;
+        // Range: "第3到5页" "第3-5页"
+        const rangeMatch = text.match(/第(\d+)[到至\-~](\d+)页/);
+        if (rangeMatch) {
+          const pages = [];
+          for (let i = parseInt(rangeMatch[1]); i <= parseInt(rangeMatch[2]); i++) pages.push(i);
+          return pages;
+        }
+        // Multiple mentions FIRST: "第7页和第5页" "第7页、第5页" "第7页第5页"
+        const allMentions = [...text.matchAll(/第(\d+)页/g)].map(m => parseInt(m[1]));
+        if (allMentions.length > 1) return [...new Set(allMentions)];
+        // Compact list: "第3、5、7页" or "第3,5,7页"
+        const compactMatch = text.match(/第([\d][、,，\d\s]+[\d])页/);
+        if (compactMatch) {
+          const nums = compactMatch[1].split(/[、,，\s]+/).map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+          if (nums.length > 1) return [...new Set(nums)];
+        }
+        // Single page: "第7页"
+        if (allMentions.length === 1) return allMentions;
+        return null;
+      };
+
+      // Compute smart label for left button
+      const detectedPages = detectPages(chatInput);
+      const smartLabel = detectedPages
+        ? (detectedPages.length === 1 ? '第' + detectedPages[0] + '页' : '多页')
+        : '第' + (currentIndex + 1) + '页';
+      const smartTooltip = detectedPages && detectedPages.length > 1
+        ? '第 ' + detectedPages.join('、') + ' 页' : '';
+
+      // ---- AI Chat ----
+      const [undoToast, setUndoToast] = useState(null); // { id, text, timer }
+
+      const sendChat = (scope) => {
+        const text = chatInput.trim();
+        if (!text) return;
+        const isGlobal = scope === 'global';
+        const targetPages = detectedPages || [currentIndex + 1];
+        const slideId = slides[currentIndex]?.id;
+        const now = Date.now();
+
+        // Scope label
+        let scopeLabel, scopeType;
+        if (isGlobal) {
+          scopeLabel = '全局';
+          scopeType = 'global';
+        } else if (detectedPages && detectedPages.length > 1) {
+          scopeLabel = '第' + detectedPages.join('、') + '页';
+          scopeType = 'multi';
+        } else {
+          const pg = detectedPages ? detectedPages[0] : currentIndex + 1;
+          scopeLabel = '第' + pg + '页';
+          scopeType = 'page';
+        }
+
+        const userMsg = { id: 'u-' + now, role: 'user', text, ts: now, scope: scopeType, slideIdx: currentIndex + 1, scopeLabel };
+        setChatMessages(prev => [...prev, userMsg]);
+        setChatInput('');
+
+        if (isGlobal || scopeType === 'multi') {
+          // ---- Progressive flow: preview on current page first ----
+          const previewPage = currentIndex + 1;
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a1-' + now, role: 'ai', type: 'status', text: '先在第 ' + previewPage + ' 页预览…', ts: now }
+            ]);
+          }, 300);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a2-' + now, role: 'ai', type: 'action', text: '第 ' + previewPage + ' 页已修改',
+                detail: '预览效果。接入 AI 后会真正修改内容。', ts: now + 1 }
+            ]);
+          }, 800);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a3-' + now, role: 'ai', type: 'confirm', text: '预览满意吗？',
+                options: [
+                  { label: isGlobal ? '满意，全部应用' : '满意，应用' + scopeLabel, action: 'apply-all-' + now },
+                  { label: '再调一下', action: 'retry-' + now },
+                ], ts: now + 2 }
+            ]);
+          }, 1200);
+        } else {
+          // ---- Single page: direct execute + undo ----
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a1-' + now, role: 'ai', type: 'status', text: '正在修改 ' + scopeLabel + '…', ts: now }
+            ]);
+          }, 300);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a2-' + now, role: 'ai', type: 'action', text: '已修改 ' + scopeLabel,
+                detail: '接入 AI 后会真正修改内容。\n现在你可以双击画布手动编辑。', ts: now + 1 }
+            ]);
+            // Log to per-slide actions
+            if (slideId) {
+              setSlideActions(prev => ({
+                ...prev,
+                [slideId]: [...(prev[slideId] || []), { id: 'sa-' + now, text: text.slice(0, 30), color: '#6a9bcc', ts: now }]
+              }));
+            }
+            // Show undo toast
+            showUndo('已修改 ' + scopeLabel, now);
+          }, 800);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'a3-' + now, role: 'ai', type: 'done', text: '完成！还有什么需要改的吗？', ts: now + 2 }
+            ]);
+          }, 1200);
+        }
+      };
+
+      // Handle confirm button clicks in chat
+      const handleConfirm = (action) => {
+        const now = Date.now();
+        if (action.startsWith('apply-all')) {
+          setChatMessages(prev => [...prev,
+            { id: 'c1-' + now, role: 'ai', type: 'status', text: '正在应用到其他页面…', ts: now }
+          ]);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'c2-' + now, role: 'ai', type: 'action', text: '抽样验证第 1、' + slides.length + ' 页', detail: '确认不同 layout 效果一致。', ts: now + 1 }
+            ]);
+          }, 600);
+          setTimeout(() => {
+            setChatMessages(prev => [...prev,
+              { id: 'c3-' + now, role: 'ai', type: 'done', text: '全部 ' + slides.length + ' 页已更新！', ts: now + 2 }
+            ]);
+            showUndo('全部 ' + slides.length + ' 页已更新', now);
+          }, 1200);
+        } else if (action.startsWith('retry')) {
+          setChatMessages(prev => [...prev,
+            { id: 'c1-' + now, role: 'ai', type: 'done', text: '好的，告诉我怎么调整。', ts: now }
+          ]);
+        }
+      };
+
+      // Undo toast with 3s countdown
+      const showUndo = (text, id) => {
+        setUndoToast({ id, text, remaining: 3 });
+      };
+      useEffect(() => {
+        if (!undoToast) return;
+        if (undoToast.remaining <= 0) { setUndoToast(null); return; }
+        const t = setTimeout(() => setUndoToast(prev => prev ? { ...prev, remaining: prev.remaining - 1 } : null), 1000);
+        return () => clearTimeout(t);
+      }, [undoToast]);
+      const handleUndo = () => {
+        if (undoToast) {
+          setChatMessages(prev => [...prev,
+            { id: 'undo-' + Date.now(), role: 'ai', type: 'done', text: '已撤销。', ts: Date.now() }
+          ]);
+          undo();
+          setUndoToast(null);
+        }
+      };
+
+      // Current slide action log
+      const currentSlideActions = slideActions[slides[currentIndex]?.id] || [];
+
+      // Auto-scroll chat
+      useEffect(() => {
+        if (chatEndRef.current) chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }, [chatMessages]);
+
+      // ---- Notes ----
+      const currentNotes = slideNotes[slides[currentIndex]?.id] || '';
+      const setCurrentNotes = (text) => {
+        setSlideNotes(prev => ({ ...prev, [slides[currentIndex].id]: text }));
+      };
+
+      const currentSlide = slides[currentIndex];
+
+      // ---- Presentation Mode ----
+      if (isPresenting) {
+        return (
+          <PresentationMode
+            ref={presentRef}
+            slides={slides}
+            currentIndex={currentIndex}
+            onIndexChange={setCurrentIndex}
+            onExit={() => setIsPresenting(false)}
+            presMode={presMode}
+          />
+        );
+      }
+
+      // ---- Editor Mode ----
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f0efeb', fontFamily: "'Poppins', 'Noto Sans SC', sans-serif" }}>
+
+          {/* ---- Tab Bar ---- */}
+          <div style={{ height: 36, background: '#e8e6dc', display: 'flex', alignItems: 'flex-end', paddingLeft: 8, gap: 2, flexShrink: 0 }}>
+            {decks.map(deck => (
+              <div
+                key={deck.id}
+                onClick={() => switchDeck(deck.id)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  padding: '5px 12px 5px 14px',
+                  fontSize: 12, fontWeight: deck.id === activeDeckId ? 600 : 400,
+                  color: deck.id === activeDeckId ? '#141413' : '#b0aea5',
+                  background: deck.id === activeDeckId ? '#faf9f5' : 'transparent',
+                  borderRadius: '6px 6px 0 0',
+                  cursor: 'pointer',
+                  maxWidth: 180,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{deck.name}</span>
+                {decks.length > 1 && (
+                  <span onClick={(e) => { e.stopPropagation(); closeDeck(deck.id); }} style={{ fontSize: 14, color: '#b0aea5', cursor: 'pointer', lineHeight: 1, marginLeft: 2 }} title="关闭">×</span>
+                )}
+              </div>
+            ))}
+            {/* Import HTML as new tab */}
+            <button onClick={importHtmlTab} style={{ background: 'none', border: 'none', fontSize: 16, color: '#b0aea5', cursor: 'pointer', padding: '4px 10px', marginBottom: 1 }} title="导入 HTML 为新标签">+</button>
+          </div>
+
+          {/* ---- Main Body ---- */}
+          <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+
+          {/* ---- Sidebar ---- */}
+          <div style={{ width: 200, background: '#faf9f5', borderRight: '1px solid #e8e6dc', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* Logo */}
+            <div style={{ padding: '12px 16px 8px', borderBottom: '1px solid #e8e6dc' }}>
+              <span style={{ fontSize: 18, fontWeight: 700, color: '#d97757' }}>Slides</span>
+              <span style={{ fontSize: 12, color: '#b0aea5', marginLeft: 6 }}>v4</span>
+            </div>
+
+            {/* Slide list */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '8px' }}>
+              {slides.map((slide, idx) => (
+                <div
+                  key={slide.id}
+                  onClick={() => setCurrentIndex(idx)}
+                  style={{
+                    marginBottom: 8,
+                    cursor: 'pointer',
+                    borderRadius: 8,
+                    border: idx === currentIndex ? '2px solid #d97757' : '2px solid transparent',
+                    overflow: 'hidden',
+                    background: '#fff',
+                    position: 'relative',
+                  }}
+                >
+                  {/* Slide number — pill badge */}
+                  <div style={{ position: 'absolute', top: 4, left: 4, fontSize: 9, color: '#fff', fontWeight: 600, zIndex: 2, background: 'rgba(0,0,0,0.45)', borderRadius: 4, padding: '1px 5px', lineHeight: '16px' }}>{idx + 1}</div>
+                  {/* Thumbnail via scale */}
+                  <div style={{ width: 180, height: 101, overflow: 'hidden', position: 'relative' }}>
+                    <div
+                      style={{
+                        width: CANVAS_W,
+                        height: CANVAS_H,
+                        transform: `scale(${180 / CANVAS_W})`,
+                        transformOrigin: 'top left',
+                        pointerEvents: 'none',
+                      }}
+                      dangerouslySetInnerHTML={{ __html: slide.html }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Sidebar actions */}
+            <div style={{ padding: 8, borderTop: '1px solid #e8e6dc', display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <button onClick={addSlide} style={{ padding: '6px 0', fontSize: 13, background: '#d97757', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 500 }} title="添加新页面">+ 添加页面</button>
+            </div>
+          </div>
+
+          {/* ---- Main Area ---- */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+
+            {/* Toolbar */}
+            <div style={{ height: 48, background: '#faf9f5', borderBottom: '1px solid #e8e6dc', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 8 }}>
+              {/* Undo/Redo */}
+              <button onClick={undo} style={btnStyle} title="撤销 (Ctrl+Z)">↩</button>
+              <button onClick={redo} style={btnStyle} title="重做 (Ctrl+Shift+Z)">↪</button>
+
+              <div style={{ width: 1, height: 20, background: '#e8e6dc', margin: '0 4px' }} />
+
+              {/* Slide management */}
+              <button onClick={() => moveSlide(currentIndex, -1)} disabled={currentIndex === 0} style={{ ...btnStyle, opacity: currentIndex === 0 ? 0.3 : 1 }} title="上移页面">↑</button>
+              <button onClick={() => moveSlide(currentIndex, 1)} disabled={currentIndex === slides.length - 1} style={{ ...btnStyle, opacity: currentIndex === slides.length - 1 ? 0.3 : 1 }} title="下移页面">↓</button>
+              <button onClick={() => deleteSlide(currentIndex)} disabled={slides.length <= 1} style={{ ...btnStyle, opacity: slides.length <= 1 ? 0.3 : 1 }} title="删除当前页">🗑</button>
+              <button onClick={insertImage} style={btnStyle} title="插入图片">🖼</button>
+              <button onClick={insertTextBox} style={btnStyle} title="新建文本框">T</button>
+
+              <div style={{ flex: 1 }} />
+
+              {/* Page info */}
+              <span style={{ fontSize: 13, color: '#b0aea5' }}>{currentIndex + 1} / {slides.length}</span>
+
+              <div style={{ flex: 1 }} />
+
+              {/* Actions */}
+              <button onClick={importFile} style={btnStyle} title="导入 HTML / .lasca / PPTX / JSON">导入</button>
+              <button onClick={exportLasca} style={btnStyle} title="导出 .lasca (HTML)">导出</button>
+              <button onClick={exportJson} style={{ ...btnStyle, fontSize: 11, padding: '5px 8px', color: '#b0aea5' }} title="导出 JSON">JSON</button>
+              <button onClick={exportPdf} disabled={isPdfExporting} style={{ ...btnStyle, background: isPdfExporting ? '#b0aea5' : '#141413', color: '#fff' }} title="导出 PDF">
+                {isPdfExporting ? '导出中...' : 'PDF'}
+              </button>
+              <button onClick={() => { setPresMode('full'); setIsPresenting(true); }} style={{ ...btnStyle, background: '#d97757', color: '#fff', fontWeight: 600 }} title="全屏演示">▶ 演示</button>
+              <button onClick={() => { setPresMode('presenter'); setIsPresenting(true); }} style={{ ...btnStyle, background: '#555', color: '#fff' }} title="演讲者视图">🖥 讲者</button>
+            </div>
+
+            {/* Per-page action log — compact, older items fade */}
+            {currentSlideActions.length > 0 && (
+              <div style={{
+                overflow: 'hidden',
+                background: '#f5f4ef', borderBottom: '1px solid #e8e6dc',
+                padding: '5px 16px', flexShrink: 0,
+                display: 'flex', alignItems: 'center', gap: 8,
+              }}>
+                <span style={{ fontSize: 10, color: '#b0aea5', flexShrink: 0, fontWeight: 500 }}>
+                  第{currentIndex + 1}页
+                </span>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', flex: 1, overflow: 'hidden' }}>
+                  {currentSlideActions.slice(-4).map((a, i, arr) => {
+                    const age = arr.length - 1 - i; // 0 = newest
+                    const opacity = age === 0 ? 1 : age === 1 ? 0.6 : 0.3;
+                    return (
+                      <div key={a.id} style={{
+                        display: 'flex', alignItems: 'center', gap: 4,
+                        opacity, transition: 'opacity 0.5s',
+                      }}>
+                        <div style={{ width: 4, height: 4, borderRadius: '50%', background: a.color, flexShrink: 0 }} />
+                        <span style={{ fontSize: 11, color: '#8a8880', whiteSpace: 'nowrap' }}>{a.text}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Canvas */}
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, overflow: 'hidden', position: 'relative' }}>
+              <SlideCanvas
+                key={currentSlide.id}
+                ref={canvasRef}
+                html={currentSlide.html}
+                onBlur={syncSlideHtml}
+                onMouseDown={handleCanvasMouseDown}
+                onMouseMove={handleCanvasHover}
+                onDoubleClick={handleCanvasDblClick}
+                onContextMenu={handleCanvasContextMenu}
+                cursor='default'
+              />
+              {/* Alignment guide lines */}
+              {guides.length > 0 && canvasRef.current && (() => {
+                const cr = canvasRef.current.getBoundingClientRect();
+                const pr = canvasRef.current.parentElement.getBoundingClientRect();
+                const offX = cr.left - pr.left;
+                const offY = cr.top - pr.top;
+                return guides.map((g, i) => {
+                  const isCenter = Math.abs(g.pos - (g.type === 'v' ? CANVAS_W / 2 : CANVAS_H / 2)) < 2;
+                  const color = isCenter ? '#d97757' : '#6a9bcc';
+                  if (g.type === 'v') {
+                    return <div key={`g-${i}`} style={{
+                      position: 'absolute', left: offX + g.pos, top: offY, width: 1, height: CANVAS_H,
+                      background: color, opacity: 0.7, pointerEvents: 'none', zIndex: 50,
+                    }} />;
+                  } else {
+                    return <div key={`g-${i}`} style={{
+                      position: 'absolute', left: offX, top: offY + g.pos, width: CANVAS_W, height: 1,
+                      background: color, opacity: 0.7, pointerEvents: 'none', zIndex: 50,
+                    }} />;
+                  }
+                });
+              })()}
+              {/* Floating format toolbar (when text-editing) */}
+              {showToolbar && editingEl && (
+                <div style={{
+                  position: 'absolute',
+                  left: canvasRef.current ? canvasRef.current.getBoundingClientRect().left - canvasRef.current.parentElement.getBoundingClientRect().left + toolbarPos.x : 0,
+                  top: canvasRef.current ? canvasRef.current.getBoundingClientRect().top - canvasRef.current.parentElement.getBoundingClientRect().top + toolbarPos.y : 0,
+                  transform: 'translateX(-50%)',
+                  background: '#141413', color: '#fff', borderRadius: 8, padding: '4px 6px',
+                  display: 'flex', gap: 2, boxShadow: '0 4px 16px rgba(0,0,0,0.2)', zIndex: 100,
+                  fontSize: 13, fontFamily: 'inherit',
+                }}>
+                  <button onClick={() => execFormat('bold')} style={fmtBtn} title="加粗"><b>B</b></button>
+                  <button onClick={() => execFormat('italic')} style={fmtBtn} title="斜体"><i>I</i></button>
+                  <button onClick={() => execFormat('underline')} style={fmtBtn} title="下划线"><u>U</u></button>
+                  <div style={{ width: 1, background: 'rgba(255,255,255,0.2)', margin: '2px 4px' }} />
+                  {/* Font size */}
+                  <button onClick={() => execFormat('fontSize', '2')} style={fmtBtn} title="缩小字号">A-</button>
+                  <button onClick={() => execFormat('fontSize', '5')} style={fmtBtn} title="放大字号">A+</button>
+                  <div style={{ width: 1, background: 'rgba(255,255,255,0.2)', margin: '2px 4px' }} />
+                  {/* Colors */}
+                  <button onClick={() => execFormat('foreColor', '#d97757')} style={{ ...fmtBtn, color: '#d97757' }} title="橙色">●</button>
+                  <button onClick={() => execFormat('foreColor', '#6a9bcc')} style={{ ...fmtBtn, color: '#6a9bcc' }} title="蓝色">●</button>
+                  <button onClick={() => execFormat('foreColor', '#788c5d')} style={{ ...fmtBtn, color: '#788c5d' }} title="绿色">●</button>
+                  <button onClick={() => execFormat('foreColor', '#141413')} style={{ ...fmtBtn, color: '#faf9f5' }} title="黑色">●</button>
+                </div>
+              )}
+              {/* Floating style popover — appears when element selected, not while text-editing */}
+              {selectedEl && !editingEl && canvasRef.current && (() => {
+                const cr = canvasRef.current.getBoundingClientRect();
+                const pr = canvasRef.current.parentElement.getBoundingClientRect();
+                const er = selectedEl.getBoundingClientRect();
+                const popX = Math.min(er.right - pr.left + 8, pr.width - 185);
+                const popY = Math.max(er.top - pr.top, 8);
+                const cs = getComputedStyle(selectedEl);
+                const rgbToHex = (rgb) => {
+                  if (!rgb || rgb === 'transparent' || rgb === 'rgba(0, 0, 0, 0)') return '#ffffff';
+                  const m = rgb.match(/\d+/g); if (!m || m.length < 3) return '#000000';
+                  return '#' + m.slice(0, 3).map(n => parseInt(n).toString(16).padStart(2, '0')).join('');
+                };
+                const setS = (prop, val) => { selectedEl.style[prop] = val; syncSlideHtml(); };
+                const bgC = rgbToHex(cs.backgroundColor);
+                const txC = rgbToHex(cs.color);
+                const fs = parseInt(cs.fontSize) || 16;
+                const brandC = ['#d97757','#6a9bcc','#788c5d','#141413','#b0aea5','#faf9f5','#fff','#000'];
+                return (
+                  <div style={{
+                    position: 'absolute', left: popX, top: popY,
+                    background: '#1a1a1a', borderRadius: 10, padding: '10px 12px',
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.35)', zIndex: 90,
+                    width: 176, fontSize: 11, color: '#ccc', fontFamily: 'inherit',
+                  }}>
+                    {/* BG color */}
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', marginBottom: 4, letterSpacing: '0.5px' }}>背景</div>
+                      <div style={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                        {brandC.map(c => (
+                          <div key={'bg'+c} onClick={() => setS('backgroundColor', c)}
+                            style={{ width: 16, height: 16, borderRadius: 3, background: c, border: bgC === c ? '2px solid #d97757' : '1px solid #444', cursor: 'pointer' }} />
+                        ))}
+                        <div style={{ width: 16, height: 16, borderRadius: 3, position: 'relative', overflow: 'hidden', border: '1px solid #444', background: 'conic-gradient(red,yellow,lime,aqua,blue,magenta,red)' }}>
+                          <input type="color" value={bgC} onChange={(e) => setS('backgroundColor', e.target.value)}
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }} />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Text color */}
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', marginBottom: 4, letterSpacing: '0.5px' }}>文字</div>
+                      <div style={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                        {brandC.map(c => (
+                          <div key={'tx'+c} onClick={() => setS('color', c)}
+                            style={{ width: 16, height: 16, borderRadius: 3, background: c, border: txC === c ? '2px solid #d97757' : '1px solid #444', cursor: 'pointer' }} />
+                        ))}
+                        <div style={{ width: 16, height: 16, borderRadius: 3, position: 'relative', overflow: 'hidden', border: '1px solid #444', background: 'conic-gradient(red,yellow,lime,aqua,blue,magenta,red)' }}>
+                          <input type="color" value={txC} onChange={(e) => setS('color', e.target.value)}
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }} />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Font size */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 8 }}>
+                      <div style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', width: 28 }}>字号</div>
+                      <button onClick={() => setS('fontSize', Math.max(8, fs - 2) + 'px')} style={{ background: '#333', border: 'none', color: '#ccc', borderRadius: 4, width: 24, height: 22, cursor: 'pointer', fontSize: 12 }}>−</button>
+                      <span style={{ fontSize: 12, color: '#fff', fontWeight: 500, width: 28, textAlign: 'center' }}>{fs}</span>
+                      <button onClick={() => setS('fontSize', Math.min(200, fs + 2) + 'px')} style={{ background: '#333', border: 'none', color: '#ccc', borderRadius: 4, width: 24, height: 22, cursor: 'pointer', fontSize: 12 }}>+</button>
+                    </div>
+                    {/* Quick actions */}
+                    <div style={{ display: 'flex', gap: 3 }}>
+                      <button onClick={() => setS('fontWeight', cs.fontWeight === '700' ? '400' : '700')}
+                        style={{ flex: 1, padding: '4px 0', fontSize: 11, fontWeight: 700, background: cs.fontWeight === '700' ? '#444' : '#2a2a2a', border: 'none', borderRadius: 4, color: '#ccc', cursor: 'pointer' }}>B</button>
+                      <button onClick={() => setS('textAlign', cs.textAlign === 'center' ? 'left' : 'center')}
+                        style={{ flex: 1, padding: '4px 0', fontSize: 10, background: cs.textAlign === 'center' ? '#444' : '#2a2a2a', border: 'none', borderRadius: 4, color: '#ccc', cursor: 'pointer' }}>居中</button>
+                      <button onClick={() => setS('opacity', parseFloat(cs.opacity) < 1 ? '1' : '0.5')}
+                        style={{ flex: 1, padding: '4px 0', fontSize: 10, background: parseFloat(cs.opacity) < 1 ? '#444' : '#2a2a2a', border: 'none', borderRadius: 4, color: '#ccc', cursor: 'pointer' }}>透明</button>
+                    </div>
+                  </div>
+                );
+              })()}
+              {/* Context menu — fixed position + invisible backdrop to catch outside clicks */}
+              {contextMenu && (
+                <>
+                <div onClick={() => setContextMenu(null)} onContextMenu={(e) => { e.preventDefault(); setContextMenu(null); }} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 199 }} />
+                <div style={{
+                  position: 'fixed',
+                  left: contextMenu.x,
+                  top: contextMenu.y,
+                  background: '#1a1a1a',
+                  borderRadius: 8,
+                  padding: '4px 0',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
+                  zIndex: 200,
+                  minWidth: 160,
+                  fontSize: 13,
+                  fontFamily: 'inherit',
+                  color: '#eee',
+                }} onClick={(e) => e.stopPropagation()}>
+                  {contextMenu.el && (
+                    <div
+                      onClick={() => { enterTextEditing(contextMenu.el); setContextMenu(null); }}
+                      onMouseEnter={(e) => e.target.style.background = '#333'}
+                      onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                      style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                    >
+                      编辑文字
+                    </div>
+                  )}
+                  <div
+                    onClick={() => { insertTextBox(); setContextMenu(null); }}
+                    onMouseEnter={(e) => e.target.style.background = '#333'}
+                    onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                    style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                  >
+                    插入文本框
+                  </div>
+                  <div
+                    onClick={() => { insertImage(); setContextMenu(null); }}
+                    onMouseEnter={(e) => e.target.style.background = '#333'}
+                    onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                    style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                  >
+                    插入图片
+                  </div>
+                  {contextMenu.el && (
+                    <div
+                      onClick={() => {
+                        const clonedHtml = contextMenu.el.outerHTML;
+                        // Insert after the original element in the HTML
+                        let html = currentSlide.html;
+                        const origHtml = contextMenu.el.outerHTML;
+                        const idx = html.indexOf(origHtml);
+                        if (idx >= 0) {
+                          html = html.slice(0, idx + origHtml.length) + clonedHtml + html.slice(idx + origHtml.length);
+                        }
+                        setSlides(prev => prev.map((s, i) => i === currentIndex ? { ...s, html } : s));
+                        setContextMenu(null);
+                      }}
+                      onMouseEnter={(e) => e.target.style.background = '#333'}
+                      onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                      style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                    >
+                      复制元素
+                    </div>
+                  )}
+                  {contextMenu.el && (
+                    <div
+                      onClick={() => { contextMenu.el.remove(); clearSelected(); syncSlideHtml(); setContextMenu(null); }}
+                      onMouseEnter={(e) => e.target.style.background = '#333'}
+                      onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                      style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                    >
+                      删除元素
+                    </div>
+                  )}
+                  {contextMenu.el && (
+                    <div
+                      onClick={() => { contextMenu.el.style.zIndex = '999'; syncSlideHtml(); setContextMenu(null); }}
+                      onMouseEnter={(e) => e.target.style.background = '#333'}
+                      onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                      style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                    >
+                      置顶
+                    </div>
+                  )}
+                  {contextMenu.el && (
+                    <div
+                      onClick={() => { contextMenu.el.style.zIndex = '0'; syncSlideHtml(); setContextMenu(null); }}
+                      onMouseEnter={(e) => e.target.style.background = '#333'}
+                      onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                      style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                    >
+                      置底
+                    </div>
+                  )}
+                  <div style={{ height: 1, background: '#333', margin: '4px 0' }} />
+                  <div
+                    onClick={() => { addSlide(); setContextMenu(null); }}
+                    onMouseEnter={(e) => e.target.style.background = '#333'}
+                    onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                    style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                  >
+                    添加页面
+                  </div>
+                  <div
+                    onClick={() => { deleteSlide(currentIndex); setContextMenu(null); }}
+                    onMouseEnter={(e) => e.target.style.background = '#333'}
+                    onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                    style={{ padding: '7px 16px', cursor: 'pointer', transition: 'background 0.1s' }}
+                  >
+                    删除页面
+                  </div>
+                </div>
+                </>
+              )}
+            </div>
+
+            {/* Status bar */}
+            <div style={{ height: 28, background: '#faf9f5', borderTop: '1px solid #e8e6dc', display: 'flex', alignItems: 'center', padding: '0 16px', fontSize: 11, color: '#b0aea5' }}>
+              <span>{CANVAS_W}×{CANVAS_H}</span>
+              <span style={{ margin: '0 12px' }}>·</span>
+              <span>{slides.length} 页</span>
+              <div style={{ flex: 1 }} />
+              <span>单击选中 · 拖拽吸附 · 双击编辑 · 右键菜单 · ← → 翻页</span>
+            </div>
+
+            {/* Speaker Notes */}
+            <div style={{ height: 72, background: '#faf9f5', borderTop: '1px solid #e8e6dc', display: 'flex', flexShrink: 0 }}>
+              <div style={{ width: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #e8e6dc' }}>
+                <span style={{ fontSize: 10, color: '#b0aea5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Notes</span>
+              </div>
+              <textarea
+                value={currentNotes}
+                onChange={(e) => setCurrentNotes(e.target.value)}
+                placeholder="添加本页演讲备注…"
+                style={{
+                  flex: 1, padding: '10px 14px', fontSize: 13, lineHeight: 1.5,
+                  border: 'none', background: 'transparent', color: '#141413',
+                  resize: 'none', outline: 'none', fontFamily: 'inherit',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* ---- AI Chat Panel (right) — warm light theme ---- */}
+          <div style={{
+            width: 300, background: '#faf9f5', borderLeft: '1px solid #e8e6dc', display: 'flex', flexDirection: 'column',
+            overflow: 'hidden', flexShrink: 0, fontFamily: 'inherit',
+          }}>
+
+            {/* Top context bar — pinned */}
+            <div style={{
+              padding: '10px 16px', borderBottom: '1px solid #e8e6dc',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#788c5d' }} />
+                <span style={{ fontSize: 12, color: '#141413', fontWeight: 600 }}>Lasca</span>
+              </div>
+              <span style={{ fontSize: 11, color: '#b0aea5' }}>第 {currentIndex + 1} 页</span>
+            </div>
+
+            {/* Message stream — scrollable with fade masks */}
+            <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+              {/* Top fade mask */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 24, background: 'linear-gradient(#faf9f5, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+              {/* Bottom fade mask */}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 24, background: 'linear-gradient(transparent, #faf9f5)', zIndex: 2, pointerEvents: 'none' }} />
+
+              <div style={{ height: '100%', overflowY: 'auto', padding: '16px 0 16px' }}>
+              {chatMessages.map((msg, msgIdx) => {
+                const isLatest = msgIdx === chatMessages.length - 1;
+                return (
+                <div key={msg.id} style={{ padding: '4px 16px', marginBottom: 2, animation: 'fadeIn 0.3s ease-out' }}>
+                  {msg.role === 'ai' ? (
+                    <div>
+                      {msg.type === 'greeting' && (
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#788c5d', flexShrink: 0, marginTop: 5 }} />
+                          <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }}>{msg.text}</div>
+                        </div>
+                      )}
+                      {msg.type === 'hint' && (
+                        <div style={{ fontSize: 12, color: '#b0aea5', lineHeight: 1.6, paddingLeft: 15, fontStyle: 'italic' }}>{msg.text}</div>
+                      )}
+                      {msg.type === 'status' && (
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                          {isLatest ? <GlimmerSpinner color="#6a9bcc" /> : <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#6a9bcc', flexShrink: 0, opacity: 0.4 }} />}
+                          <div style={{ fontSize: 12, color: isLatest ? '#8a8880' : '#d4d2ca', lineHeight: 1.6 }}>{msg.text}</div>
+                        </div>
+                      )}
+                      {msg.type === 'action' && (
+                        <AiActionBlock text={msg.text} detail={msg.detail} />
+                      )}
+                      {msg.type === 'done' && (
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#788c5d', flexShrink: 0, marginTop: 5 }} />
+                          {isLatest ? (
+                            <StreamingText text={msg.text} speed={30} style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }} />
+                          ) : (
+                            <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }}>{msg.text}</div>
+                          )}
+                        </div>
+                      )}
+                      {msg.type === 'confirm' && (
+                        <div>
+                          <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 8 }}>
+                            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', flexShrink: 0, marginTop: 5 }} />
+                            <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }}>{msg.text}</div>
+                          </div>
+                          {msg.options && (
+                            <div style={{ display: 'flex', gap: 6, paddingLeft: 15 }}>
+                              {msg.options.map((opt, oi) => (
+                                <button key={oi} onClick={() => handleConfirm(opt.action)}
+                                  style={{
+                                    padding: '6px 14px', fontSize: 12, fontWeight: 500, fontFamily: 'inherit',
+                                    border: 'none', borderRadius: 8, cursor: 'pointer',
+                                    background: oi === 0 ? '#d97757' : '#e8e6dc',
+                                    color: oi === 0 ? '#fff' : '#141413',
+                                    transition: 'background 0.2s',
+                                  }}
+                                >{opt.label}</button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {!msg.type && (
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#6a9bcc', flexShrink: 0, marginTop: 5 }} />
+                          <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }}>{msg.text}</div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // User messages — with scope badge
+                    <div style={{ marginTop: 6, marginBottom: 6 }}>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                        <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', flexShrink: 0, marginTop: 5 }} />
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                            <span style={{
+                              fontSize: 9, color: '#fff', borderRadius: 3, padding: '1px 5px', fontWeight: 500,
+                              background: msg.scope === 'global' ? '#141413' : msg.scope === 'multi' ? '#6a9bcc' : '#d97757',
+                            }}>{msg.scopeLabel || (msg.scope === 'global' ? '全部' : '第' + msg.slideIdx + '页')}</span>
+                          </div>
+                          <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6, fontWeight: 500 }}>{msg.text}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+              })}
+              <div ref={chatEndRef} />
+            </div>
+            </div>
+
+            {/* Selected element info — pinned above input when element selected */}
+            {selectedEl && (
+              <div style={{
+                padding: '6px 16px', borderTop: '1px solid #e8e6dc',
+                display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0,
+                background: '#f5f4ef',
+              }}>
+                <div style={{ width: 6, height: 6, borderRadius: 2, background: '#d97757', flexShrink: 0 }} />
+                <span style={{ fontSize: 10, color: '#b0aea5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  已选中 &lt;{selectedEl.tagName.toLowerCase()}&gt; — "{(selectedEl.textContent || '').slice(0, 30)}"
+                </span>
+              </div>
+            )}
+
+            {/* Input — fixed at bottom, smart buttons */}
+            <div style={{
+              padding: '12px 12px', borderTop: '1px solid #e8e6dc', flexShrink: 0,
+            }}>
+              {/* Undo toast */}
+              {undoToast && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  background: '#141413', borderRadius: 8, padding: '6px 12px', marginBottom: 8,
+                  animation: 'fadeIn 0.2s ease-out',
+                }}>
+                  <span style={{ fontSize: 12, color: '#fff' }}>{undoToast.text}</span>
+                  <button onClick={handleUndo} style={{
+                    background: '#d97757', border: 'none', borderRadius: 6, padding: '3px 10px',
+                    fontSize: 11, color: '#fff', cursor: 'pointer', fontWeight: 500, fontFamily: 'inherit',
+                  }}>撤销 {undoToast.remaining}s</button>
+                </div>
+              )}
+              <div style={{
+                background: '#fff', borderRadius: 12, padding: '8px 12px',
+                border: '1px solid #e8e6dc',
+              }}>
+                <textarea
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); sendChat('page'); } }}
+                  placeholder="告诉 Lasca 你想改什么…"
+                  rows={1}
+                  style={{
+                    width: '100%', background: 'transparent', border: 'none', outline: 'none',
+                    color: '#141413', fontSize: 13, fontFamily: 'inherit', resize: 'none',
+                    lineHeight: 1.5, maxHeight: 80, padding: 0, display: 'block',
+                  }}
+                  onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 80) + 'px'; }}
+                />
+                <div style={{ display: 'flex', gap: 6, marginTop: 8, justifyContent: 'flex-end' }}>
+                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                  <button
+                    onClick={() => sendChat('page')}
+                    disabled={!chatInput.trim()}
+                    onMouseEnter={(e) => { const tip = e.currentTarget.parentElement.querySelector('[data-tip]'); if (tip) tip.style.opacity = '1'; }}
+                    onMouseLeave={(e) => { const tip = e.currentTarget.parentElement.querySelector('[data-tip]'); if (tip) tip.style.opacity = '0'; }}
+                    style={{
+                      background: chatInput.trim() ? '#d97757' : '#e8e6dc',
+                      border: 'none', borderRadius: 8, padding: '5px 14px',
+                      fontSize: 12, fontWeight: 500, fontFamily: 'inherit',
+                      color: chatInput.trim() ? '#fff' : '#b0aea5',
+                      cursor: chatInput.trim() ? 'pointer' : 'default',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    {smartLabel} ↵
+                  </button>
+                  {smartTooltip && (
+                    <div data-tip="true" style={{
+                      position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)',
+                      background: '#141413', color: '#fff', fontSize: 11, padding: '4px 10px',
+                      borderRadius: 6, whiteSpace: 'nowrap', marginBottom: 6,
+                      opacity: 0, transition: 'opacity 0.15s', pointerEvents: 'none',
+                    }}>{smartTooltip}</div>
+                  )}
+                  </div>
+                  <button
+                    onClick={() => sendChat('global')}
+                    disabled={!chatInput.trim()}
+                    style={{
+                      background: chatInput.trim() ? '#141413' : '#e8e6dc',
+                      border: 'none', borderRadius: 8, padding: '5px 14px',
+                      fontSize: 12, fontWeight: 500, fontFamily: 'inherit',
+                      color: chatInput.trim() ? '#fff' : '#b0aea5',
+                      cursor: chatInput.trim() ? 'pointer' : 'default',
+                      transition: 'background 0.2s',
+                    }}
+                  >
+                    全部 ↵
+                  </button>
+                </div>
+              </div>
+              <div style={{ fontSize: 10, color: '#b0aea5', marginTop: 6, textAlign: 'center' }}>
+                Enter 换行 · Cmd+Enter 发送
+              </div>
+            </div>
+          </div>
+
+          </div>{/* close Main Body */}
+        </div>
+      );
+    }
+
+    // ========================================================================
+    // PRESENTATION MODE — laser pointer, pen, slide transitions
+    // ========================================================================
+    const PresentationMode = React.forwardRef(({ slides, currentIndex, onIndexChange, onExit, presMode }, ref) => {
+      const containerRef = useRef(null);
+      const canvasRef2 = useRef(null);
+      const leftPanelRef = useRef(null);
+      const [tool, setTool] = useState('pointer');
+      const [penColor, setPenColor] = useState('#d97757');
+      const [isDrawing, setIsDrawing] = useState(false);
+      const [laserPos, setLaserPos] = useState(null);
+      const [showControls, setShowControls] = useState(false);
+      const [prevIndex, setPrevIndex] = useState(null);
+      const [elapsedTime, setElapsedTime] = useState(0);
+      const [fullScale, setFullScale] = useState(1);
+      const [presenterScale, setPresenterScale] = useState(1);
+      const strokesRef = useRef([]);
+      const currentStroke = useRef([]);
+      const hideTimer = useRef(null);
+      const clickStartRef = useRef(null);
+      const startTimeRef = useRef(Date.now());
+
+      // Extract speaker notes from slide HTML
+      const extractNotes = (html) => {
+        const match = html.match(/<aside[^>]*class="notes"[^>]*>([\s\S]*?)<\/aside>/i);
+        return match ? match[1].replace(/<[^>]+>/g, '').trim() : '';
+      };
+
+      React.useImperativeHandle(ref, () => containerRef.current);
+
+      // Track previous index
+      const prevIdxRef = useRef(currentIndex);
+      useEffect(() => {
+        setPrevIndex(prevIdxRef.current);
+        prevIdxRef.current = currentIndex;
+        strokesRef.current = [];
+        if (canvasRef2.current) {
+          const ctx = canvasRef2.current.getContext('2d');
+          ctx.clearRect(0, 0, canvasRef2.current.width, canvasRef2.current.height);
+        }
+      }, [currentIndex]);
+
+      // Staggered child animations — only animate translateY (NEVER touch opacity — that causes black flash)
+      // Find meaningful children to animate (skip style elements, skip single-child wrappers)
+      const getMeaningfulChildren = (el) => {
+        if (!el) return [];
+        let children = Array.from(el.children).filter(c =>
+          c.tagName !== 'STYLE' && c.tagName !== 'SCRIPT' &&
+          getComputedStyle(c).display !== 'none'
+        );
+        // If there's only 1 visible child, go deeper (it's probably a wrapper)
+        while (children.length === 1 && children[0].children.length > 0) {
+          children = Array.from(children[0].children).filter(c =>
+            c.tagName !== 'STYLE' && c.tagName !== 'SCRIPT' &&
+            getComputedStyle(c).display !== 'none'
+          );
+        }
+        return children;
+      };
+
+      useLayoutEffect(() => {
+        const activeSlide = containerRef.current?.querySelector(`[data-slide-idx="${currentIndex}"]`);
+        if (!activeSlide) return;
+        const inner = activeSlide.querySelector('[data-slide-inner]');
+        if (!inner) return;
+        const scaleWrapper = inner.firstElementChild; // the scale wrapper (CANVAS_W container)
+        if (!scaleWrapper) return;
+        const contentRoot = scaleWrapper.firstElementChild; // the actual slide content root
+        const children = getMeaningfulChildren(contentRoot || scaleWrapper);
+
+        // Reset: push children down, no transition
+        children.forEach(child => {
+          child.style.transform = 'translateY(16px)';
+          child.style.transition = 'none';
+        });
+
+        // After paint: stagger slide-up
+        let raf1, raf2;
+        raf1 = requestAnimationFrame(() => {
+          raf2 = requestAnimationFrame(() => {
+            children.forEach((child, i) => {
+              child.style.transition = `transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) ${i * 0.07}s`;
+              child.style.transform = 'translateY(0)';
+            });
+          });
+        });
+        return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
+      }, [currentIndex]);
+
+      // Fullscreen (only for full mode, not presenter mode)
+      useEffect(() => {
+        if (presMode === 'full') {
+          containerRef.current?.requestFullscreen?.();
+          const onFs = () => { if (!document.fullscreenElement) onExit(); };
+          document.addEventListener('fullscreenchange', onFs);
+          return () => document.removeEventListener('fullscreenchange', onFs);
+        }
+      }, [presMode, onExit]);
+
+      // Compute fullScale for full-screen mode
+      useEffect(() => {
+        if (presMode !== 'full') return;
+        const updateScale = () => {
+          setFullScale(Math.min(window.innerWidth / CANVAS_W, window.innerHeight / CANVAS_H));
+        };
+        updateScale();
+        window.addEventListener('resize', updateScale);
+        return () => window.removeEventListener('resize', updateScale);
+      }, [presMode]);
+
+      // Compute presenterScale for presenter mode's left panel
+      useEffect(() => {
+        if (presMode !== 'presenter' || !leftPanelRef.current) return;
+        const updateScale = () => {
+          const rect = leftPanelRef.current.getBoundingClientRect();
+          setPresenterScale(Math.min(rect.width / CANVAS_W, rect.height / CANVAS_H));
+        };
+        updateScale();
+        window.addEventListener('resize', updateScale);
+        const ro = new ResizeObserver(updateScale);
+        ro.observe(leftPanelRef.current);
+        return () => { window.removeEventListener('resize', updateScale); ro.disconnect(); };
+      }, [presMode]);
+
+      const goNext = () => { if (currentIndex < slides.length - 1) onIndexChange(currentIndex + 1); };
+      const goPrev = () => { if (currentIndex > 0) onIndexChange(currentIndex - 1); };
+
+      // Keyboard
+      useEffect(() => {
+        const handler = (e) => {
+          if (e.key === 'Escape') { onExit(); return; }
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goNext(); }
+          else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goPrev(); }
+          else if (e.key === 'p' || e.key === 'P') { setTool(t => t === 'pen' ? 'pointer' : 'pen'); }
+          else if (e.key === 'l' || e.key === 'L') { setTool('pointer'); }
+          else if (e.key === 'c' || e.key === 'C') { strokesRef.current = []; redrawCanvas(); }
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+      }, [currentIndex, slides.length]);
+
+      // Mouse — pointer, pen, left-click advance
+      const getCanvasPos = (e) => {
+        const rect = canvasRef2.current?.getBoundingClientRect();
+        if (!rect) return null;
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      };
+
+      const handleMouseMove = (e) => {
+        const pos = getCanvasPos(e);
+        if (!pos) return;
+        if (e.clientY > window.innerHeight - 60) {
+          setShowControls(true); clearTimeout(hideTimer.current);
+        } else if (showControls) {
+          clearTimeout(hideTimer.current);
+          hideTimer.current = setTimeout(() => setShowControls(false), 2000);
+        }
+        if (tool === 'pointer') setLaserPos(pos);
+        if (tool === 'pen' && isDrawing) { currentStroke.current.push(pos); redrawCanvas(); }
+      };
+
+      const handleMouseDown = (e) => {
+        clickStartRef.current = { x: e.clientX, y: e.clientY, time: Date.now() };
+        if (tool === 'pen') { setIsDrawing(true); currentStroke.current = [getCanvasPos(e)]; }
+      };
+
+      const handleMouseUp = (e) => {
+        if (tool === 'pen' && isDrawing) {
+          setIsDrawing(false);
+          if (currentStroke.current.length > 1) strokesRef.current.push({ points: [...currentStroke.current], color: penColor, width: 3 });
+          currentStroke.current = [];
+        }
+        // Left-click advance: only if it was a short, stationary click (not a drag or long press)
+        if (tool === 'pointer' && clickStartRef.current && e.button === 0) {
+          const dx = Math.abs(e.clientX - clickStartRef.current.x);
+          const dy = Math.abs(e.clientY - clickStartRef.current.y);
+          const dt = Date.now() - clickStartRef.current.time;
+          // Short click, barely moved, not on control bar
+          if (dx < 5 && dy < 5 && dt < 400 && e.clientY < window.innerHeight - 60) {
+            goNext();
+          }
+        }
+        clickStartRef.current = null;
+      };
+
+      const handleMouseLeave = () => { setLaserPos(null); if (isDrawing) handleMouseUp({ button: -1, clientX: 0, clientY: 0 }); };
+
+      // Right-click to go back
+      const handleContextMenu = (e) => {
+        e.preventDefault();
+        goPrev();
+      };
+
+      const redrawCanvas = () => {
+        const canvas = canvasRef2.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const drawStroke = (s) => { ctx.beginPath(); ctx.strokeStyle = s.color; ctx.lineWidth = s.width; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; s.points.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y)); ctx.stroke(); };
+        strokesRef.current.forEach(drawStroke);
+        if (currentStroke.current.length > 1) drawStroke({ points: currentStroke.current, color: penColor, width: 3 });
+      };
+
+      useEffect(() => {
+        const resize = () => {
+          if (!canvasRef2.current) return;
+          if (presMode === 'presenter') {
+            const slideContainer = canvasRef2.current.closest('div[style*="position: relative"]');
+            if (slideContainer) {
+              const rect = slideContainer.getBoundingClientRect();
+              canvasRef2.current.width = rect.width;
+              canvasRef2.current.height = rect.height;
+            }
+          } else {
+            canvasRef2.current.width = window.innerWidth;
+            canvasRef2.current.height = window.innerHeight;
+          }
+        };
+        resize(); window.addEventListener('resize', resize);
+        return () => window.removeEventListener('resize', resize);
+      }, [presMode]);
+
+      // Timer for presenter mode
+      useEffect(() => {
+        if (presMode !== 'presenter') return;
+        const interval = setInterval(() => {
+          setElapsedTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
+        }, 100);
+        return () => clearInterval(interval);
+      }, [presMode]);
+
+      const goingForward = prevIndex !== null ? currentIndex > prevIndex : true;
+      const cursorStyle = tool === 'pen' ? 'crosshair' : 'none';
+
+      const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+      };
+
+      // Presenter mode layout
+      if (presMode === 'presenter') {
+        const nextIdx = currentIndex + 1;
+        const hasNext = nextIdx < slides.length;
+        const nextSlide = hasNext ? slides[nextIdx] : null;
+
+        return (
+          <div
+            ref={containerRef}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 340px',
+              gap: 16,
+              padding: 16,
+              background: '#202020',
+              width: '100vw',
+              height: '100vh',
+              overflow: 'hidden',
+              fontFamily: 'Poppins, sans-serif',
+              color: '#fff',
+            }}
+          >
+            {/* Left: Current slide */}
+            <div
+              ref={leftPanelRef}
+              style={{
+                position: 'relative',
+                borderRadius: 8,
+                overflow: 'hidden',
+                background: '#f0efe9',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+              onContextMenu={handleContextMenu}
+            >
+              {/* Slide content */}
+              {slides.map((slide, idx) => {
+                const isActive = idx === currentIndex;
+                const isPrev = idx === prevIndex;
+                const isFirst = prevIndex === null;
+
+                let style;
+                if (isActive) {
+                  style = {
+                    opacity: 1,
+                    filter: 'none',
+                    transform: 'scale(1)',
+                    transition: isFirst ? 'none' : 'opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1)',
+                    zIndex: 10,
+                  };
+                } else if (isPrev) {
+                  style = {
+                    opacity: 0,
+                    filter: 'blur(12px) brightness(1.05)',
+                    transform: 'scale(1.02)',
+                    transition: 'opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.6s ease-out, transform 0.8s ease-out',
+                    zIndex: 5,
+                  };
+                } else {
+                  style = { opacity: 0, filter: 'none', transform: 'scale(1)', transition: 'none', zIndex: 1 };
+                }
+
+                return (
+                  <div key={slide.id} data-slide-idx={idx} style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    ...style,
+                    pointerEvents: isActive ? 'auto' : 'none',
+                  }}>
+                    <div data-slide-inner="true" style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{
+                        width: CANVAS_W,
+                        height: CANVAS_H,
+                        transform: `scale(${presenterScale})`,
+                        transformOrigin: 'center center',
+                        flexShrink: 0,
+                        overflow: 'hidden',
+                      }} dangerouslySetInnerHTML={{ __html: slide.html }} />
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Drawing overlay */}
+              <canvas ref={canvasRef2} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: tool === 'pen' ? 'auto' : 'none', zIndex: 20 }} />
+
+              {/* Laser pointer */}
+              {tool === 'pointer' && laserPos && (
+                <div style={{
+                  position: 'absolute', left: laserPos.x - 8, top: laserPos.y - 8,
+                  width: 16, height: 16, borderRadius: '50%',
+                  background: 'radial-gradient(circle, #ff3333 30%, rgba(255,50,50,0.4) 70%, transparent 100%)',
+                  boxShadow: '0 0 12px 4px rgba(255,50,50,0.5)',
+                  pointerEvents: 'none', zIndex: 30,
+                }} />
+              )}
+            </div>
+
+            {/* Right panel: Next slide preview, timer, controls */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {/* Next slide preview */}
+              <div style={{
+                width: 320,
+                height: 180,
+                background: '#222',
+                borderRadius: 8,
+                overflow: 'hidden',
+                border: '1px solid #333',
+                position: 'relative',
+                flexShrink: 0,
+              }}>
+                {hasNext ? (
+                  <div style={{
+                    width: CANVAS_W,
+                    height: CANVAS_H,
+                    transform: `scale(${320 / CANVAS_W})`,
+                    transformOrigin: '0 0',
+                    overflow: 'hidden',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                  }} dangerouslySetInnerHTML={{ __html: nextSlide.html }} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: '#666', fontSize: 13 }}>最后一页</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Page counter */}
+              <div style={{ textAlign: 'center', fontSize: 13, color: '#aaa' }}>
+                {currentIndex + 1} / {slides.length}
+              </div>
+
+              {/* Timer */}
+              <div style={{ textAlign: 'center', fontSize: 28, fontWeight: 700, fontFamily: 'monospace', color: '#d97757' }}>
+                {formatTime(elapsedTime)}
+              </div>
+
+              {/* Speaker Notes */}
+              <div style={{
+                flex: '1 1 auto',
+                background: '#222',
+                borderRadius: 8,
+                padding: '12px 14px',
+                fontSize: 14,
+                lineHeight: 1.6,
+                color: '#ccc',
+                overflowY: 'auto',
+                border: '1px solid #333',
+                minHeight: 80,
+              }}>
+                <div style={{ fontSize: 11, color: '#888', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>Speaker Notes</div>
+                {extractNotes(slides[currentIndex].html) || <span style={{ color: '#555', fontStyle: 'italic' }}>No notes for this slide</span>}
+              </div>
+
+              {/* Controls */}
+              <div style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
+                <button onClick={(e) => { e.stopPropagation(); goPrev(); }} style={{ ...presBtn, background: '#444', color: '#fff', padding: '8px 12px', fontSize: 13 }}>◀ Prev</button>
+                <button onClick={(e) => { e.stopPropagation(); goNext(); }} style={{ ...presBtn, background: '#444', color: '#fff', padding: '8px 12px', fontSize: 13 }}>Next ▶</button>
+                <button onClick={(e) => { e.stopPropagation(); onExit(); }} style={{ ...presBtn, background: '#555', color: '#fff', padding: '8px 12px', fontSize: 13 }}>Exit</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Full screen mode (original layout)
+      return (
+        <div
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onContextMenu={handleContextMenu}
+          style={{ width: '100vw', height: '100vh', background: '#f0efe9', position: 'relative', overflow: 'hidden', cursor: cursorStyle }}
+        >
+          {/* All slides layered — new slide on top, old slide blurs out (diffusion dissolve) */}
+          {slides.map((slide, idx) => {
+            const isActive = idx === currentIndex;
+            const isPrev = idx === prevIndex;
+            const isFirst = prevIndex === null;
+
+            let style;
+            if (isActive) {
+              style = {
+                opacity: 1,
+                filter: 'none',
+                transform: 'scale(1)',
+                transition: isFirst ? 'none' : 'opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1)',
+                zIndex: 10,
+              };
+            } else if (isPrev) {
+              // Old slide: blur + subtle zoom out = diffusion dissolve
+              style = {
+                opacity: 0,
+                filter: 'blur(12px) brightness(1.05)',
+                transform: 'scale(1.02)',
+                transition: 'opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.6s ease-out, transform 0.8s ease-out',
+                zIndex: 5,
+              };
+            } else {
+              style = { opacity: 0, filter: 'none', transform: 'scale(1)', transition: 'none', zIndex: 1 };
+            }
+
+            return (
+              <div key={slide.id} data-slide-idx={idx} style={{
+                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                ...style,
+                pointerEvents: isActive ? 'auto' : 'none',
+              }}>
+                <div data-slide-inner="true" style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{
+                    width: CANVAS_W,
+                    height: CANVAS_H,
+                    transform: `scale(${fullScale})`,
+                    transformOrigin: 'center center',
+                    flexShrink: 0,
+                    overflow: 'hidden',
+                  }} dangerouslySetInnerHTML={{ __html: slide.html }} />
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Drawing overlay */}
+          <canvas ref={canvasRef2} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: tool === 'pen' ? 'auto' : 'none', zIndex: 20 }} />
+
+          {/* Laser pointer */}
+          {tool === 'pointer' && laserPos && (
+            <div style={{
+              position: 'fixed', left: laserPos.x - 8, top: laserPos.y - 8,
+              width: 16, height: 16, borderRadius: '50%',
+              background: 'radial-gradient(circle, #ff3333 30%, rgba(255,50,50,0.4) 70%, transparent 100%)',
+              boxShadow: '0 0 12px 4px rgba(255,50,50,0.5)',
+              pointerEvents: 'none', zIndex: 30,
+            }} />
+          )}
+
+          {/* SVG filter for arrow glow (visible on any background) */}
+          <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+            <defs>
+              <filter id="arrow-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="rgba(255,255,255,0.8)" />
+              </filter>
+            </defs>
+          </svg>
+
+          {/* Floating navigation arrows — reveal.js style */}
+          {/* Left arrow (previous) */}
+          {currentIndex > 0 && (
+            <div
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              className="nav-arrow nav-arrow-left"
+              style={{
+                position: 'fixed', left: 20, top: '50%', transform: 'translateY(-50%)',
+                zIndex: 40, cursor: 'pointer', padding: 12,
+                opacity: 0.5, transition: 'opacity 0.3s ease, transform 0.3s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
+            >
+              <svg width="40" height="60" viewBox="0 0 40 60" fill="none">
+                <path d="M30 5L10 30L30 55" stroke="rgba(0,0,0,0.35)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" filter="url(#arrow-glow)"/>
+              </svg>
+            </div>
+          )}
+
+          {/* Right arrow (next) */}
+          {currentIndex < slides.length - 1 && (
+            <div
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              className="nav-arrow nav-arrow-right"
+              style={{
+                position: 'fixed', right: 20, top: '50%', transform: 'translateY(-50%)',
+                zIndex: 40, cursor: 'pointer', padding: 12,
+                opacity: 0.5, transition: 'opacity 0.3s ease, transform 0.3s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
+            >
+              <svg width="40" height="60" viewBox="0 0 40 60" fill="none">
+                <path d="M10 5L30 30L10 55" stroke="rgba(0,0,0,0.35)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" filter="url(#arrow-glow)"/>
+              </svg>
+            </div>
+          )}
+
+          {/* Bottom-right floating tools — compact pill */}
+          <div style={{
+            position: 'fixed', bottom: 20, right: 24,
+            display: 'flex', alignItems: 'center', gap: 4,
+            background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(8px)',
+            borderRadius: 20, padding: '4px 10px',
+            opacity: showControls ? 0.9 : 0.2,
+            transition: 'opacity 0.3s ease',
+            zIndex: 40, fontFamily: 'Poppins, sans-serif',
+          }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.9'; }}
+            onMouseLeave={(e) => { if (!showControls) e.currentTarget.style.opacity = '0.2'; }}
+          >
+            <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12, padding: '0 6px' }}>{currentIndex + 1}/{slides.length}</span>
+            <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.2)' }} />
+            <button onClick={(e) => { e.stopPropagation(); setTool('pointer'); }} style={{ ...presBtn, fontSize: 11, padding: '3px 6px', background: tool === 'pointer' ? 'rgba(255,255,255,0.2)' : 'transparent', borderRadius: 10 }} title="激光笔 (L)">🔴</button>
+            <button onClick={(e) => { e.stopPropagation(); setTool('pen'); }} style={{ ...presBtn, fontSize: 11, padding: '3px 6px', background: tool === 'pen' ? 'rgba(255,255,255,0.2)' : 'transparent', borderRadius: 10 }} title="画笔 (P)">✏️</button>
+            {tool === 'pen' && (
+              <>
+                {['#d97757','#ff3333','#6a9bcc','#ffffff'].map(c => (
+                  <button key={c} onClick={(e) => { e.stopPropagation(); setPenColor(c); }} style={{ ...presBtn, color: c, fontSize: 10, padding: '2px 4px' }}>●</button>
+                ))}
+                <button onClick={(e) => { e.stopPropagation(); strokesRef.current = []; redrawCanvas(); }} style={{ ...presBtn, fontSize: 10, padding: '2px 4px' }} title="清除 (C)">🗑</button>
+              </>
+            )}
+          </div>
+
+          {/* Progress bar — thin line at bottom */}
+          <div style={{ position: 'fixed', bottom: 0, left: 0, height: 2, background: 'rgba(217,119,87,0.7)', width: `${((currentIndex + 1) / slides.length) * 100}%`, transition: 'width 0.4s ease-out', zIndex: 40 }} />
+        </div>
+      );
+    });
+
+    const presBtn = {
+      background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer',
+      padding: '6px 10px', borderRadius: 6, fontSize: 15, lineHeight: 1,
+    };
+
+    // SlideCanvas: contentEditable wrapper that preserves HTML
+    const SlideCanvas = React.forwardRef(({ html, onBlur, editable, onMouseDown, onMouseMove, onDoubleClick, onContextMenu, cursor }, ref) => {
+      const innerRef = useRef(null);
+      React.useImperativeHandle(ref, () => innerRef.current);
+
+      useEffect(() => {
+        if (innerRef.current) {
+          innerRef.current.innerHTML = html;
+        }
+      }, [html]);
+
+      return (
+        <div
+          ref={innerRef}
+          onBlur={onBlur}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onDoubleClick={onDoubleClick}
+          onContextMenu={onContextMenu}
+          style={{
+            width: CANVAS_W,
+            height: CANVAS_H,
+            background: '#fff',
+            borderRadius: 8,
+            overflow: 'hidden',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+            flexShrink: 0,
+            outline: 'none',
+            cursor: cursor || 'default',
+            position: 'relative',
+          }}
+        />
+      );
+    });
+
+    // ========================================================================
+    // AI ACTION BLOCK — collapsible action detail (Claude Code style)
+    // ========================================================================
+    function AiActionBlock({ text, detail }) {
+      const [expanded, setExpanded] = useState(false);
+      return (
+        <div style={{ marginTop: 2 }}>
+          <div
+            onClick={() => detail && setExpanded(e => !e)}
+            style={{ display: 'flex', gap: 8, alignItems: 'flex-start', cursor: detail ? 'pointer' : 'default' }}
+          >
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#6a9bcc', flexShrink: 0, marginTop: 5 }} />
+            <div style={{ fontSize: 13, color: '#141413', lineHeight: 1.6 }}>
+              <span style={{ fontWeight: 500 }}>{text}</span>
+              {detail && (
+                <span style={{ fontSize: 11, color: '#b0aea5', marginLeft: 8 }}>
+                  {expanded ? '▾' : '▸'} {expanded ? '收起' : '详情'}
+                </span>
+              )}
+            </div>
+          </div>
+          {expanded && detail && (
+            <div style={{
+              marginLeft: 15, marginTop: 4, padding: '8px 10px',
+              background: '#f0efeb', borderRadius: 6, borderLeft: '2px solid #e8e6dc',
+              fontSize: 12, color: '#b0aea5', lineHeight: 1.6, whiteSpace: 'pre-wrap',
+            }}>
+              {detail}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Glimmer spinner — Claude Code style character cycling
+    function GlimmerSpinner({ color }) {
+      const chars = ['·', '✻', '✽', '✶', '✳', '✢'];
+      const [idx, setIdx] = useState(0);
+      useEffect(() => {
+        const t = setInterval(() => setIdx(i => (i + 1) % chars.length), 150);
+        return () => clearInterval(t);
+      }, []);
+      return (
+        <span style={{ color: color || '#d97757', fontSize: 14, fontWeight: 700, display: 'inline-block', width: 14, textAlign: 'center' }}>
+          {chars[idx]}
+        </span>
+      );
+    }
+
+    // Streaming text — reveals text character by character
+    function StreamingText({ text, speed, style: s }) {
+      const [shown, setShown] = useState(0);
+      useEffect(() => {
+        if (shown >= text.length) return;
+        const t = setTimeout(() => setShown(n => n + 1), speed || 25);
+        return () => clearTimeout(t);
+      }, [shown, text]);
+      return <span style={s}>{text.slice(0, shown)}{shown < text.length ? '▍' : ''}</span>;
+    }
+
+    const fmtBtn = {
+      background: 'none', border: 'none', color: '#fff', cursor: 'pointer',
+      padding: '4px 8px', borderRadius: 4, fontSize: 14, fontFamily: 'inherit', lineHeight: 1,
+    };
+
+    const btnStyle = {
+      padding: '5px 12px',
+      fontSize: 13,
+      background: '#fff',
+      color: '#141413',
+      border: '1px solid #e8e6dc',
+      borderRadius: 6,
+      cursor: 'pointer',
+      fontFamily: 'inherit',
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

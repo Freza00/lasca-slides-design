@@ -1,0 +1,17 @@
+{
+  "brand": "ferrari",
+  "category": "automotive",
+  "aesthetic": "Noir & Gold — Didone italic luxury, cinematic black, one drop of red per page",
+  "colors": { "primary": "#DA291C", "accent": "#FFF200", "bg": "#0c0c0c", "text": "#f0ece4" },
+  "typography": { "display": "var(--font-display-serif)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Deep red #DA291C appears once per page — surgical sparseness",
+    "Whitespace ≥55% — luxury means space to waste",
+    "Fraunces italic display: Didone elegance, high stroke contrast",
+    "Titles ≤4 words — luxury copy law: less is more expensive",
+    "Zero box-shadows — depth via chiaroscuro surface contrast"
+  ],
+  "preferLayouts": ["cover", "big-number", "quote", "image"],
+  "avoidLayouts": ["grid-cards", "stacked-bars", "three-cards"],
+  "promptGuide": "Apply the Noir & Gold aesthetic: Fraunces italic weight 400 display (letter-spacing +0.04em, luxury type-setting standard), Plus Jakarta Sans weight 300 body (extreme contrast with display), bg #0c0c0c (matte black velvet), text #f0ece4 (warm cream), Deep red #DA291C on ONE element per page only, Racing Yellow #FFF200 max 2× per deck, 2px border-radius (precision engineering), zero box-shadows (depth via chiaroscuro), titles ≤4 words, third-person or subjectless sentences, no exclamations/emoji/casual language."
+}

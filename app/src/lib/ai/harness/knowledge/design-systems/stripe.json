@@ -1,0 +1,17 @@
+{
+  "brand": "stripe",
+  "category": "fintech",
+  "aesthetic": "Swiss Precision — weight-300 elegance, prismatic gradients, mathematical whitespace",
+  "colors": { "primary": "#533afd", "accent": "#00d4ff", "bg": "#ffffff", "text": "#061b31" },
+  "typography": { "display": "var(--font-body-sans)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Weight 300 is the brand voice — lightness as luxury",
+    "Mathematical whitespace: every gap is intentional",
+    "Blue-tinted shadows: rgba(50,50,93,0.25) — even shadows are on-brand",
+    "Numbers are visual anchors: 3× larger than body text",
+    "One accent element per page — surgical restraint"
+  ],
+  "preferLayouts": ["cover", "big-number", "two-column", "quote"],
+  "avoidLayouts": ["grid-cards", "three-cards"],
+  "promptGuide": "Apply the Swiss Precision aesthetic: weight-300 headlines (never 400+), deep navy #061b31 text (not pure black), single #533afd accent per page, blue-tinted dual shadows (rgba(50,50,93,0.25) + rgba(0,0,0,0.1)), letter-spacing tightens with size (-0.025em at 56px). Copy is terse: ≤8 words per headline, no exclamations, no 'we'. Numbers dominate with tabular-nums."
+}

@@ -1,0 +1,1424 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #f5f5f0;
+  --color-foreground: #141413;
+  --color-editor-bg: #f0efeb;
+  --color-panel-bg: #faf9f5;
+  --color-primary: #d97757;
+  --color-accent: #6a9bcc;
+  --color-muted: #b0aea5;
+  --color-green: #788c5d;
+  --color-border: #e8e6dc;
+  --font-sans: var(--font-poppins), var(--font-noto-sans-sc), system-ui, sans-serif;
+
+  /* ----- frontend-design 审美底座的语义字体令牌 -----
+   * AI prompt 引用这些语义名（display-serif / display-sans / body-sans /
+   * body-serif），而不是品牌名。这样以后想换字体只改这里 + layout.tsx，
+   * 不用动 prompt。
+   * 见 lib/ai/harness/designPrinciples.ts → DESIGN_FONT_PAIRS
+   */
+  --font-display-serif: var(--font-fraunces), 'Noto Serif SC', Georgia, serif;
+  --font-display-sans: var(--font-bricolage-grotesque), var(--font-noto-sans-sc), system-ui, sans-serif;
+  --font-body-sans: var(--font-plus-jakarta), var(--font-noto-sans-sc), system-ui, sans-serif;
+  --font-body-serif: var(--font-lora), 'Noto Serif SC', Georgia, serif;
+
+  /* Theme switcher 路径用的字体变量 (themes.ts cool/dark 通过 next/font className 命中) */
+  --font-instrument-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-familjen-grotesk: var(--font-familjen-grotesk), system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Toast slide-in animation */
+@keyframes lasca-toast-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes cardRise {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+@keyframes caveStrokeDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d4d2ca; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #b0aea5; }
+
+body {
+  background: var(--color-editor-bg);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Create flow animations */
+@keyframes qaFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardExpand {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 500px; }
+}
+@keyframes sidePanelSlideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Layout strip — bouncy hover on the thin line + dot reveal */
+.layout-strip:hover > div:first-child {
+  transform: scaleX(1.8);
+  background: linear-gradient(180deg, #d97757 0%, #e8a87c 100%) !important;
+  box-shadow: 0 0 8px rgba(217,119,87,0.3);
+}
+.layout-strip:hover .layout-strip-dot {
+  opacity: 1 !important;
+  transform: translateY(-50%) scale(1.2) !important;
+}
+.layout-strip:active > div:first-child {
+  transform: scaleX(1.2);
+  transition-duration: 0.1s;
+}
+@keyframes chartSheetSlideUp {
+  0%   { opacity: 0; transform: translateY(40px) scale(0.97); filter: blur(12px); }
+  40%  { opacity: 0.6; transform: translateY(10px) scale(0.99); filter: blur(6px); }
+  70%  { opacity: 0.9; transform: translateY(3px) scale(1); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes chartItemFadeIn {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes chartPreviewReveal {
+  from { opacity: 0; transform: scale(0.92); filter: blur(4px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes thumbReveal {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Generation preview: frosted glass overlay swept away left→right by laser */
+@keyframes genGlassSweep {
+  0%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+/* Generation preview: gentle blur breathing after laser reveal */
+@keyframes genGlassBreath {
+  0%, 100% { filter: blur(0px); opacity: 1; }
+  50%      { filter: blur(3px); opacity: 0.85; }
+}
+/* Generation preview: async floating breath per card */
+@keyframes genFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+/* Generation preview: active batch glow pulse — bright white shimmer */
+@keyframes genPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5), 0 0 12px rgba(255,255,255,0.15); }
+  50% { box-shadow: 0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6), 0 0 28px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.1); }
+}
+/* Generation preview: wireframe SVG gentle scale breath */
+@keyframes genSvgBreath {
+  0%, 100% { transform: scale(3.5); opacity: 0.85; }
+  50% { transform: scale(3.65); opacity: 1; }
+}
+/* Generation preview: sparkle twinkle (text characters) */
+@keyframes genSparkle {
+  0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  20% { opacity: 1; transform: scale(1) rotate(20deg); }
+  50% { opacity: 0.8; transform: scale(1.1) rotate(40deg); }
+  80% { opacity: 1; transform: scale(0.9) rotate(60deg); }
+  100% { opacity: 0; transform: scale(0.5) rotate(80deg); }
+}
+/* Generation preview: glowing light orb */
+@keyframes genOrb {
+  0% { opacity: 0; transform: scale(0.3); }
+  30% { opacity: 0.9; transform: scale(1.2); }
+  60% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.4); }
+}
+/* Generation preview: drifting light orb (moves while glowing) */
+@keyframes genOrbDrift {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.3); }
+  25% { opacity: 0.8; transform: translate(8px, -12px) scale(1.1); }
+  50% { opacity: 0.6; transform: translate(-5px, -20px) scale(0.9); }
+  75% { opacity: 0.8; transform: translate(6px, -8px) scale(1.05); }
+  100% { opacity: 0; transform: translate(0, 0) scale(0.3); }
+}
+/* Generation preview: scanning light sweep across grid */
+@keyframes genSweep {
+  0% { left: -30%; opacity: 0; }
+  10% { opacity: 0.6; }
+  50% { opacity: 0.4; }
+  90% { opacity: 0.6; }
+  100% { left: 110%; opacity: 0; }
+}
+/* Generation preview: halo ring expand */
+@keyframes genHalo {
+  0% { transform: scale(0); opacity: 0.8; }
+  60% { opacity: 0.3; }
+  100% { transform: scale(3); opacity: 0; }
+}
+/* Generation preview: explosion spark fly outward */
+@keyframes genSpark {
+  0% { opacity: 1; transform: translate(0,0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0.2); }
+}
+
+/* ============================================================================
+ * Lasca Ambient Animations — per theme
+ * ============================================================================
+ *
+ * 每个 native layout 的 outer wrapper 在 renderSlide.ts 里得到一个
+ * `lasca-theme-{warm|cool|dark|original}` class。下面的规则给每个主题挂上
+ * always-on 的环境动效（呼吸/釉光/篝火/冰光），让 slide 永远在动 —— 这是
+ * Lasca 区别于传统 PPT 的杀手锏，性能开销几乎为 0（CSS-only, GPU 加速）。
+ *
+ * 设计原则：
+ *   - subtle (绝不干扰阅读)
+ *   - CSS-only (0 JS)
+ *   - always-on (无限循环)
+ *   - theme-specific (服务于每个主题的 aesthetic anchor)
+ *   - sidebar 缩略图禁用 ([data-no-fx="1"])
+ *   - 尊重 prefers-reduced-motion
+ *   - print 媒介下全停 (PDF 导出)
+ *
+ * Faithful 模式 (pdf-faithful / pptx-faithful) 的 wrapper 没有 lasca-theme-*
+ * class，所以这些规则不会影响导入文件的 1:1 还原 — 这是有意设计。
+ * ========================================================================== */
+
+/* CSS variable interpolation for breath effects (cards 表面 alpha 呼吸) */
+@property --lasca-fx-breath {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+/* Default texture variant URLs — Editor.tsx overrides these per deck via
+ * document.documentElement.style.setProperty(). The values here are the
+ * Claude-style dot grid fallback for each theme, so even without a deck
+ * override the surface has a baseline texture. */
+:root {
+  --lasca-texture-warm-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='1.1' fill='rgba(140,105,70,0.18)'/%3E%3C/svg%3E");
+  --lasca-texture-cool-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='1.1' fill='rgba(40,80,130,0.20)'/%3E%3C/svg%3E");
+  --lasca-texture-dark-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='1.1' fill='rgba(255,245,220,0.11)'/%3E%3C/svg%3E");
+  --lasca-texture-original-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='1.1' fill='rgba(120,120,120,0.12)'/%3E%3C/svg%3E");
+
+  /* Premium theme textures — unique per design identity */
+  --lasca-texture-stripe-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg stroke='rgba(10,37,64,0.04)' fill='none' stroke-width='0.5'%3E%3Cpath d='M0 24 L48 24'/%3E%3Cpath d='M24 0 L24 48'/%3E%3C/g%3E%3Ccircle cx='24' cy='24' r='0.5' fill='rgba(83,58,253,0.06)'/%3E%3C/svg%3E");
+  --lasca-texture-linear-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48' viewBox='0 0 28 48'%3E%3Cg stroke='rgba(94,106,210,0.06)' fill='none' stroke-width='0.4'%3E%3Cpath d='M14 0 L28 8 L28 24 L14 32 L0 24 L0 8 Z'/%3E%3Cpath d='M14 16 L28 24 L28 40 L14 48 L0 40 L0 24 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --lasca-texture-notion-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='rgba(55,53,47,0.025)' stroke='none'%3E%3Ccircle cx='23' cy='17' r='0.4'/%3E%3Ccircle cx='67' cy='43' r='0.3'/%3E%3Ccircle cx='112' cy='8' r='0.5'/%3E%3Ccircle cx='156' cy='31' r='0.3'/%3E%3Ccircle cx='45' cy='72' r='0.4'/%3E%3Ccircle cx='89' cy='95' r='0.5'/%3E%3Ccircle cx='134' cy='67' r='0.3'/%3E%3Ccircle cx='178' cy='88' r='0.4'/%3E%3Ccircle cx='12' cy='123' r='0.3'/%3E%3Ccircle cx='56' cy='148' r='0.5'/%3E%3Ccircle cx='98' cy='134' r='0.3'/%3E%3Ccircle cx='145' cy='156' r='0.4'/%3E%3Ccircle cx='189' cy='142' r='0.3'/%3E%3Ccircle cx='34' cy='178' r='0.4'/%3E%3Ccircle cx='78' cy='191' r='0.3'/%3E%3Ccircle cx='123' cy='183' r='0.5'/%3E%3Ccircle cx='167' cy='172' r='0.3'/%3E%3C/g%3E%3C/svg%3E");
+  --lasca-texture-spotify-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='none'%3E%3Ccircle cx='45' cy='67' r='18' stroke='rgba(29,185,84,0.03)' stroke-width='0.5'/%3E%3Ccircle cx='198' cy='34' r='12' stroke='rgba(29,185,84,0.025)' stroke-width='0.4'/%3E%3Ccircle cx='267' cy='145' r='22' stroke='rgba(29,185,84,0.02)' stroke-width='0.5'/%3E%3Ccircle cx='89' cy='234' r='15' stroke='rgba(29,185,84,0.03)' stroke-width='0.4'/%3E%3Ccircle cx='178' cy='189' r='10' stroke='rgba(29,185,84,0.025)' stroke-width='0.3'/%3E%3C/g%3E%3C/svg%3E");
+  --lasca-texture-airbnb-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='320' viewBox='0 0 480 320'%3E%3Cg fill='none' stroke='rgba(255,90,95,0.04)' stroke-width='0.6' stroke-linecap='round'%3E%3Cpath d='M-20 55 Q90 35 190 60 T390 50 T580 70'/%3E%3Cpath d='M-20 120 Q80 100 200 125 T400 115 T580 130'/%3E%3Cpath d='M-20 190 Q100 170 210 195 T410 185 T580 200'/%3E%3Cpath d='M-20 260 Q90 240 180 265 T380 255 T580 270'/%3E%3C/g%3E%3C/svg%3E");
+  --lasca-texture-ferrari-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 L10 20' stroke='rgba(240,236,228,0.025)' stroke-width='0.4' fill='none'/%3E%3C/svg%3E");
+
+  /* Scene × Colorway textures — analyst uses a subtle dot grid tuned per colorway */
+  --lasca-texture-analyst-light-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.8' fill='rgba(37,99,235,0.06)'/%3E%3C/svg%3E");
+  --lasca-texture-analyst-mist-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.8' fill='rgba(67,56,202,0.06)'/%3E%3C/svg%3E");
+  --lasca-texture-analyst-dark-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.8' fill='rgba(96,165,250,0.08)'/%3E%3C/svg%3E");
+
+  /* Lookbook family — minimal decoration, near-invisible dot tuned to each variant's chromatic mass */
+  --lasca-texture-lookbook-ember-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.9' fill='rgba(217,119,87,0.08)'/%3E%3C/svg%3E");
+  --lasca-texture-lookbook-forest-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.9' fill='rgba(44,95,45,0.08)'/%3E%3C/svg%3E");
+  --lasca-texture-lookbook-ink-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.7' fill='rgba(20,20,19,0.04)'/%3E%3C/svg%3E");
+
+  /* Private-banking family — minimal decoration, hairline-only feel */
+  --lasca-texture-private-banking-sovereign-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.8' fill='rgba(26,51,96,0.07)'/%3E%3C/svg%3E");
+  --lasca-texture-private-banking-noir-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.8' fill='rgba(11,11,12,0.05)'/%3E%3C/svg%3E");
+  --lasca-texture-private-banking-clay-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='0.9' fill='rgba(109,46,70,0.07)'/%3E%3C/svg%3E");
+}
+
+/* ===================================================================
+ * 主题颜色 CSS 变量 — faithful 幻灯片 AI 主题适配用
+ * ===================================================================
+ * AI 重写 rawHtml 时把硬编码颜色替换成 var(--lasca-primary) 等引用。
+ * 切主题时 class 变化 → 变量值变 → 颜色自动更新。
+ * original 主题不定义这些变量 → var() 回退到 fallback（原始色）。
+ * =================================================================== */
+
+.lasca-theme-warm {
+  --lasca-primary: #d97757;
+  --lasca-accent: #6a9bcc;
+  --lasca-text: #141413;
+  --lasca-muted: #b0aea5;
+  --lasca-bg: #faf9f5;
+  --lasca-card-bg: #ffffff;
+  --lasca-border: #e8e6dc;
+  --lasca-green: #788c5d;
+  --lasca-dark: #141413;
+}
+
+.lasca-theme-cool {
+  --lasca-primary: #0f3d7a;
+  --lasca-accent: #c2410c;
+  --lasca-text: #0a1422;
+  --lasca-muted: #5e6f80;
+  --lasca-bg: #eff4f8;
+  --lasca-card-bg: #fcfdfe;
+  --lasca-border: #cdd9e3;
+  --lasca-green: #2f7a4a;
+  --lasca-dark: #0a1422;
+}
+
+.lasca-theme-dark {
+  --lasca-primary: #e89968;
+  --lasca-accent: #a89372;
+  --lasca-text: #e8e0d0;
+  --lasca-muted: #6a665e;
+  --lasca-bg: #0a0b0e;
+  --lasca-card-bg: #15131a;
+  --lasca-border: #1f1d22;
+  --lasca-green: #6b8050;
+  --lasca-dark: #e8e0d0;
+}
+
+/* original: NO vars defined → var(--lasca-primary, #fallback) resolves
+   to the fallback color, preserving original PPT colors. */
+
+/* ===================================================================
+ * 氛围 variant 效果 — 按 data-lasca-ambient-{theme}="{id}" gate
+ * ===================================================================
+ * 默认没有 .lasca-theme-* 上的 animation — 完全由 Editor.tsx 设的
+ * data attribute 控制。没有 attribute = 没有 ambient.
+ * 每个 variant id 对应一块 selector + keyframes. */
+
+/* ---------- Shared keyframes ------------------------------------------ */
+
+/* 通用 breath (controls --lasca-fx-breath) */
+@keyframes lasca-breath-wide {
+  0%, 100% { --lasca-fx-breath: 0.25; }
+  50%      { --lasca-fx-breath: 1.00; }
+}
+@keyframes lasca-breath-subtle {
+  0%, 100% { --lasca-fx-breath: 0.55; }
+  50%      { --lasca-fx-breath: 1.00; }
+}
+/* 通用 pulse: brightness ±8% */
+@keyframes lasca-pulse {
+  0%, 100% { filter: brightness(1.00) saturate(1.00); }
+  50%      { filter: brightness(1.08) saturate(1.05); }
+}
+/* 通用 drift: 底纹 tile 缓移 */
+@keyframes lasca-texture-drift {
+  0%, 100% { background-position: 0% 0%, 0 0; }
+  50%      { background-position: 24px 12px, 0 0; }
+}
+@keyframes lasca-texture-drift-fast {
+  0%, 100% { background-position: 0% 0%, 0 0; }
+  50%      { background-position: 24px 0, 0 0; }
+}
+
+/* ---------- 岩壁 (warm) variants -------------------------------------- */
+
+/* warm:pulse — 脉动: 整体明度 ±8%, 6s */
+@keyframes lasca-warm-pulse {
+  0%, 100% { filter: brightness(1.00); }
+  35%      { filter: brightness(1.08); }
+  70%      { filter: brightness(0.94); }
+}
+[data-lasca-ambient-warm="pulse"] .lasca-theme-warm {
+  animation: lasca-warm-pulse 6s ease-in-out infinite, lasca-breath-subtle 8s ease-in-out infinite;
+}
+
+/* warm:glow — 暖晕: 中心暖橙柔光 脉动 */
+@keyframes lasca-warm-glow-pulse {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.75; }
+}
+[data-lasca-ambient-warm="glow"] .lasca-theme-warm {
+  animation: lasca-breath-subtle 6s ease-in-out infinite;
+}
+[data-lasca-ambient-warm="glow"] .lasca-theme-warm::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 55% 40% at 50% 45%, rgba(217,119,87,0.22) 0%, transparent 70%);
+  mix-blend-mode: multiply;
+  animation: lasca-warm-glow-pulse 5s ease-in-out infinite;
+}
+
+/* warm:drift — 沙纹: 底纹大幅缓漂 + 暖色条痕 ::before 横移 */
+@keyframes lasca-warm-drift-sweep {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
+}
+[data-lasca-ambient-warm="drift"] .lasca-theme-warm {
+  animation: lasca-texture-drift-fast 12s linear infinite, lasca-breath-subtle 8s ease-in-out infinite;
+}
+[data-lasca-ambient-warm="drift"] .lasca-theme-warm::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(95deg, transparent 40%, rgba(180,140,90,0.15) 50%, transparent 60%);
+  background-size: 300% 100%;
+  mix-blend-mode: multiply;
+  animation: lasca-warm-drift-sweep 18s ease-in-out infinite;
+}
+
+/* ---------- 冰川 (cool) variants -------------------------------------- */
+/* 冰川在 light bg 上: overlay blend 几乎不可见. 必须用 multiply + 更高 alpha. */
+
+/* cool:pulse — 脉动: brightness ±6% + ::before 冷蓝中心柔光脉动 */
+@keyframes lasca-cool-pulse-filter {
+  0%, 100% { filter: brightness(1.00); }
+  30%      { filter: brightness(1.10); }
+  65%      { filter: brightness(0.92); }
+}
+@keyframes lasca-cool-glow-pulse {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.55; }
+}
+[data-lasca-ambient-cool="pulse"] .lasca-theme-cool {
+  animation: lasca-breath-wide 4s ease-in-out infinite, lasca-cool-pulse-filter 5s ease-in-out infinite;
+}
+[data-lasca-ambient-cool="pulse"] .lasca-theme-cool::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 60% 45% at 50% 45%, rgba(15,61,122,0.16) 0%, transparent 70%);
+  mix-blend-mode: multiply;
+  animation: lasca-cool-glow-pulse 4s ease-in-out infinite;
+}
+
+/* cool:shimmer — 微光: 标题文字跑马灯，冰蓝反光从左到右扫过标题字面
+   节奏参照 LascaBrand.tsx 的 lascaBrandSweep: 停 → 快扫 → 停
+   CRITICAL: 不能用 !important — CSS 规范: !important 声明阻止动画覆盖该属性。
+   用 [style] 选择器提升特异性来赢过 inline style，而非 !important。 */
+@keyframes lasca-cool-shimmer-text {
+  0%, 15%  { background-position: 110% 50%; }
+  40%      { background-position: -10% 50%; }
+  50%, 100% { background-position: 110% 50%; }
+}
+[data-lasca-ambient-cool="shimmer"] .lasca-theme-cool h1,
+[data-lasca-ambient-cool="shimmer"] .lasca-theme-cool h2 {
+  /* Only color needs !important (overrides inline color from renderSlide).
+     All background props are free of !important so the animation can
+     control background-position without being blocked. */
+  background-image: linear-gradient(100deg,
+    #0f3d7a 0%, #0f3d7a 20%,
+    #5a9ad4 46%, #9ec5e4 50%, #5a9ad4 54%,
+    #0f3d7a 80%, #0f3d7a 100%);
+  background-size: 300% 100%;
+  background-position: 110% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: lasca-cool-shimmer-text 12s ease-in-out infinite;
+}
+
+/* cool:frost — 结霜: 底纹缓移 + brightness 脉动 ±5% + 冷蓝边缘 vignette */
+@keyframes lasca-cool-frost-filter {
+  0%, 100% { filter: brightness(1.00) saturate(1.00); }
+  50%      { filter: brightness(1.08) saturate(0.90); }
+}
+@keyframes lasca-cool-frost-vignette {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.55; }
+}
+[data-lasca-ambient-cool="frost"] .lasca-theme-cool {
+  animation: lasca-texture-drift 18s linear infinite, lasca-cool-frost-filter 6s ease-in-out infinite, lasca-breath-wide 5s ease-in-out infinite;
+}
+[data-lasca-ambient-cool="frost"] .lasca-theme-cool::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(40,80,140,0.14) 100%);
+  animation: lasca-cool-frost-vignette 8s ease-in-out infinite;
+}
+
+/* ---------- 洞穴 (dark) variants -------------------------------------- */
+
+/* dark:campfire — 篝火: brightness/saturate ±12% 不规则跳动 + 暖橙 vignette ::before */
+@keyframes lasca-dark-flicker {
+  0%, 100% { filter: brightness(1.00) saturate(1.00); }
+  12%      { filter: brightness(1.13) saturate(1.14); }
+  32%      { filter: brightness(0.88) saturate(0.88); }
+  52%      { filter: brightness(1.10) saturate(1.12); }
+  75%      { filter: brightness(0.86) saturate(0.85); }
+  90%      { filter: brightness(1.06) saturate(1.08); }
+}
+@keyframes lasca-dark-campfire-glow {
+  0%, 100% { opacity: 0.20; }
+  30%      { opacity: 0.60; }
+  65%      { opacity: 0.35; }
+}
+[data-lasca-ambient-dark="campfire"] .lasca-theme-dark {
+  animation: lasca-dark-flicker 4s ease-in-out infinite, lasca-breath-wide 5s ease-in-out infinite;
+}
+[data-lasca-ambient-dark="campfire"] .lasca-theme-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 65% 50% at 50% 55%, rgba(232,153,104,0.22) 0%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: lasca-dark-campfire-glow 4s ease-in-out infinite;
+}
+
+/* dark:starry — 星空: ::before 星层闪烁 + 缓漂 */
+@keyframes lasca-dark-star-twinkle {
+  0%, 100% { opacity: 0.45; }
+  25%      { opacity: 0.90; }
+  50%      { opacity: 0.25; }
+  75%      { opacity: 0.75; }
+}
+@keyframes lasca-dark-star-drift {
+  0%   { background-position: 40% 25%; }
+  100% { background-position: 22% 29%; }
+}
+[data-lasca-ambient-dark="starry"] .lasca-theme-dark {
+  animation: lasca-breath-wide 6s ease-in-out infinite;
+}
+[data-lasca-ambient-dark="starry"] .lasca-theme-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Cg fill='rgba(255,245,220,0.9)'%3E%3Ccircle cx='45' cy='30' r='0.7'/%3E%3Ccircle cx='120' cy='68' r='1.1'/%3E%3Ccircle cx='200' cy='22' r='0.6'/%3E%3Ccircle cx='275' cy='90' r='0.9'/%3E%3Ccircle cx='350' cy='40' r='1.3'/%3E%3Ccircle cx='420' cy='72' r='0.7'/%3E%3Ccircle cx='490' cy='18' r='0.8'/%3E%3Ccircle cx='555' cy='55' r='1.0'/%3E%3Ccircle cx='78' cy='140' r='0.8'/%3E%3Ccircle cx='165' cy='175' r='0.5'/%3E%3Ccircle cx='240' cy='135' r='1.2'/%3E%3Ccircle cx='320' cy='190' r='0.7'/%3E%3Ccircle cx='395' cy='155' r='0.9'/%3E%3Ccircle cx='460' cy='210' r='0.6'/%3E%3Ccircle cx='530' cy='165' r='1.0'/%3E%3Ccircle cx='30' cy='235' r='1.1'/%3E%3Ccircle cx='110' cy='260' r='0.8'/%3E%3Ccircle cx='185' cy='230' r='0.6'/%3E%3Ccircle cx='270' cy='285' r='1.0'/%3E%3Ccircle cx='345' cy='245' r='0.7'/%3E%3Ccircle cx='425' cy='295' r='0.9'/%3E%3Ccircle cx='500' cy='250' r='0.8'/%3E%3Ccircle cx='570' cy='310' r='1.1'/%3E%3Ccircle cx='55' cy='340' r='0.6'/%3E%3Ccircle cx='145' cy='360' r='1.2'/%3E%3Ccircle cx='225' cy='330' r='0.8'/%3E%3Ccircle cx='310' cy='375' r='0.7'/%3E%3Ccircle cx='390' cy='345' r='0.9'/%3E%3Ccircle cx='475' cy='385' r='0.6'/%3E%3Ccircle cx='550' cy='355' r='1.0'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 600px 400px;
+  mix-blend-mode: screen;
+  animation: lasca-dark-star-twinkle 7s ease-in-out infinite, lasca-dark-star-drift 60s linear infinite;
+}
+
+/* dark:candle — 烛光: 大面积暖橙中心柔光, α更高, 脉动幅度更大 */
+@keyframes lasca-dark-candle-glow {
+  0%, 100% { opacity: 0.15; }
+  35%      { opacity: 0.75; }
+  60%      { opacity: 0.40; }
+  85%      { opacity: 0.65; }
+}
+[data-lasca-ambient-dark="candle"] .lasca-theme-dark {
+  animation: lasca-breath-wide 6s ease-in-out infinite;
+}
+[data-lasca-ambient-dark="candle"] .lasca-theme-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(232,153,104,0.38) 0%, transparent 65%);
+  mix-blend-mode: screen;
+  animation: lasca-dark-candle-glow 5s ease-in-out infinite;
+}
+
+/* ---------- 原样 (original) variant ---------------------------------------- */
+/* Neutral pulse — theme-agnostic, works on any source color palette */
+
+[data-lasca-ambient-original="pulse"] .lasca-theme-original {
+  animation: lasca-pulse 6s ease-in-out infinite, lasca-breath-subtle 8s ease-in-out infinite;
+}
+
+/* ---------- Premium theme ambient rules ------------------------------------ */
+/* Premium themes reuse the same keyframes as base themes. Each ambient effect
+ * (pulse/glow/drift/shimmer/frost/campfire/starry/candle) needs to work with
+ * every premium theme class (.lasca-theme-stripe, .lasca-theme-linear, etc.).
+ *
+ * Strategy: for each premium theme, define the same ambient selectors using
+ * the base theme's keyframe animations. We use a helper variable approach —
+ * each premium theme's ambient attribute gates the same CSS as the base theme.
+ * -------------------------------------------------------------------------- */
+
+/* Helper: all premium theme classes (used with :is() below) */
+
+/* -- warm ambients applied to premium themes -- */
+[data-lasca-ambient-stripe="pulse"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="pulse"] .lasca-theme-notion,
+[data-lasca-ambient-apple="pulse"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="pulse"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="pulse"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="pulse"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="pulse"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="pulse"] .lasca-theme-ferrari {
+  animation: lasca-warm-pulse 6s ease-in-out infinite, lasca-breath-subtle 8s ease-in-out infinite;
+}
+
+[data-lasca-ambient-stripe="glow"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="glow"] .lasca-theme-notion,
+[data-lasca-ambient-apple="glow"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="glow"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="glow"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="glow"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="glow"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="glow"] .lasca-theme-ferrari {
+  animation: lasca-breath-subtle 6s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="glow"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="glow"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="glow"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="glow"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="glow"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="glow"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="glow"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="glow"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 55% 40% at 50% 45%, rgba(217,119,87,0.22) 0%, transparent 70%);
+  mix-blend-mode: multiply;
+  animation: lasca-warm-glow-pulse 5s ease-in-out infinite;
+}
+
+[data-lasca-ambient-stripe="drift"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="drift"] .lasca-theme-notion,
+[data-lasca-ambient-apple="drift"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="drift"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="drift"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="drift"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="drift"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="drift"] .lasca-theme-ferrari {
+  animation: lasca-texture-drift-fast 12s linear infinite, lasca-breath-subtle 8s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="drift"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="drift"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="drift"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="drift"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="drift"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="drift"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="drift"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="drift"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: linear-gradient(95deg, transparent 40%, rgba(180,140,90,0.15) 50%, transparent 60%);
+  background-size: 300% 100%;
+  mix-blend-mode: multiply;
+  animation: lasca-warm-drift-sweep 18s ease-in-out infinite;
+}
+
+/* -- cool ambients applied to premium themes -- */
+[data-lasca-ambient-stripe="shimmer"] .lasca-theme-stripe h1,
+[data-lasca-ambient-stripe="shimmer"] .lasca-theme-stripe h2,
+[data-lasca-ambient-notion="shimmer"] .lasca-theme-notion h1,
+[data-lasca-ambient-notion="shimmer"] .lasca-theme-notion h2,
+[data-lasca-ambient-apple="shimmer"] .lasca-theme-apple h1,
+[data-lasca-ambient-apple="shimmer"] .lasca-theme-apple h2,
+[data-lasca-ambient-airbnb="shimmer"] .lasca-theme-airbnb h1,
+[data-lasca-ambient-airbnb="shimmer"] .lasca-theme-airbnb h2,
+[data-lasca-ambient-linear="shimmer"] .lasca-theme-linear h1,
+[data-lasca-ambient-linear="shimmer"] .lasca-theme-linear h2,
+[data-lasca-ambient-vercel="shimmer"] .lasca-theme-vercel h1,
+[data-lasca-ambient-vercel="shimmer"] .lasca-theme-vercel h2,
+[data-lasca-ambient-spotify="shimmer"] .lasca-theme-spotify h1,
+[data-lasca-ambient-spotify="shimmer"] .lasca-theme-spotify h2,
+[data-lasca-ambient-ferrari="shimmer"] .lasca-theme-ferrari h1,
+[data-lasca-ambient-ferrari="shimmer"] .lasca-theme-ferrari h2 {
+  background-image: linear-gradient(100deg,
+    currentColor 0%, currentColor 20%,
+    rgba(255,255,255,0.6) 46%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.6) 54%,
+    currentColor 80%, currentColor 100%);
+  background-size: 300% 100%;
+  background-position: 110% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: lasca-cool-shimmer-text 12s ease-in-out infinite;
+}
+
+[data-lasca-ambient-stripe="frost"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="frost"] .lasca-theme-notion,
+[data-lasca-ambient-apple="frost"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="frost"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="frost"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="frost"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="frost"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="frost"] .lasca-theme-ferrari {
+  animation: lasca-texture-drift 18s linear infinite, lasca-cool-frost-filter 6s ease-in-out infinite, lasca-breath-wide 5s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="frost"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="frost"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="frost"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="frost"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="frost"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="frost"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="frost"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="frost"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(40,80,140,0.14) 100%);
+  animation: lasca-cool-frost-vignette 8s ease-in-out infinite;
+}
+
+/* -- dark ambients applied to premium themes -- */
+[data-lasca-ambient-stripe="campfire"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="campfire"] .lasca-theme-notion,
+[data-lasca-ambient-apple="campfire"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="campfire"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="campfire"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="campfire"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="campfire"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="campfire"] .lasca-theme-ferrari {
+  animation: lasca-dark-flicker 4s ease-in-out infinite, lasca-breath-wide 5s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="campfire"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="campfire"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="campfire"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="campfire"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="campfire"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="campfire"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="campfire"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="campfire"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 65% 50% at 50% 55%, rgba(232,153,104,0.22) 0%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: lasca-dark-campfire-glow 4s ease-in-out infinite;
+}
+
+[data-lasca-ambient-stripe="starry"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="starry"] .lasca-theme-notion,
+[data-lasca-ambient-apple="starry"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="starry"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="starry"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="starry"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="starry"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="starry"] .lasca-theme-ferrari {
+  animation: lasca-breath-wide 6s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="starry"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="starry"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="starry"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="starry"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="starry"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="starry"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="starry"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="starry"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Cg fill='rgba(255,245,220,0.9)'%3E%3Ccircle cx='45' cy='30' r='0.7'/%3E%3Ccircle cx='120' cy='68' r='1.1'/%3E%3Ccircle cx='200' cy='22' r='0.6'/%3E%3Ccircle cx='275' cy='90' r='0.9'/%3E%3Ccircle cx='350' cy='40' r='1.3'/%3E%3Ccircle cx='420' cy='72' r='0.7'/%3E%3Ccircle cx='490' cy='18' r='0.8'/%3E%3Ccircle cx='555' cy='55' r='1.0'/%3E%3Ccircle cx='78' cy='140' r='0.8'/%3E%3Ccircle cx='165' cy='175' r='0.5'/%3E%3Ccircle cx='240' cy='135' r='1.2'/%3E%3Ccircle cx='320' cy='190' r='0.7'/%3E%3Ccircle cx='395' cy='155' r='0.9'/%3E%3Ccircle cx='460' cy='210' r='0.6'/%3E%3Ccircle cx='530' cy='165' r='1.0'/%3E%3Ccircle cx='30' cy='235' r='1.1'/%3E%3Ccircle cx='110' cy='260' r='0.8'/%3E%3Ccircle cx='185' cy='230' r='0.6'/%3E%3Ccircle cx='270' cy='285' r='1.0'/%3E%3Ccircle cx='345' cy='245' r='0.7'/%3E%3Ccircle cx='425' cy='295' r='0.9'/%3E%3Ccircle cx='500' cy='250' r='0.8'/%3E%3Ccircle cx='570' cy='310' r='1.1'/%3E%3Ccircle cx='55' cy='340' r='0.6'/%3E%3Ccircle cx='145' cy='360' r='1.2'/%3E%3Ccircle cx='225' cy='330' r='0.8'/%3E%3Ccircle cx='310' cy='375' r='0.7'/%3E%3Ccircle cx='390' cy='345' r='0.9'/%3E%3Ccircle cx='475' cy='385' r='0.6'/%3E%3Ccircle cx='550' cy='355' r='1.0'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 600px 400px;
+  mix-blend-mode: screen;
+  animation: lasca-dark-star-twinkle 7s ease-in-out infinite, lasca-dark-star-drift 60s linear infinite;
+}
+
+[data-lasca-ambient-stripe="candle"] .lasca-theme-stripe,
+[data-lasca-ambient-notion="candle"] .lasca-theme-notion,
+[data-lasca-ambient-apple="candle"] .lasca-theme-apple,
+[data-lasca-ambient-airbnb="candle"] .lasca-theme-airbnb,
+[data-lasca-ambient-linear="candle"] .lasca-theme-linear,
+[data-lasca-ambient-vercel="candle"] .lasca-theme-vercel,
+[data-lasca-ambient-spotify="candle"] .lasca-theme-spotify,
+[data-lasca-ambient-ferrari="candle"] .lasca-theme-ferrari {
+  animation: lasca-breath-wide 6s ease-in-out infinite;
+}
+[data-lasca-ambient-stripe="candle"] .lasca-theme-stripe::before,
+[data-lasca-ambient-notion="candle"] .lasca-theme-notion::before,
+[data-lasca-ambient-apple="candle"] .lasca-theme-apple::before,
+[data-lasca-ambient-airbnb="candle"] .lasca-theme-airbnb::before,
+[data-lasca-ambient-linear="candle"] .lasca-theme-linear::before,
+[data-lasca-ambient-vercel="candle"] .lasca-theme-vercel::before,
+[data-lasca-ambient-spotify="candle"] .lasca-theme-spotify::before,
+[data-lasca-ambient-ferrari="candle"] .lasca-theme-ferrari::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(232,153,104,0.38) 0%, transparent 65%);
+  mix-blend-mode: screen;
+  animation: lasca-dark-candle-glow 5s ease-in-out infinite;
+}
+
+/* -- no-fx for premium themes (sidebar thumbnails) -- */
+[data-no-fx="1"] .lasca-theme-stripe::before,
+[data-no-fx="1"] .lasca-theme-linear::before,
+[data-no-fx="1"] .lasca-theme-notion::before,
+[data-no-fx="1"] .lasca-theme-vercel::before,
+[data-no-fx="1"] .lasca-theme-apple::before,
+[data-no-fx="1"] .lasca-theme-spotify::before,
+[data-no-fx="1"] .lasca-theme-airbnb::before,
+[data-no-fx="1"] .lasca-theme-ferrari::before {
+  animation: none !important;
+  opacity: 0 !important;
+  will-change: auto !important;
+}
+
+/* ----- Sidebar 缩略图 / explicit no-fx — 缩略图里保留 element-level flicker/breath,
+ *       关 ::before 星空层 (缩略图面积太小, 星点看不清只会显脏) */
+
+[data-no-fx="1"] .lasca-theme-warm::before,
+[data-no-fx="1"] .lasca-theme-cool::before,
+[data-no-fx="1"] .lasca-theme-dark::before,
+[data-no-fx="1"] .lasca-theme-original::before {
+  animation: none !important;
+  opacity: 0 !important;
+  will-change: auto !important;
+}
+
+/* ----- 两个独立开关: 底纹 (Texture) + 氛围 (Ambience) ------------------------
+ *
+ * 底纹 = 静态 SVG 背景图案 (topographic contours / hex lattice / constellations)
+ * 氛围 = 动态层 (flicker / twinkle / breath / sweep)
+ *
+ * 两个正交: 可以只关动、保留底纹 (texture on + ambient off);
+ *         也可以只关底纹、保留动 (texture off + ambient on);
+ *         也可以全关 (两个都 off = 经典平面).
+ *
+ * Editor.tsx 把 deck.texture / deck.ambient 的 false 值映射为
+ * <html data-lasca-texture="off" data-lasca-ambient="off">.
+ * ---------------------------------------------------------------------------- */
+
+/* ---- 底纹 关闭: 剥离 SVG 背景层, 保留基础色/渐变 ---- */
+[data-lasca-texture="off"] .lasca-theme-warm {
+  background: #faf9f5 !important;
+}
+[data-lasca-texture="off"] .lasca-theme-cool {
+  background: linear-gradient(180deg,#eff4f8 0%,#f4f6f9 100%) !important;
+}
+[data-lasca-texture="off"] .lasca-theme-dark {
+  background: radial-gradient(ellipse 80% 60% at 50% 35%,#14151a 0%,#0a0b0e 75%) !important;
+}
+[data-lasca-texture="off"] .lasca-theme-original {
+  background: #ffffff !important;
+}
+
+/* Hide faithful texture overlay div when texture is off */
+[data-lasca-texture="off"] [data-lasca-texture-overlay] {
+  display: none !important;
+}
+
+/* ---- 氛围 关闭: 停 animation + filter, 隐藏 ::before ---- */
+[data-lasca-ambient="off"] .lasca-theme-warm,
+[data-lasca-ambient="off"] .lasca-theme-cool,
+[data-lasca-ambient="off"] .lasca-theme-dark,
+[data-lasca-ambient="off"] .lasca-theme-original {
+  animation: none !important;
+  filter: none !important;
+}
+
+[data-lasca-ambient="off"] .lasca-theme-warm::before,
+[data-lasca-ambient="off"] .lasca-theme-cool::before,
+[data-lasca-ambient="off"] .lasca-theme-dark::before,
+[data-lasca-ambient="off"] .lasca-theme-original::before {
+  display: none !important;
+}
+
+/* ----- Reduced motion — accessibility -------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lasca-theme-warm,
+  .lasca-theme-cool,
+  .lasca-theme-dark,
+  .lasca-theme-original,
+  .lasca-theme-warm::before,
+  .lasca-theme-cool::before,
+  .lasca-theme-dark::before,
+  .lasca-theme-original::before {
+    animation: none !important;
+  }
+}
+
+/* ----- Print — PDF export ----------------------------------------------------*/
+
+@media print {
+  .lasca-theme-warm,
+  .lasca-theme-cool,
+  .lasca-theme-dark,
+  .lasca-theme-original {
+    animation: none !important;
+    filter: none !important;
+  }
+  .lasca-theme-warm::before,
+  .lasca-theme-cool::before,
+  .lasca-theme-dark::before,
+  .lasca-theme-original::before {
+    display: none !important;
+  }
+}
+
+/* ── Mobile responsive ─────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Landing hero: stack cards vertically */
+  .landing-cards-grid { grid-template-columns: 1fr !important; }
+
+  /* Landing hero: scale headline */
+  .landing-headline { font-size: 36px !important; letter-spacing: -1px !important; }
+
+  /* Create flow: full-width containers */
+  .create-container { max-width: 100% !important; padding-left: 16px !important; padding-right: 16px !important; }
+
+  /* Safe area insets for notched phones */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-headline { font-size: 28px !important; }
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Preset: bilingual-report
+ * 机构研报风格：Kai + 暖纸色 + 橙色 accent
+ * 见 app/src/lib/ai/harness/stylePresets.ts BILINGUAL_REPORT
+ * ───────────────────────────────────────────────────────── */
+.preset-bilingual-report {
+  /* Palette — skill-exact hex values */
+  --br-paper: #faf9f5;
+  --br-ink: #141413;
+  --br-orange: #d97757;
+  --br-blue: #6a9bcc;
+  --br-sage: #788c5d;
+  --br-mid: #b0aea5;
+  --br-warm-line: #ddd4c6;
+  --br-section-back: #f7f3ec;
+  --br-ink-wash: #fcfaf4;
+  --br-light-gray: #e8e6dc;
+  --br-h3-air: 40px; /* ≈30pt on screen; 30pt preserved in @media print */
+
+  /* Font stacks — Latin first, CJK fallback (browser splits glyphs automatically) */
+  --br-body: 'Lora', 'KaiTi', 'STKaiti', 'Kai', var(--font-noto-serif-sc), serif;
+  --br-display: 'Fraunces', 'KaiTi', 'STKaiti', 'Kai', var(--font-noto-serif-sc), serif;
+  --br-cn-bold: var(--font-noto-sans-sc), 'Heiti SC', sans-serif;
+  --br-label: var(--font-plus-jakarta), sans-serif;
+  --br-folio: var(--font-lora), serif;
+}
+
+.preset-bilingual-report,
+.preset-bilingual-report p,
+.preset-bilingual-report li,
+.preset-bilingual-report td,
+.preset-bilingual-report th {
+  font-family: var(--br-body);
+  color: var(--br-ink);
+  line-height: 1.8;
+}
+
+.preset-bilingual-report h1,
+.preset-bilingual-report h2,
+.preset-bilingual-report [data-field="title"],
+.preset-bilingual-report [data-field="heading"] {
+  font-family: var(--br-display);
+  color: var(--br-ink);
+}
+
+.preset-bilingual-report h3,
+.preset-bilingual-report [data-field="subheading"] {
+  font-family: var(--br-display);
+  font-weight: 700;
+  color: var(--br-ink);
+  margin-top: var(--br-h3-air);
+}
+
+/* Uppercase tracked EN labels (skill's Outfit substitute) */
+.preset-bilingual-report .br-label,
+.preset-bilingual-report [data-field="label"],
+.preset-bilingual-report [data-field="kicker"] {
+  font-family: var(--br-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--br-orange);
+  font-size: 0.72em;
+}
+
+/* KPI / bold CN numbers — heiti */
+.preset-bilingual-report .br-kpi,
+.preset-bilingual-report [data-field="metric"],
+.preset-bilingual-report [data-field="value"] {
+  font-family: var(--br-cn-bold);
+  font-weight: 700;
+  color: var(--br-ink);
+}
+
+/* Page folio (page number) — Lora bold orange */
+.preset-bilingual-report .br-folio,
+.preset-bilingual-report [data-field="folio"],
+.preset-bilingual-report [data-field="pageNumber"] {
+  font-family: var(--br-folio);
+  font-weight: 700;
+  color: var(--br-orange);
+  font-size: 0.85em;
+}
+
+/* Source citation split (rendered by renderParagraphs in renderSlide.ts) */
+.preset-bilingual-report .citation-keep {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.preset-bilingual-report .citation {
+  font-size: 0.82em;
+  color: var(--br-mid);
+  margin-top: -4px;
+  line-height: 1.5;
+}
+
+/* Paper page background default for all report-* layouts.
+   Declared FIRST so specific layout rules below can override (same specificity → source order). */
+.preset-bilingual-report [data-layout^="report-"] {
+  background-color: var(--br-paper);
+}
+
+/* report-section: single-column, orange left rule, section-back tint */
+.preset-bilingual-report [data-layout="report-section"] {
+  background: var(--br-section-back);
+  border-left: 4px solid var(--br-orange);
+  padding-left: 32px;
+}
+/* Hide the callout right-column when preset is active (skill is single-column) */
+.preset-bilingual-report [data-layout="report-section"] [data-field="callout"] {
+  display: none;
+}
+
+/* report-quote: orange left bar + Kai quote + Lora attribution */
+.preset-bilingual-report [data-layout="report-quote"] {
+  border-left: 4px solid var(--br-orange);
+  padding-left: 32px;
+}
+.preset-bilingual-report [data-layout="report-quote"] [data-field="attribution"] {
+  font-family: var(--br-folio);
+  color: var(--br-mid);
+  font-style: italic;
+}
+
+/* report-cover: minimal editorial — orange rule (baked into renderer) + warm paper.
+   renderReportCover emits: title, subtitle, author, date — no `brand` or `label`. */
+.preset-bilingual-report [data-layout="report-cover"] {
+  background: var(--br-paper);
+}
+.preset-bilingual-report [data-layout="report-cover"] [data-field="title"] {
+  font-family: var(--br-display);
+  font-weight: 700;
+}
+.preset-bilingual-report [data-layout="report-cover"] [data-field="subtitle"] {
+  font-family: var(--br-body);
+  color: var(--br-ink);
+}
+.preset-bilingual-report [data-layout="report-cover"] [data-field="author"],
+.preset-bilingual-report [data-layout="report-cover"] [data-field="date"] {
+  font-family: var(--br-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--br-mid);
+  font-size: 11px;
+}
+
+/* Tables — first column shaded, header gray, warm hairline */
+.preset-bilingual-report table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--br-body);
+}
+.preset-bilingual-report table th {
+  background: var(--br-light-gray);
+  font-family: var(--br-cn-bold);
+  font-weight: 700;
+  border-bottom: 1px solid var(--br-warm-line);
+  padding: 8px 12px;
+  text-align: left;
+}
+.preset-bilingual-report table td {
+  border-bottom: 1px solid var(--br-warm-line);
+  padding: 8px 12px;
+}
+.preset-bilingual-report table td:first-child {
+  background: var(--br-section-back);
+  font-weight: 500;
+}
+
+/* Hairlines on report page header/footer */
+.preset-bilingual-report [data-field="header"],
+.preset-bilingual-report [data-field="footer"] {
+  color: var(--br-mid);
+  font-family: var(--br-label);
+  font-size: 0.7em;
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--br-warm-line);
+}
+
+/* Print: preserve original pt-based spacing */
+@media print {
+  .preset-bilingual-report {
+    --br-h3-air: 30pt;
+  }
+}
+
+/* ===================================================================
+ * SCENE: Analyst — Institutional IB / PE / Consulting pitch-book styling
+ * ===================================================================
+ * Mirrors the `preset-bilingual-report` pattern: scoped via the
+ * `.scene-analyst` class (applied by React wrappers when deck.theme is
+ * analyst-*). Targets each layout via `[data-layout="..."]` attributes
+ * emitted by renderSlide() dispatcher. No layout render code is modified.
+ *
+ * Design inspirations:
+ *   an investment bank pitch books — double-rule headers, disciplined hierarchy
+ *   consulting-firm slideware — uppercase section labels, tabular numerics
+ *   Morgan Stanley — hairline-only surfaces, no rounded corners
+ *   CBRE Line of Sight — left-rule accents, structured column labels
+ * =================================================================== */
+
+.scene-analyst {
+  --analyst-hairline: rgba(15, 61, 122, 0.22);
+  --analyst-label-tracking: 0.14em;
+  --analyst-caps-size: 0.62rem;
+  --analyst-caps-weight: 600;
+}
+
+/* Tabular numerics everywhere — IB decks live and die by aligned columns */
+.scene-analyst [data-layout] {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---- cover: tighten title tracking, restrain subtitle hierarchy ---- */
+.scene-analyst [data-layout="cover"] [data-field="title"] {
+  letter-spacing: -0.018em;
+}
+.scene-analyst [data-layout="cover"] [data-field="subtitle"] {
+  text-transform: uppercase;
+  letter-spacing: var(--analyst-label-tracking);
+  font-size: 0.78rem !important;
+  font-weight: var(--analyst-caps-weight);
+  opacity: 0.75;
+}
+
+/* ---- big-number: flat accent, tabular digit, metadata-style footnote ---- */
+.scene-analyst [data-layout="big-number"] [data-field="number"] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  letter-spacing: -0.04em;
+}
+.scene-analyst [data-layout="big-number"] [data-field="footnote"] {
+  text-transform: uppercase;
+  letter-spacing: var(--analyst-label-tracking);
+  font-size: var(--analyst-caps-size) !important;
+  font-weight: var(--analyst-caps-weight);
+}
+
+/* ---- two-column: institutional column headers + sharp hairline divider ---- */
+/* Column headings get uppercase caps treatment with a 3px left accent bar,
+   mimicking IB column-label bars (CBRE / consulting-firm style) */
+.scene-analyst [data-layout="two-column"] [data-field$=".heading"] {
+  text-transform: uppercase !important;
+  letter-spacing: var(--analyst-label-tracking) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  padding-left: 10px;
+  border-left: 3px solid currentColor;
+  line-height: 1.4;
+}
+/* Sub-footer on each column (the "Built to stay..." line) — meta treatment */
+.scene-analyst [data-layout="two-column"] [data-field$=".sub"] {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.68rem !important;
+  font-weight: 500;
+  opacity: 0.7;
+}
+/* Strengthen the column divider from #cdd9e3 to the analyst hairline color */
+.scene-analyst [data-layout="two-column"] > div > div[style*="width:1px"] {
+  background: var(--analyst-hairline) !important;
+}
+
+/* ---- three-cards / card-grid-4: flat IB cards (sharp corners, hairlines) ---- */
+.scene-analyst [data-layout="three-cards"] > div > div,
+.scene-analyst [data-layout="card-grid-4"] > div > div,
+.scene-analyst [data-layout="grid-cards"] > div > div {
+  border-radius: 2px !important;
+  box-shadow: 0 0 0 1px var(--analyst-hairline) !important;
+}
+/* Card labels (01 / 02 / 03 or similar) — make them a proper data callout */
+.scene-analyst [data-layout="three-cards"] [data-field$=".label"],
+.scene-analyst [data-layout="card-grid-4"] [data-field$=".label"] {
+  text-transform: uppercase;
+  letter-spacing: var(--analyst-label-tracking);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 700 !important;
+}
+
+/* ---- stacked-bars / chart: tabular axis labels ---- */
+.scene-analyst [data-layout="stacked-bars"] text,
+.scene-analyst [data-layout="chart"] text,
+.scene-analyst [data-layout="bar-chart"] text {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+/* ---- quote: reduce emphasis (quotes are rare in IB decks) ---- */
+.scene-analyst [data-layout="quote"] [data-field="text"] {
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.scene-analyst [data-layout="quote"] [data-field="attribution"] {
+  text-transform: uppercase;
+  letter-spacing: var(--analyst-label-tracking);
+  font-size: var(--analyst-caps-size) !important;
+  font-weight: var(--analyst-caps-weight);
+}
+
+/* ---- title-body / agenda: editorial spacing ---- */
+.scene-analyst [data-layout="title-body"] [data-field="title"],
+.scene-analyst [data-layout="agenda"] [data-field="title"] {
+  letter-spacing: -0.012em;
+}
+
+/* ===================================================================
+ * Per-colorway structural differences. Each mirrors a real firm's
+ * layout signature so Light vs Mist vs Dark feel genuinely different,
+ * not just re-tinted versions of the same template.
+ * =================================================================== */
+
+/* ---- analyst-light: investment-bank — tight, conservative, GS-Blue tagged cards ---- */
+.scene-analyst [data-scene-variant="light"] [data-layout="three-cards"] > div > div,
+.scene-analyst [data-scene-variant="light"] [data-layout="card-grid-4"] > div > div,
+.scene-analyst [data-scene-variant="light"] [data-layout="grid-cards"] > div > div {
+  border-top: 2px solid #6B96C3 !important; /* Accent blue top-tag on every card */
+  border-radius: 0 !important; /* squared, IB-hard */
+  box-shadow: 0 0 0 1px #cdd9e3, 0 1px 2px rgba(0,0,0,0.04) !important;
+}
+/* investment-bank column labels: solid dark-navy bar (conservative) */
+.scene-analyst [data-scene-variant="light"] [data-layout="two-column"] [data-field$=".heading"] {
+  border-left-color: #00355F !important;
+  border-left-width: 4px !important;
+  color: #00355F !important;
+}
+
+/* ---- analyst-mist: consulting-firm — vivid-blue accents, editorial left-rule emphasis ---- */
+.scene-analyst [data-scene-variant="mist"] [data-layout="three-cards"] > div > div,
+.scene-analyst [data-scene-variant="mist"] [data-layout="card-grid-4"] > div > div,
+.scene-analyst [data-scene-variant="mist"] [data-layout="grid-cards"] > div > div {
+  border-left: 3px solid #2251FF !important; /* consulting-firm vivid-blue left tag */
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 1px rgba(5,28,44,0.12) !important;
+}
+/* consulting-firm column labels: vivid-blue bar, bolder caps */
+.scene-analyst [data-scene-variant="mist"] [data-layout="two-column"] [data-field$=".heading"] {
+  border-left-color: #2251FF !important;
+  border-left-width: 3px !important;
+  color: #051C2C !important;
+  letter-spacing: 0.16em !important;
+}
+/* consulting-firm big-number: vivid-blue accent on the number */
+.scene-analyst [data-scene-variant="mist"] [data-layout="big-number"] [data-field="number"] {
+  color: #2251FF !important;
+}
+
+/* ---- analyst-dark: private-equity — zero card chrome, pure spacing ---- */
+.scene-analyst [data-scene-variant="dark"] [data-layout="three-cards"] > div > div,
+.scene-analyst [data-scene-variant="dark"] [data-layout="card-grid-4"] > div > div,
+.scene-analyst [data-scene-variant="dark"] [data-layout="grid-cards"] > div > div {
+  background: transparent !important; /* cards disappear — pure spacing layout */
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-top: 1px solid rgba(232,224,208,0.25) !important;
+}
+/* PE-style column labels: cream hairline bar, restrained */
+.scene-analyst [data-scene-variant="dark"] [data-layout="two-column"] [data-field$=".heading"] {
+  border-left-color: rgba(232,224,208,0.5) !important;
+  border-left-width: 2px !important;
+  color: #e8e0d0 !important;
+  letter-spacing: 0.18em !important;
+}
+/* private-equity: oversized cover title tracking, very ceremonial */
+.scene-analyst [data-scene-variant="dark"] [data-layout="cover"] [data-field="title"] {
+  letter-spacing: 0.01em !important;
+}
+
+/* ===================================================================
+ * SCENE: Analyst — additional per-layout optimizations (v2)
+ * ===================================================================
+ * Cover / agenda / section-break / quote / image get scene-aware
+ * typographic polish so text-light and navigation pages feel as
+ * institutional as data-dense ones. Consumed alongside the existing
+ * .scene-analyst block above. */
+
+/* ---- Cover: tighten serif title, disciplined subtitle metadata ---- */
+.scene-analyst [data-layout="cover"] [data-field="title"] {
+  line-height: 1.08;
+}
+.scene-analyst [data-layout="cover"] [data-field="footnote"] {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.7rem !important;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+/* ---- analyst-mist cover: consulting-firm-authentic white ground + Fraunces serif title ----
+ * The `analyst-mist` theme bg is #f0f2f6 (cool gray) for internal pages, but real
+ * consulting-firm covers are pure white with a large Bodoni/Didone serif title. Override
+ * just the cover so the opening page reads as a clean editorial white, then
+ * internal pages resume the gray wash. */
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="cover"] {
+  background: #ffffff !important;
+}
+.scene-analyst [data-scene-variant="mist"] [data-layout="cover"] [data-field="title"] {
+  font-family: var(--font-display-serif), 'Fraunces', 'Bodoni Moda', serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* ---- Agenda / TOC: tabular numerals, hairline dividers between items ---- */
+.scene-analyst [data-layout="agenda"] [data-field^="items."] {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.scene-analyst [data-layout="agenda"] [data-field="title"] {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+}
+
+/* ---- Section break: oversized tracked number, minimal accessories ---- */
+.scene-analyst [data-layout="section-break"] [data-field="number"] {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+}
+.scene-analyst [data-layout="section-break"] [data-field="subtitle"] {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem !important;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+/* ---- Quote: disciplined serif italic, attribution in caps ---- */
+.scene-analyst [data-layout="quote"] [data-field="text"],
+.scene-analyst [data-layout="quote"] [data-field="body"] {
+  letter-spacing: -0.005em;
+}
+
+/* ---- Image layouts: scene-specific CSS filter on real images ---- */
+[data-scene="analyst"][data-scene-variant="light"][data-layout="image"] [style*="background-image"],
+[data-scene="analyst"][data-scene-variant="light"][data-layout="split-image"] [style*="background-image"] {
+  /* investment-bank: leave images raw, no filter */
+}
+[data-scene="analyst"][data-scene-variant="mist"] img,
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="image"][style*="background-image"],
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="split-image"] [style*="background-image"] {
+  filter: grayscale(0.85) contrast(1.05) brightness(1.02);
+}
+[data-scene="analyst"][data-scene-variant="dark"] img,
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="image"][style*="background-image"],
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="split-image"] [style*="background-image"] {
+  filter: grayscale(1) contrast(1.1);
+}
+
+/* ---- paletteWeight surfaced as CSS custom properties ---- */
+/* Not directly consumed by any current rule; exposed for future scene
+   rules that want ratio-aware sizing (e.g., accent-color area percentage). */
+[data-scene="analyst"][data-scene-variant="light"] { --weight-primary-pct: 60; --weight-accent-pct: 25; --weight-muted-pct: 15; }
+[data-scene="analyst"][data-scene-variant="mist"]  { --weight-primary-pct: 55; --weight-accent-pct: 30; --weight-muted-pct: 15; }
+[data-scene="analyst"][data-scene-variant="dark"]  { --weight-primary-pct: 70; --weight-accent-pct: 10; --weight-muted-pct: 20; }
+
+/* ===================================================================
+ * SCENE: Analyst — Functional-page COMPOSITION shifts (v3)
+ * ===================================================================
+ * Pairs with renderScenePanels() in algorithmicArt.ts. The panels occupy
+ * specific canvas regions (right 60%, full-bleed, etc.) — these CSS rules
+ * push the layout's text content out of the panel region and tune the
+ * page-type-specific typography shift each firm is known for.
+ * =================================================================== */
+
+/* ---- investment-bank Light — section-break gets navy color field; text flips white ---- */
+[data-scene="analyst"][data-scene-variant="light"][data-layout="section-break"] * {
+  color: #ffffff !important;
+}
+[data-scene="analyst"][data-scene-variant="light"][data-layout="section-break"] [data-field="title"] {
+  color: #ffffff !important;
+}
+
+/* ---- consulting-firm Mist — 40/60 split composition on cover + section-break ---- */
+/* Art panel occupies right 60%. Text lives in a 32% column on the LEFT with
+   an 8% breathing gutter between text and art (combined padding-right: 68%).
+   The gutter is cool-mist bg showing through — gives the text block visual
+   room to breathe, matches consulting-firm's editorial negative-space discipline. */
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="cover"],
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="section-break"] {
+  padding-right: 68% !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  justify-content: center !important;
+}
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="cover"] [data-field],
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="section-break"] [data-field] {
+  text-align: left !important;
+  max-width: 100% !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* Enlarged vivid-blue opening quote mark — canonical consulting signature */
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="quote"] [data-field="text"]::before,
+[data-scene="analyst"][data-scene-variant="mist"][data-layout="quote"] [data-field="body"]::before {
+  content: '\201C';
+  color: #2251FF;
+  font-size: 2.4em;
+  line-height: 0;
+  margin-right: 0.08em;
+  vertical-align: -0.22em;
+  font-weight: 700;
+}
+
+/* ---- PE Dark — full-bleed art + "number IS composition" ---- */
+/* Text sits on top of the full-bleed art; no padding shift needed */
+/* PE-style signature: number scaled to 180px+ with 80% whitespace */
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="big-number"] [data-field="number"] {
+  font-size: 180px !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.04em !important;
+}
+/* Oversized quote treatment — Chronicle-style dramatic serif.
+ * Apply ONLY to the main quote headline. The body field below (long
+ * supporting paragraphs) must respect renderQuote's fitToBudget output,
+ * otherwise 4+ paragraphs blow past the slide edge silently. */
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="quote"] [data-field="quote"] {
+  font-size: 2.6rem !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.01em !important;
+}
+/* Cover text legibility over art: add subtle text shadow for safety */
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="cover"] [data-field="title"],
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="section-break"] [data-field="title"] {
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6) !important;
+  position: relative;
+  z-index: 1;
+}
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="cover"] [data-field="subtitle"],
+[data-scene="analyst"][data-scene-variant="dark"][data-layout="cover"] [data-field="footnote"] {
+  text-shadow: 0 1px 10px rgba(0,0,0,0.5) !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================================================================
+ * Canvas corner controls — auto-hide UX
+ * =================================================================== */
+.lasca-canvas-corner {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
+}
+.lasca-canvas-frame:hover .lasca-canvas-corner,
+.lasca-canvas-corner.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}

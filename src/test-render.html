@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Lasca renderSlide 测试</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f0f0f0; padding: 32px; font-family: 'Poppins', 'Noto Sans SC', sans-serif; }
+    h1 { font-size: 24px; margin-bottom: 8px; color: #333; }
+    .theme-section { margin-bottom: 48px; }
+    .theme-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #666; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .slide-wrapper { border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+    .slide-label { font-size: 12px; color: #999; padding: 6px 12px; background: #fff; }
+    .slide-frame { width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <h1>Lasca renderSlide() — 8 Layouts × 3 Themes</h1>
+  <div id="app"></div>
+
+  <script type="module">
+    import { renderSlide, THEMES } from './renderSlide.js';
+
+    const testSlides = [
+      { layout: 'cover', data: { title: 'AI 不是 Magic', subtitle: '给普通员工的一张 AI 自学路线图', footnote: '从 Chatbox，到 Workflow，到 Agent 与 System', author: 'Lasca Team · 2026' } },
+      { layout: 'big-number', data: { number: '84%', text: '的人从未真正与 AI 对话过', footnote: '用过 AI 16% · 听说过 AI 60% · 从未对话过 84%', highlight: '认知鸿沟比技术鸿沟更大' } },
+      { layout: 'three-cards', data: { title: '三个阶段', cards: [
+        { label: '01', title: 'Chatbox / Copilot', desc: '先会用，再协作' },
+        { label: '02', title: 'Workflow / Agent', desc: '让 AI 参与流程' },
+        { label: '03', title: 'Harness / System', desc: '让 AI 进入系统' },
+      ] } },
+      { layout: 'two-column', data: { title: '从搜索思维到实习生思维', left: { heading: '✕ 搜索思维', content: '"帮我写个方案。"', sub: '没有目标、没有受众\n没有材料、没有格式要求' }, right: { heading: '✓ 实习生思维', content: '"给老板做10页汇报，受众是管理层..."' }, footer: '本质变化：不是 AI 更懂你了，而是你更会交代任务了' } },
+      { layout: 'stacked-bars', data: { title: 'AI 世界总地图', bars: [
+        { text: '模型层 — GPT / Claude / Gemini', color: 'primary' },
+        { text: '产品入口层 — ChatGPT / Claude App', color: 'accent' },
+        { text: '搜索层 — Perplexity / 秘塔搜索', color: 'green' },
+        { text: '工作台层 — Cherry Studio', color: 'muted' },
+        { text: 'Agent 层 — Manus / Claude Code', color: 'primary' },
+        { text: '系统接入层 — API / MCP', color: 'dark' },
+      ] } },
+      { layout: 'grid-cards', data: { title: 'Prompt 不是玄学，Context 才是核心', columns: 3, cards: [
+        { label: '01', title: '目标' }, { label: '02', title: '受众 / 场景' }, { label: '03', title: '材料' },
+        { label: '04', title: '规则' }, { label: '05', title: '输出格式' }, { label: '06', title: '评价标准' },
+      ], footer: '六要素越完整，AI 越不容易「自作聪明」' } },
+      { layout: 'quote', data: { quote: 'AI 不是许愿机', body: '真正的 Magic，是你如何设计它进入工作。\n从会聊天，到会工作，到会重构工作方式。', highlight: '现在就开始，不要等准备好。', author: 'AI 不是 Magic · Lasca Team · 2026' } },
+      { layout: 'image', data: { title: '看见未来', subtitle: '当 AI 成为你的第二大脑', image_prompt: 'abstract futuristic workspace, warm earth tones', image_url: '', overlay: 'dark' } },
+    ];
+
+    const themes = ['warm', 'cool', 'dark'];
+    let html = '';
+
+    for (const theme of themes) {
+      html += `<div class="theme-section">`;
+      html += `<div class="theme-title">Theme: ${theme} (${({ warm: '岩壁', cool: '冰川', dark: '洞穴' })[theme]})</div>`;
+      html += `<div class="grid">`;
+      for (const slide of testSlides) {
+        html += `<div class="slide-wrapper">`;
+        html += `<div class="slide-label">${slide.layout}</div>`;
+        html += `<div class="slide-frame">${renderSlide(slide, theme)}</div>`;
+        html += `</div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    document.getElementById('app').innerHTML = html;
+  </script>
+</body>
+</html>

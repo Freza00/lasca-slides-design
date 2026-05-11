@@ -1,0 +1,15 @@
+{
+  "brand": "figma",
+  "category": "devtool",
+  "aesthetic": "Collaborative Canvas — vibrant multi-color, playful yet professional, component-driven",
+  "colors": { "primary": "#f24e1e", "accent": "#a259ff", "bg": "#ffffff", "text": "#1e1e1e" },
+  "typography": { "display": "var(--font-display-sans)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Multi-color palette: red/purple/blue/green each with clear role",
+    "Component thinking: every element is reusable and consistent",
+    "Playful but precise: rounded corners + tight grid",
+    "Collaborative tone: 'together', 'shared', 'everyone'"
+  ],
+  "preferLayouts": ["grid-cards", "three-cards", "cover", "two-column"],
+  "promptGuide": "Apply this aesthetic: Bricolage Grotesque display, Plus Jakarta Sans body, white bg, near-black #1e1e1e text, use brand colors purposefully (red for primary CTA, purple for creative/design, blue for tech, green for success), 8px border-radius, consistent spacing grid (8px base), collaborative tone ('design together', 'shared workspace'), component-like card layouts with clear visual hierarchy."
+}

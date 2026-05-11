@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /editor
+Disallow: /present
+Disallow: /create
+Disallow: /admin
+Disallow: /api/
+Allow: /

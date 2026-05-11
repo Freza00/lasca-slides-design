@@ -1,0 +1,46 @@
+name: App CI
+
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'dev.sh'
+      - '.github/workflows/app-ci.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - 'dev.sh'
+      - '.github/workflows/app-ci.yml'
+
+concurrency:
+  group: app-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      JWT_SECRET: ci-dev-secret
+      AI_PROVIDER: openai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify app
+        run: npm run verify

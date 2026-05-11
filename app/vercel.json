@@ -1,0 +1,16 @@
+{
+  "functions": {
+    "src/app/api/ai/generate/route.ts": {
+      "maxDuration": 300
+    },
+    "src/app/api/ai/edit/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/ai/polish/route.ts": {
+      "maxDuration": 120
+    },
+    "src/app/api/ai/redesign/route.ts": {
+      "maxDuration": 120
+    }
+  }
+}

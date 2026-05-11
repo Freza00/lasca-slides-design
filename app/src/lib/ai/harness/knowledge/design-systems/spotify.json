@@ -1,0 +1,16 @@
+{
+  "brand": "spotify",
+  "category": "consumer",
+  "aesthetic": "Aurora — dark neon, characterful grotesque, green pulse in the dark",
+  "colors": { "primary": "#1ed760", "accent": "#1db954", "bg": "#121212", "text": "#ffffff" },
+  "typography": { "display": "var(--font-display-sans)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Green is light, not color — use for glow effects",
+    "Dark gray #121212 (not pure black) — has warmth",
+    "Cards with green outer glow: rgba(29,185,84,0.12)",
+    "Uppercase button labels + wide letter-spacing 1.4-2px",
+    "Podcast host tone: enthusiastic, direct, short-sentence rhythm"
+  ],
+  "preferLayouts": ["big-number", "three-cards", "cover", "stacked-bars", "grid-cards"],
+  "promptGuide": "Apply the Aurora aesthetic: Bricolage Grotesque weight 700-800 display (quirky angles on g/a/e), Plus Jakarta Sans weight 400 body, bg #121212 (not pure black), text #ffffff, green #1ed760 for play/CTA/active states only (functional, not decorative), cards with green glow shadow rgba(29,185,84,0.12), 16px border-radius, uppercase button labels + letter-spacing 1.4-2px, podcast tone: casual ('honestly', 'guess what'), green highlights for growth numbers, emoji allowed (≤1 per page, data-related only)."
+}

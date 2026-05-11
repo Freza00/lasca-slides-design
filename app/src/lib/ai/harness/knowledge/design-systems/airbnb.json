@@ -1,0 +1,16 @@
+{
+  "brand": "airbnb",
+  "category": "consumer",
+  "aesthetic": "Kiln Glaze — coral glaze, all-serif warmth, organic whitespace",
+  "colors": { "primary": "#ff385c", "accent": "#00a699", "bg": "#faf7f2", "text": "#222222" },
+  "typography": { "display": "var(--font-display-serif)", "body": "var(--font-body-serif)" },
+  "principles": [
+    "All-serif pairing: Fraunces italic + Lora — magazine warmth",
+    "Organic asymmetry: titles offset, irregular whitespace",
+    "Coral #ff5a5f for quote marks (60px+) as visual anchor",
+    "Every page has human trace: quote/name/story/scene",
+    "Storyteller tone: narrative warmth, specific details"
+  ],
+  "preferLayouts": ["quote", "three-cards", "cover", "two-column", "image"],
+  "promptGuide": "Apply the Kiln Glaze aesthetic: Fraunces italic weight 500 display, Lora weight 400 body (all-serif pairing), bg #faf7f2 (warm like pottery glaze), text #222222 (warm near-black), Coral red #ff385c for quote marks/key data/section dividers, teal #00a699 for secondary highlights, 20px+ border-radius (core identity), 3-layer shadows (ring 0.02 + near 0.04 + far 0.1), organic asymmetry (titles left-upper/right-lower), storyteller tone: 'we discovered', specific people/scenes, quote layout is star."
+}

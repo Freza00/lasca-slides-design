@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel)"
+
+echo "Lasca pre-push: running app verify..."
+cd "$repo_root/app"
+npm run verify

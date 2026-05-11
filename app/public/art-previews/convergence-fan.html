@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Field Ribbon — Editorial Cover (Analyst Mist)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&family=Fraunces:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+        .container { display: flex; min-height: 100vh; padding: 20px; gap: 20px; }
+        .sidebar {
+            width: 340px; flex-shrink: 0; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px); padding: 24px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(20,20,19,0.1);
+            overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 40px);
+        }
+        .sidebar h1 { font-family: 'Lora', serif; font-size: 24px; font-weight: 500; margin-bottom: 8px; }
+        .sidebar .subtitle { color: var(--anthropic-mid-gray); font-size: 13px; margin-bottom: 24px; line-height: 1.45; }
+        .control-section { margin-bottom: 24px; }
+        .control-section h3 {
+            font-size: 15px; font-weight: 600; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .control-section h3::before { content: '•'; color: var(--anthropic-orange); font-weight: bold; }
+        .seed-input {
+            width: 100%; background: var(--anthropic-light); padding: 10px;
+            border-radius: 8px; font-family: 'Courier New', monospace;
+            font-size: 13px; margin-bottom: 10px;
+            border: 1px solid var(--anthropic-light-gray); text-align: center;
+        }
+        .seed-input:focus {
+            outline: none; border-color: var(--anthropic-orange);
+            box-shadow: 0 0 0 2px rgba(217,119,87,0.1); background: white;
+        }
+        .seed-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .control-group { margin-bottom: 14px; }
+        .control-group label {
+            display: block; font-size: 12px; font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .slider-container { display: flex; align-items: center; gap: 10px; }
+        .slider-container input[type="range"] {
+            flex: 1; height: 4px; background: var(--anthropic-light-gray);
+            border-radius: 2px; outline: none; -webkit-appearance: none;
+        }
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 14px; height: 14px;
+            background: var(--anthropic-orange); border-radius: 50%; cursor: pointer;
+        }
+        .value-display {
+            font-family: 'Courier New', monospace; font-size: 11px;
+            color: var(--anthropic-mid-gray); min-width: 54px; text-align: right;
+        }
+        .color-group { margin-bottom: 12px; }
+        .color-group label { display: block; font-size: 11px; color: var(--anthropic-mid-gray); margin-bottom: 4px; }
+        .color-picker-container { display: flex; align-items: center; gap: 8px; }
+        .color-picker-container input[type="color"] {
+            width: 28px; height: 28px; border: none; border-radius: 6px; cursor: pointer; background: none; padding: 0;
+        }
+        .color-value { font-family: 'Courier New', monospace; font-size: 11px; color: var(--anthropic-mid-gray); }
+        .button {
+            background: var(--anthropic-orange); color: white; border: none;
+            padding: 9px 14px; border-radius: 6px; font-size: 13px;
+            font-weight: 500; cursor: pointer; width: 100%;
+        }
+        .button:hover { background: #c86641; }
+        .button.secondary { background: var(--anthropic-blue); }
+        .button.secondary:hover { background: #5a8bb8; }
+        .button.tertiary { background: var(--anthropic-green); }
+        .button.tertiary:hover { background: #6b7b52; }
+
+        .canvas-area { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
+        #canvas-container {
+            width: 100%; max-width: 1280px; border-radius: 4px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(20,20,19,0.12);
+            background: white;
+        }
+        #canvas-container canvas { display: block; width: 100% !important; height: auto !important; }
+        .loading { padding: 80px; text-align: center; color: var(--anthropic-mid-gray); }
+        .caption-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 12px; font-size: 11px; color: var(--anthropic-mid-gray);
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Flow Field Ribbon</h1>
+            <div class="subtitle">
+                Perlin-noise vector field with traced particles (Tyler Hobbs flow-field technique).
+                Each particle spawns along an invisible seed line, then drifts with the field, leaving a polyline trail.
+                All particles read the same noise field — so their trails stay near-parallel, producing a natural ribbon bundle.
+            </div>
+
+            <div class="control-section">
+                <h3>Seed</h3>
+                <input type="number" id="seed-input" class="seed-input" value="12345" onchange="updateSeed()">
+                <div class="seed-controls">
+                    <button class="button secondary" onclick="previousSeed()">← Prev</button>
+                    <button class="button secondary" onclick="nextSeed()">Next →</button>
+                </div>
+                <button class="button tertiary" onclick="randomSeedAndUpdate()">↻ Random</button>
+            </div>
+
+            <div class="control-section">
+                <h3>Composition</h3>
+
+                <div class="control-group">
+                    <label>Show full cover (text + art)</label>
+                    <div class="slider-container">
+                        <input type="range" id="showCover" min="0" max="1" step="1" value="1" oninput="updateParam('showCover', this.value)">
+                        <span class="value-display" id="showCover-value">1</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Spawn X (% of art panel width)</label>
+                    <div class="slider-container">
+                        <input type="range" id="startX" min="0.20" max="1.00" step="0.01" value="0.75" oninput="updateParam('startX', this.value)">
+                        <span class="value-display" id="startX-value">0.75</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Spawn Y (% of art panel height)</label>
+                    <div class="slider-container">
+                        <input type="range" id="startY" min="-0.10" max="0.60" step="0.01" value="0.12" oninput="updateParam('startY', this.value)">
+                        <span class="value-display" id="startY-value">0.12</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Spawn spread (width of seed line)</label>
+                    <div class="slider-container">
+                        <input type="range" id="spawnSpread" min="0.05" max="0.80" step="0.01" value="0.22" oninput="updateParam('spawnSpread', this.value)">
+                        <span class="value-display" id="spawnSpread-value">0.22</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Base flow angle (deg, 0=right, 90=down)</label>
+                    <div class="slider-container">
+                        <input type="range" id="baseAngle" min="0" max="360" step="1" value="135" oninput="updateParam('baseAngle', this.value)">
+                        <span class="value-display" id="baseAngle-value">135</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Angle variance (deg, how much noise deflects)</label>
+                    <div class="slider-container">
+                        <input type="range" id="angleRange" min="0" max="180" step="1" value="55" oninput="updateParam('angleRange', this.value)">
+                        <span class="value-display" id="angleRange-value">55</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Noise scale (smaller = smoother)</label>
+                    <div class="slider-container">
+                        <input type="range" id="noiseScale" min="0.0005" max="0.0100" step="0.0001" value="0.0028" oninput="updateParam('noiseScale', this.value)">
+                        <span class="value-display" id="noiseScale-value">0.0028</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Particle count (N)</label>
+                    <div class="slider-container">
+                        <input type="range" id="N" min="30" max="400" step="10" value="200" oninput="updateParam('N', this.value)">
+                        <span class="value-display" id="N-value">200</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Step length (px)</label>
+                    <div class="slider-container">
+                        <input type="range" id="stepLen" min="0.5" max="3.0" step="0.1" value="1.2" oninput="updateParam('stepLen', this.value)">
+                        <span class="value-display" id="stepLen-value">1.2</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Max steps per particle</label>
+                    <div class="slider-container">
+                        <input type="range" id="maxSteps" min="80" max="700" step="10" value="380" oninput="updateParam('maxSteps', this.value)">
+                        <span class="value-display" id="maxSteps-value">380</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Stroke width (px)</label>
+                    <div class="slider-container">
+                        <input type="range" id="strokeW" min="0.30" max="1.50" step="0.05" value="0.60" oninput="updateParam('strokeW', this.value)">
+                        <span class="value-display" id="strokeW-value">0.60</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Opacity (base)</label>
+                    <div class="slider-container">
+                        <input type="range" id="opacity" min="0.05" max="0.80" step="0.02" value="0.32" oninput="updateParam('opacity', this.value)">
+                        <span class="value-display" id="opacity-value">0.32</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Lerp to white (paleness)</label>
+                    <div class="slider-container">
+                        <input type="range" id="pale" min="0.00" max="0.85" step="0.02" value="0.55" oninput="updateParam('pale', this.value)">
+                        <span class="value-display" id="pale-value">0.55</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Colors — editorial palette</h3>
+                <div class="color-group">
+                    <label>Accent (Vivid Blue)</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="colAccent" value="#2251FF" onchange="updateColor('colAccent', this.value)">
+                        <span class="color-value" id="colAccent-value">#2251FF</span>
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label>Pale Endpoint</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="colPale" value="#a8b5dd" onchange="updateColor('colPale', this.value)">
+                        <span class="color-value" id="colPale-value">#a8b5dd</span>
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label>Primary (Deep Blue, for text)</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="colPrimary" value="#051C2C" onchange="updateColor('colPrimary', this.value)">
+                        <span class="color-value" id="colPrimary-value">#051C2C</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Actions</h3>
+                <button class="button" onclick="resetParameters()">Reset</button>
+            </div>
+        </div>
+
+        <div class="canvas-area">
+            <div style="width:100%;max-width:1280px;">
+                <div id="canvas-container">
+                    <div class="loading">Initializing Flow Field Ribbon…</div>
+                </div>
+                <div class="caption-row">
+                    <span>16:9 cover · left 40% text · right 60% art panel</span>
+                    <span id="param-summary"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════
+        // FLOW FIELD RIBBON — editorial cover
+        // Technique: Perlin noise vector field + particle tracing (Tyler Hobbs).
+        //   1. Sample noise(x*s, y*s) at each position → an angle.
+        //   2. Move the particle one step along that angle.
+        //   3. Repeat; record the polyline.
+        //   4. Because all particles read the SAME smooth noise field, their
+        //      trails stay near-parallel, drifting organically like a ribbon.
+        // ═══════════════════════════════════════════════════════════════════════
+
+        let params = {
+            seed: 12345,
+            showCover: 1,
+            // Spawn region (fractions of art panel) — spawn OUTSIDE the panel
+            // so particles flow IN and sweep across most of the art area.
+            startX: 1.08,
+            startY: -0.05,
+            spawnSpread: 0.85,   // width of seed line, as fraction of min(w,h)
+            // Flow field
+            baseAngle: 158,      // global direction (158° = mostly down-left, slight descent)
+            angleRange: 70,      // how many degrees the noise can deflect
+            noiseScale: 0.0020,  // smaller = smoother/larger curves
+            // Particle dynamics
+            N: 260,
+            stepLen: 1.6,
+            maxSteps: 780,
+            // Visual
+            strokeW: 0.55,
+            opacity: 0.28,
+            pale: 0.55,
+            colors: { accent: '#2251FF', pale: '#a8b5dd', primary: '#051C2C' },
+        };
+        let defaultParams = JSON.parse(JSON.stringify(params));
+
+        // Mulberry32 — matches production TS makeRng().
+        function makeRng(seed) {
+            let s = (seed | 0) || 1;
+            return () => {
+                s = Math.imul(s ^ (s >>> 15), s | 1);
+                s ^= s + Math.imul(s ^ (s >>> 7), s | 61);
+                return ((s ^ (s >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        function hexLerp(a, b, k) {
+            const h = s => [parseInt(s.slice(1,3),16), parseInt(s.slice(3,5),16), parseInt(s.slice(5,7),16)];
+            const ah = h(a), bh = h(b);
+            const r = Math.round(ah[0] + (bh[0]-ah[0])*k);
+            const g = Math.round(ah[1] + (bh[1]-ah[1])*k);
+            const bl = Math.round(ah[2] + (bh[2]-ah[2])*k);
+            return '#' + [r,g,bl].map(v => v.toString(16).padStart(2,'0')).join('');
+        }
+
+        function hexToRgb(hex) {
+            return { r: parseInt(hex.slice(1,3),16), g: parseInt(hex.slice(3,5),16), b: parseInt(hex.slice(5,7),16) };
+        }
+
+        function setup() {
+            const c = createCanvas(1280, 720);
+            c.parent('canvas-container');
+            noLoop();
+            document.querySelector('.loading').style.display = 'none';
+            drawComposition();
+        }
+
+        function drawComposition() {
+            background('#ffffff');
+
+            let artX, artY, artW, artH;
+            if (Number(params.showCover) === 1) {
+                artX = Math.round(width * 0.40);
+                artY = 0;
+                artW = width - artX;
+                artH = height;
+                drawCoverText();
+            } else {
+                artX = 0; artY = 0; artW = width; artH = height;
+            }
+
+            drawFlowFieldRibbon(artX, artY, artW, artH);
+            updateSummary();
+        }
+
+        function drawCoverText() {
+            push();
+            fill(params.colors.primary);
+            noStroke();
+            textFont('Poppins');
+            textStyle(BOLD);
+            textSize(13);
+            textAlign(LEFT, TOP);
+            text('L A S C A', 64, 44);
+
+            textFont('Fraunces');
+            textStyle(BOLD);
+            textSize(78);
+            textAlign(LEFT, TOP);
+            fill(params.colors.primary);
+            text('Cloud value', 64, 260);
+            text('in cash', 64, 344);
+            text('management', 64, 428);
+
+            textFont('Poppins');
+            textStyle(NORMAL);
+            textSize(18);
+            fill('#6a7789');
+            text('Webinar', 64, 540);
+            pop();
+        }
+
+        function drawFlowFieldRibbon(x0, y0, w, h) {
+            noiseSeed(params.seed | 0);
+            const rng = makeRng((params.seed | 0) * 5381 + 17);
+
+            const baseAng = params.baseAngle * Math.PI / 180;
+            const angRange = params.angleRange * Math.PI / 180;
+            const ns = Number(params.noiseScale);
+            const N = Math.round(params.N);
+            const maxSteps = Math.round(params.maxSteps);
+            const stepLen = Number(params.stepLen);
+
+            // Particles spawn along a line perpendicular to the base flow direction.
+            // That way they start near-parallel; the noise field then curves them
+            // together into a ribbon bundle.
+            const perpAng = baseAng + Math.PI / 2;
+            const spawnCx = x0 + w * params.startX;
+            const spawnCy = y0 + h * params.startY;
+            const spreadPx = params.spawnSpread * Math.min(w, h);
+
+            noFill();
+            strokeCap(ROUND);
+
+            for (let i = 0; i < N; i++) {
+                const t = N === 1 ? 0.5 : i / (N - 1);
+
+                // Position along the seed line, with tiny jitter to break lockstep
+                const uniform = (t - 0.5) * spreadPx;
+                const jitter = (rng() - 0.5) * (spreadPx / N);
+                const offset = uniform + jitter;
+
+                let px = spawnCx + Math.cos(perpAng) * offset;
+                let py = spawnCy + Math.sin(perpAng) * offset;
+
+                // Color per line: accent → pale across the bundle, then lerped toward white
+                const hue = hexLerp(params.colors.accent, params.colors.pale, t);
+                const col = hexLerp(hue, '#ffffff', params.pale);
+                const { r, g, b } = hexToRgb(col);
+                stroke(r, g, b, Math.round(params.opacity * 255));
+                strokeWeight(params.strokeW);
+
+                beginShape();
+                vertex(px, py);
+
+                for (let s = 0; s < maxSteps; s++) {
+                    const n = noise(px * ns, py * ns);
+                    const ang = baseAng + (n - 0.5) * angRange;
+
+                    px += Math.cos(ang) * stepLen;
+                    py += Math.sin(ang) * stepLen;
+
+                    // Bail when the particle drifts off the art panel (+ 8px slack)
+                    if (px < x0 - 8 || px > x0 + w + 8 || py < y0 - 8 || py > y0 + h + 8) break;
+                    vertex(px, py);
+                }
+                endShape();
+            }
+        }
+
+        function updateSummary() {
+            const p = params;
+            const s = `seed=${p.seed} N=${p.N} angle=${p.baseAngle}° var=${p.angleRange}° ns=${Number(p.noiseScale).toFixed(4)}`;
+            const el = document.getElementById('param-summary');
+            if (el) el.textContent = s;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // UI HANDLERS
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function updateParam(name, value) {
+            const num = Number(value);
+            const intFields = ['N', 'showCover', 'baseAngle', 'angleRange', 'maxSteps'];
+            params[name] = intFields.includes(name) ? Math.round(num) : num;
+            const lbl = document.getElementById(name + '-value');
+            if (lbl) lbl.textContent = value;
+            redraw();
+        }
+
+        function updateColor(id, value) {
+            if (id === 'colAccent') params.colors.accent = value;
+            if (id === 'colPale') params.colors.pale = value;
+            if (id === 'colPrimary') params.colors.primary = value;
+            const lbl = document.getElementById(id + '-value');
+            if (lbl) lbl.textContent = value;
+            redraw();
+        }
+
+        function updateSeedDisplay() {
+            document.getElementById('seed-input').value = params.seed;
+        }
+        function updateSeed() {
+            const v = parseInt(document.getElementById('seed-input').value);
+            if (v && v > 0) { params.seed = v; redraw(); }
+            else updateSeedDisplay();
+        }
+        function previousSeed() { params.seed = Math.max(1, params.seed - 1); updateSeedDisplay(); redraw(); }
+        function nextSeed()     { params.seed = params.seed + 1; updateSeedDisplay(); redraw(); }
+        function randomSeedAndUpdate() {
+            params.seed = Math.floor(Math.random() * 999999) + 1;
+            updateSeedDisplay(); redraw();
+        }
+
+        function resetParameters() {
+            params = JSON.parse(JSON.stringify(defaultParams));
+            const fields = ['showCover','startX','startY','spawnSpread','baseAngle','angleRange','noiseScale','N','stepLen','maxSteps','strokeW','opacity','pale'];
+            fields.forEach(f => {
+                const el = document.getElementById(f);
+                const lbl = document.getElementById(f + '-value');
+                if (el) el.value = params[f];
+                if (lbl) lbl.textContent = params[f];
+            });
+            document.getElementById('colAccent').value = params.colors.accent;
+            document.getElementById('colAccent-value').textContent = params.colors.accent;
+            document.getElementById('colPale').value = params.colors.pale;
+            document.getElementById('colPale-value').textContent = params.colors.pale;
+            document.getElementById('colPrimary').value = params.colors.primary;
+            document.getElementById('colPrimary-value').textContent = params.colors.primary;
+            updateSeedDisplay();
+            redraw();
+        }
+
+        window.addEventListener('load', updateSeedDisplay);
+    </script>
+</body>
+</html>

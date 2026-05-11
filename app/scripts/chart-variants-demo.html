@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="zh"><head>
+<meta charset="utf-8">
+<title>Lasca — chart embedding variants</title>
+<style>
+  body { margin:0; padding:40px 0 80px; background:#f0efeb; font-family:-apple-system,'SF Pro Text','PingFang SC',sans-serif; }
+  h1 { max-width:1040px; margin:0 auto 8px; padding:0 16px; font:600 22px/1.3 -apple-system,sans-serif; color:#222; }
+  .sub { max-width:1040px; margin:0 auto 20px; padding:0 16px; color:#666; font-size:14px; }
+</style>
+</head><body>
+<h1>Chart 嵌入变体样张（8 种）</h1>
+<p class="sub">每一页都不是整页图 — 图都被塞进了某个文字为主的布局里。验证"chart 不是 layout"已经跑通。</p>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">1. split-image · imagePosition=bottom（上文下图 / analyst 默认）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="split-image" class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5;">
+  <div style="flex:0 0 auto; display:flex; flex-direction:column; justify-content:center; padding:40px 56px; ">
+    <h2 data-field="title" style="font-size:27px; color:#d97757; margin-bottom:10px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">华东持续领跑，占集团营收的 38%</h2>
+    <p data-field="body" style="font-size:12px; color:#141413; line-height:1.7; margin:0; word-break:break-word; overflow-wrap:anywhere;">上半年华东区同比 +22%，西南与东北继续承压。<br>预计下半年区域差距进一步拉大。</p>
+  </div><div style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:32px 40px;">
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:16px;  font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">各区域 2024 年销售额</h2>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 400" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="272" x2="900" y2="272" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="204" x2="900" y2="204" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="136" x2="900" y2="136" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="68" x2="900" y2="68" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="0" x2="900" y2="0" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#e8e6dc" stroke-width="1"/>
+      <text x="72" y="344" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">0</text><text x="72" y="276" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">20</text><text x="72" y="208" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">40</text><text x="72" y="140" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">60</text><text x="72" y="72" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">80</text><text x="72" y="4" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">100</text>
+      
+      <rect x="121" y="61.19999999999999" width="115" height="278.8" rx="8" fill="#d97757"/>
+      <text x="178.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华东</text>
+      <text x="178.5" y="55.19999999999999" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">82</text>
+      <rect x="277" y="122.4" width="115" height="217.6" rx="8" fill="#6a9bcc"/>
+      <text x="334.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华南</text>
+      <text x="334.5" y="116.4" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">64</text>
+      <rect x="433" y="176.8" width="115" height="163.2" rx="8" fill="#788c5d"/>
+      <text x="490.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华北</text>
+      <text x="490.5" y="170.8" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">48</text>
+      <rect x="589" y="234.6" width="115" height="105.4" rx="8" fill="#b0aea5"/>
+      <text x="646.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">西南</text>
+      <text x="646.5" y="228.6" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">31</text>
+      <rect x="745" y="275.4" width="115" height="64.6" rx="8" fill="#141413"/>
+      <text x="802.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">东北</text>
+      <text x="802.5" y="269.4" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">19</text>
+      
+    </svg>
+  </div>
+  
+</div>
+    </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">2. split-image · imagePosition=top（上图下文）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="split-image" class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5;">
+  <div style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:32px 40px;">
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:16px;  font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">过去 12 个月活跃用户</h2>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 370" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="laqqdt95-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d97757" stop-opacity="0.28"/><stop offset="100%" stop-color="#d97757" stop-opacity="0.02"/></linearGradient></defs>
+      <line x1="80" y1="320" x2="880" y2="320" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="268.3333333333333" x2="880" y2="268.3333333333333" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="216.66666666666669" x2="880" y2="216.66666666666669" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="165" x2="880" y2="165" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="113.33333333333334" x2="880" y2="113.33333333333334" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="61.66666666666663" x2="880" y2="61.66666666666663" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="10" x2="880" y2="10" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="320" x2="880" y2="320" stroke="#e8e6dc" stroke-width="1"/>
+      <text x="72" y="324" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">0</text><text x="72" y="272.3333333333333" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">10</text><text x="72" y="220.66666666666669" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">20</text><text x="72" y="169" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">30</text><text x="72" y="117.33333333333334" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">40</text><text x="72" y="65.66666666666663" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">50</text><text x="72" y="14" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">60</text>
+      <text x="80" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">1月</text><text x="152.72727272727275" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">2月</text><text x="225.45454545454547" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">3月</text><text x="298.18181818181813" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">4月</text><text x="370.90909090909093" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">5月</text><text x="443.6363636363636" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">6月</text><text x="516.3636363636363" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">7月</text><text x="589.090909090909" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">8月</text><text x="661.8181818181819" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">9月</text><text x="734.5454545454546" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">10月</text><text x="807.2727272727273" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">11月</text><text x="880" y="340" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">12月</text>
+      <polygon points="80,320 80,258 152.72727272727275,242.5 225.45454545454547,227 298.18181818181813,211.5 370.90909090909093,201.16666666666666 443.6363636363636,185.66666666666666 516.3636363636363,175.33333333333334 589.090909090909,154.66666666666666 661.8181818181819,139.16666666666666 734.5454545454546,108.16666666666666 807.2727272727273,72 880,30.666666666666686 880,320" fill="url(#laqqdt95-0)" stroke="none"/><polyline points="80,258 152.72727272727275,242.5 225.45454545454547,227 298.18181818181813,211.5 370.90909090909093,201.16666666666666 443.6363636363636,185.66666666666666 516.3636363636363,175.33333333333334 589.090909090909,154.66666666666666 661.8181818181819,139.16666666666666 734.5454545454546,108.16666666666666 807.2727272727273,72 880,30.666666666666686" fill="none" stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="80" cy="258" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="152.72727272727275" cy="242.5" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="225.45454545454547" cy="227" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="298.18181818181813" cy="211.5" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="370.90909090909093" cy="201.16666666666666" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="443.6363636363636" cy="185.66666666666666" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="516.3636363636363" cy="175.33333333333334" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="589.090909090909" cy="154.66666666666666" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="661.8181818181819" cy="139.16666666666666" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="734.5454545454546" cy="108.16666666666666" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="807.2727272727273" cy="72" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="880" cy="30.666666666666686" r="3.5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/>
+      
+      
+      
+    </svg>
+  </div>
+  
+</div>
+    </div><div style="flex:0 0 auto; display:flex; flex-direction:column; justify-content:center; padding:40px 56px; ">
+    <h2 data-field="title" style="font-size:28px; color:#d97757; margin-bottom:10px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">活跃用户年内翻 4.6 倍</h2>
+    <p data-field="body" style="font-size:12px; color:#141413; line-height:1.7; margin:0; word-break:break-word; overflow-wrap:anywhere;">10 月后增长陡增，主要由付费推荐渠道拉动；<br>用户留存率同步提升至 62%。</p>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">3. split-image · imagePosition=right（左文右图）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="split-image" class="lasca-theme-warm" style="display:flex;  font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5;">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:40px 56px; ">
+    <h2 data-field="title" style="font-size:28px; color:#d97757; margin-bottom:16px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">订阅业务接近六成收入</h2>
+    <p data-field="body" style="font-size:16px; color:#141413; line-height:1.7; margin:0; word-break:break-word; overflow-wrap:anywhere;">订阅 + 企业合计占 82%，抗周期性好。<br>咨询是增速最快的第三曲线。</p>
+  </div><div style="flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:32px 40px;">
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:16px;  font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">收入结构</h2>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 880 400" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 240 190 L 240 40 A 150 150 0 1 1 167.73694888474273 321.44600200657953 Z" fill="#d97757"/>
+<path d="M 240 190 L 167.73694888474273 321.44600200657953 A 150 150 0 0 1 104.27594213009704 126.13310626523915 Z" fill="#6a9bcc"/>
+<path d="M 240 190 L 104.27594213009704 126.13310626523915 A 150 150 0 0 1 184.7813170972982 50.53352711676234 Z" fill="#788c5d"/>
+<path d="M 240 190 L 184.7813170972982 50.53352711676234 A 150 150 0 0 1 239.99999999999997 40 Z" fill="#b0aea5"/>
+      
+      <rect x="460" y="80" width="14" height="14" rx="3" fill="#d97757"/>
+      <text x="482" y="92" font-size="13" fill="#141413" font-family="inherit">订阅</text>
+      <text x="840" y="92" text-anchor="end" font-size="13" fill="#b0aea5" font-family="inherit">58 (58%)</text>
+      <rect x="460" y="116" width="14" height="14" rx="3" fill="#6a9bcc"/>
+      <text x="482" y="128" font-size="13" fill="#141413" font-family="inherit">企业</text>
+      <text x="840" y="128" text-anchor="end" font-size="13" fill="#b0aea5" font-family="inherit">24 (24%)</text>
+      <rect x="460" y="152" width="14" height="14" rx="3" fill="#788c5d"/>
+      <text x="482" y="164" font-size="13" fill="#141413" font-family="inherit">咨询</text>
+      <text x="840" y="164" text-anchor="end" font-size="13" fill="#b0aea5" font-family="inherit">12 (12%)</text>
+      <rect x="460" y="188" width="14" height="14" rx="3" fill="#b0aea5"/>
+      <text x="482" y="200" font-size="13" fill="#141413" font-family="inherit">其它</text>
+      <text x="840" y="200" text-anchor="end" font-size="13" fill="#b0aea5" font-family="inherit">6 (6%)</text>
+    </svg>
+  </div>
+  
+</div>
+    </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">4. split-image · imagePosition=left（左图右文）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="split-image" class="lasca-theme-warm" style="display:flex;  font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5;">
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:32px 40px;">
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:16px;  font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">价格 vs 销量</h2>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 380" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="320" x2="900" y2="320" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="258" x2="900" y2="258" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="196" x2="900" y2="196" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="134" x2="900" y2="134" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="72" x2="900" y2="72" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="10" x2="900" y2="10" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="10" x2="80" y2="320" stroke="#e8e6dc" stroke-width="1"/>
+      <line x1="80" y1="320" x2="900" y2="320" stroke="#e8e6dc" stroke-width="1"/>
+      <text x="72" y="324" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">0</text><text x="72" y="262" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">200</text><text x="72" y="200" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">400</text><text x="72" y="138" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">600</text><text x="72" y="76" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">800</text><text x="72" y="14" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">1000</text>
+      <text x="80" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">0</text><text x="244" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">100</text><text x="408" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">200</text><text x="572" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">300</text><text x="736" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">400</text><text x="900" y="338" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">500</text>
+      <text x="490" y="360" text-anchor="middle" font-size="11" font-weight="600" fill="#141413" font-family="inherit">价格（元）</text>
+      <text x="32" y="165" text-anchor="middle" font-size="11" font-weight="600" fill="#141413" font-family="inherit" transform="rotate(-90 32 165)">月销量</text>
+      <line x1="80" y1="35.977686472819244" x2="900" y2="281.1167509481669" stroke="#d97757" stroke-width="1.5" stroke-dasharray="5,3" stroke-opacity="0.7"/>
+      <circle cx="244" cy="65.80000000000001" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="276.79999999999995" cy="90.6" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="326" cy="106.10000000000002" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="375.2" cy="130.9" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="440.8" cy="152.6" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="506.40000000000003" cy="174.3" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="572" cy="192.9" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="654" cy="217.7" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="768.8" cy="239.39999999999998" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/><circle cx="900" cy="264.2" r="5" fill="#d97757" fill-opacity="0.78" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1"/>
+      
+    </svg>
+  </div>
+  
+</div>
+    </div><div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:40px 56px; ">
+    <h2 data-field="title" style="font-size:28px; color:#d97757; margin-bottom:16px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">价格敏感度高于预期</h2>
+    <p data-field="body" style="font-size:16px; color:#141413; line-height:1.7; margin:0; word-break:break-word; overflow-wrap:anywhere;">价格每上浮 100 元，月销量平均下滑 ~16%。<br>建议在 180–220 元区间找到甜区。</p>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">5. two-column · chartPosition=right（显式左文右图分栏）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="two-column" class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5; padding:40px 56px;"><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:16px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:42px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:68px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:94px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div>
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:24px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">核心问题：为什么华北掉队？</h2>
+  <div style="display:flex; gap:32px; flex:1; min-height:0; overflow:hidden;">
+    <div style="flex:1; display:flex; flex-direction:column; overflow:hidden; ">
+      <div style="flex:1; display:flex; flex-direction:column; background:#ffffff; border-radius:12px; padding:20px 22px;">
+        <div style="flex:1; min-height:0; overflow:hidden;">
+          <p data-field="left.heading" style="font-size:20px; color:#b0aea5; margin:0 0 16px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">三点归因</p>
+          <div><div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6a9bcc; flex-shrink:0; margin-top:7px;"></span>
+          <span data-field="left.content" style="font-size:17px; color:#141413; line-height:1.55; word-break:break-word; overflow-wrap:anywhere;">1. 经销商网络覆盖不足</span>
+        </div>
+<div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6a9bcc; flex-shrink:0; margin-top:7px;"></span>
+          <span data-field="left.content" style="font-size:17px; color:#141413; line-height:1.55; word-break:break-word; overflow-wrap:anywhere;">2. 线上投放预算削减 35%</span>
+        </div>
+<div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6a9bcc; flex-shrink:0; margin-top:7px;"></span>
+          <span data-field="left.content" style="font-size:17px; color:#141413; line-height:1.55; word-break:break-word; overflow-wrap:anywhere;">3. 竞品新品集中华北首发</span>
+        </div></div>
+          
+        </div>
+      </div>
+    </div>
+    <div style="width:1px; background:#e8e6dc;"></div>
+    <div style="flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:32px 40px;">
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:16px;  font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">各区域 2024 年销售额</h2>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 400" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="272" x2="900" y2="272" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="204" x2="900" y2="204" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="136" x2="900" y2="136" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="68" x2="900" y2="68" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="0" x2="900" y2="0" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#e8e6dc" stroke-width="1"/>
+      <text x="72" y="344" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">0</text><text x="72" y="276" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">20</text><text x="72" y="208" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">40</text><text x="72" y="140" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">60</text><text x="72" y="72" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">80</text><text x="72" y="4" text-anchor="end" font-size="10" fill="#b0aea5" font-family="inherit">100</text>
+      
+      <rect x="121" y="61.19999999999999" width="115" height="278.8" rx="8" fill="#d97757"/>
+      <text x="178.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华东</text>
+      <text x="178.5" y="55.19999999999999" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">82</text>
+      <rect x="277" y="122.4" width="115" height="217.6" rx="8" fill="#6a9bcc"/>
+      <text x="334.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华南</text>
+      <text x="334.5" y="116.4" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">64</text>
+      <rect x="433" y="176.8" width="115" height="163.2" rx="8" fill="#788c5d"/>
+      <text x="490.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">华北</text>
+      <text x="490.5" y="170.8" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">48</text>
+      <rect x="589" y="234.6" width="115" height="105.4" rx="8" fill="#b0aea5"/>
+      <text x="646.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">西南</text>
+      <text x="646.5" y="228.6" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">31</text>
+      <rect x="745" y="275.4" width="115" height="64.6" rx="8" fill="#141413"/>
+      <text x="802.5" y="358" text-anchor="middle" font-size="11" fill="#141413" font-family="inherit">东北</text>
+      <text x="802.5" y="269.4" text-anchor="middle" font-size="10" fill="#b0aea5" font-family="inherit">19</text>
+      
+    </svg>
+  </div>
+  
+</div></div>
+  </div>
+  
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">6. featured-grid · hero 文 + 多 tile 图（一页多图对比）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="featured-grid" class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5; padding:40px 56px;"><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:16px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:42px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:68px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:94px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div>
+  <div style="flex:0 0 auto; display:flex; flex-direction:column; justify-content:center; overflow:hidden; padding-bottom:16px;">
+    <h2 data-field="title" style="font-size:36px; color:#d97757; margin-bottom:8px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">三个业务线的不同温度</h2>
+    <p data-field="subtitle" style="font-size:18px; color:#141413; margin-bottom:4px; word-break:break-word; overflow-wrap:anywhere;">同一段时间，不同速度</p>
+    <p data-field="body" style="font-size:15px; color:#b0aea5; line-height:1.6; margin-top:8px; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">订阅稳定扩张，企业承压，咨询从零起步。</p>
+  </div>
+  <div style="width:100%; height:1px; background:#e8e6dc; margin-bottom:12px;"></div>
+  <div style="flex:1; min-height:0; min-width:0; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; align-content:start;">
+    
+    <div style="background:#ffffff; border-radius:12px; padding:16px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);  overflow:hidden;">
+      <div style="margin-bottom:8px; overflow:hidden; border-radius:8px;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:6px 8px;">
+  
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 330" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="layzwury-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d97757" stop-opacity="0.28"/><stop offset="100%" stop-color="#d97757" stop-opacity="0.02"/></linearGradient></defs>
+      <line x1="20" y1="320" x2="940" y2="320" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="268.3333333333333" x2="940" y2="268.3333333333333" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="216.66666666666669" x2="940" y2="216.66666666666669" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="165" x2="940" y2="165" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="113.33333333333334" x2="940" y2="113.33333333333334" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="61.66666666666663" x2="940" y2="61.66666666666663" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="10" x2="940" y2="10" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="20" y1="320" x2="940" y2="320" stroke="#e8e6dc" stroke-width="1"/>
+      
+      
+      <polygon points="20,320 20,258 103.63636363636364,242.5 187.27272727272728,227 270.9090909090909,211.5 354.54545454545456,201.16666666666666 438.1818181818182,185.66666666666666 521.8181818181818,175.33333333333334 605.4545454545455,154.66666666666666 689.0909090909091,139.16666666666666 772.7272727272727,108.16666666666666 856.3636363636364,72 940,30.666666666666686 940,320" fill="url(#layzwury-0)" stroke="none"/><polyline points="20,258 103.63636363636364,242.5 187.27272727272728,227 270.9090909090909,211.5 354.54545454545456,201.16666666666666 438.1818181818182,185.66666666666666 521.8181818181818,175.33333333333334 605.4545454545455,154.66666666666666 689.0909090909091,139.16666666666666 772.7272727272727,108.16666666666666 856.3636363636364,72 940,30.666666666666686" fill="none" stroke="#d97757" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="20" cy="258" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="103.63636363636364" cy="242.5" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="187.27272727272728" cy="227" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="270.9090909090909" cy="211.5" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="354.54545454545456" cy="201.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="438.1818181818182" cy="185.66666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="521.8181818181818" cy="175.33333333333334" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="605.4545454545455" cy="154.66666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="689.0909090909091" cy="139.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="772.7272727272727" cy="108.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="856.3636363636364" cy="72" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="940" cy="30.666666666666686" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/>
+      
+      
+      
+    </svg>
+  </div>
+  
+</div></div>
+      <div style="">
+        
+        
+        <p data-field="tiles.0.title" style="font-size:15px; color:#141413; font-weight:600; margin:0; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">订阅</p>
+        <p data-field="tiles.0.desc" style="font-size:12px; color:#b0aea5; margin-top:4px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">+18% YoY</p>
+      </div>
+    </div>
+
+    <div style="background:#ffffff; border-radius:12px; padding:16px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);  overflow:hidden;">
+      <div style="margin-bottom:8px; overflow:hidden; border-radius:8px;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:6px 8px;">
+  
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="70 0 840 360" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="272" x2="900" y2="272" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="204" x2="900" y2="204" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="136" x2="900" y2="136" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="68" x2="900" y2="68" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="0" x2="900" y2="0" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#e8e6dc" stroke-width="1"/>
+      
+      
+      <rect x="121" y="61.19999999999999" width="115" height="278.8" rx="8" fill="#d97757"/>
+      
+      
+      <rect x="277" y="122.4" width="115" height="217.6" rx="8" fill="#6a9bcc"/>
+      
+      
+      <rect x="433" y="176.8" width="115" height="163.2" rx="8" fill="#788c5d"/>
+      
+      
+      <rect x="589" y="234.6" width="115" height="105.4" rx="8" fill="#b0aea5"/>
+      
+      
+      <rect x="745" y="275.4" width="115" height="64.6" rx="8" fill="#141413"/>
+      
+      
+      
+    </svg>
+  </div>
+  
+</div></div>
+      <div style="">
+        
+        
+        <p data-field="tiles.1.title" style="font-size:15px; color:#141413; font-weight:600; margin:0; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">企业</p>
+        <p data-field="tiles.1.desc" style="font-size:12px; color:#b0aea5; margin-top:4px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">-4% YoY</p>
+      </div>
+    </div>
+
+    <div style="background:#ffffff; border-radius:12px; padding:16px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.06);  overflow:hidden;">
+      <div style="margin-bottom:8px; overflow:hidden; border-radius:8px;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:6px 8px;">
+  
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 400 400" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 200 200 L 200 30 A 170 170 0 1 1 118.10187540270844 348.97213560745683 Z" fill="#d97757"/>
+<path d="M 200 200 L 118.10187540270844 348.97213560745683 A 170 170 0 0 1 46.17940108077664 127.61752043393771 Z" fill="#6a9bcc"/>
+<path d="M 200 200 L 46.17940108077664 127.61752043393771 A 170 170 0 0 1 137.41882604360464 41.93799739899731 Z" fill="#788c5d"/>
+<path d="M 200 200 L 137.41882604360464 41.93799739899731 A 170 170 0 0 1 199.99999999999997 30 Z" fill="#b0aea5"/>
+      
+    </svg>
+  </div>
+  
+</div></div>
+      <div style="">
+        
+        
+        <p data-field="tiles.2.title" style="font-size:15px; color:#141413; font-weight:600; margin:0; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">咨询</p>
+        <p data-field="tiles.2.desc" style="font-size:12px; color:#b0aea5; margin-top:4px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">新开业务</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">7. bento · 不对称拼块，其中一块是图（Apple 发布会风）</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="bento" class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5; padding:40px 56px;"><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:16px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:42px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:68px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:94px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div>
+  <h2 data-field="title" style="font-size:30px; color:#d97757; margin-bottom:20px; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">本季度要点</h2>
+  <div style="flex:1; min-height:0; min-width:0; display:grid; grid-template-areas:'a b' 'a c' 'd d'; grid-template-columns:1.6fr 1fr; grid-template-rows:1fr 1fr 0.8fr; gap:14px;">
+    
+    <div style="grid-area:a; background:#ffffff; border-radius:12px; padding:28px 24px; display:flex; flex-direction:column; justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden;">
+      <div style="overflow:hidden; border-radius:8px; flex:1; min-height:0;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:6px 8px;">
+  
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 960 330" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="la21bc0u-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d97757" stop-opacity="0.28"/><stop offset="100%" stop-color="#d97757" stop-opacity="0.02"/></linearGradient></defs>
+      <line x1="20" y1="320" x2="940" y2="320" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="268.3333333333333" x2="940" y2="268.3333333333333" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="216.66666666666669" x2="940" y2="216.66666666666669" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="165" x2="940" y2="165" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="113.33333333333334" x2="940" y2="113.33333333333334" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="61.66666666666663" x2="940" y2="61.66666666666663" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="20" y1="10" x2="940" y2="10" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="20" y1="320" x2="940" y2="320" stroke="#e8e6dc" stroke-width="1"/>
+      
+      
+      <polygon points="20,320 20,258 103.63636363636364,242.5 187.27272727272728,227 270.9090909090909,211.5 354.54545454545456,201.16666666666666 438.1818181818182,185.66666666666666 521.8181818181818,175.33333333333334 605.4545454545455,154.66666666666666 689.0909090909091,139.16666666666666 772.7272727272727,108.16666666666666 856.3636363636364,72 940,30.666666666666686 940,320" fill="url(#la21bc0u-0)" stroke="none"/><polyline points="20,258 103.63636363636364,242.5 187.27272727272728,227 270.9090909090909,211.5 354.54545454545456,201.16666666666666 438.1818181818182,185.66666666666666 521.8181818181818,175.33333333333334 605.4545454545455,154.66666666666666 689.0909090909091,139.16666666666666 772.7272727272727,108.16666666666666 856.3636363636364,72 940,30.666666666666686" fill="none" stroke="#d97757" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="20" cy="258" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="103.63636363636364" cy="242.5" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="187.27272727272728" cy="227" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="270.9090909090909" cy="211.5" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="354.54545454545456" cy="201.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="438.1818181818182" cy="185.66666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="521.8181818181818" cy="175.33333333333334" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="605.4545454545455" cy="154.66666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="689.0909090909091" cy="139.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="772.7272727272727" cy="108.16666666666666" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="856.3636363636364" cy="72" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/><circle cx="940" cy="30.666666666666686" r="5" fill="#d97757" stroke="var(--lasca-texture-warm-url) repeat, #faf9f5" stroke-width="1.5"/>
+      
+      
+      
+    </svg>
+  </div>
+  
+</div></div>
+      <div style="">
+        
+        
+        <p data-field="items.0.heading" style="font-size:24px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">营收</p>
+        <p data-field="items.0.body" style="font-size:15px; color:#000; margin-top:8px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden;">+22% YoY，创历史新高</p>
+      </div>
+    </div>
+
+    <div style="grid-area:b; background:#ffffff; border-radius:12px; padding:20px 16px; display:flex; flex-direction:column;  box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden;">
+      
+      <div style="">
+        
+        
+        <p data-field="items.1.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere;  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">毛利率</p>
+        <p data-field="items.1.body" style="font-size:13px; color:#000; margin-top:8px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">48.6%（+3.1pp）</p>
+      </div>
+    </div>
+
+    <div style="grid-area:c; background:#ffffff; border-radius:12px; padding:20px 16px; display:flex; flex-direction:column;  box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden;">
+      
+      <div style="">
+        
+        
+        <p data-field="items.2.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere;  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">新用户</p>
+        <p data-field="items.2.body" style="font-size:13px; color:#000; margin-top:8px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">2.3 M（+61%）</p>
+      </div>
+    </div>
+
+    <div style="grid-area:d; background:#ffffff; border-radius:12px; padding:20px 16px; display:flex; flex-direction:column;  box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden;">
+      
+      <div style="">
+        
+        
+        <p data-field="items.3.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere;  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">留存</p>
+        <p data-field="items.3.body" style="font-size:13px; color:#000; margin-top:8px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">62% D30，行业首位</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section style="margin:32px auto; max-width:1040px;">
+    <div style="font:500 14px/1.4 -apple-system,'SF Pro Text',sans-serif; color:#555; margin:0 0 10px 4px; letter-spacing:0.02em;">8. title-bento · 左大标题 + 右卡片网格，其中卡片带图</div>
+    <div style="width:960px; height:540px; box-shadow:0 2px 18px rgba(0,0,0,0.08); border-radius:10px; overflow:hidden; background:#fff;">
+      
+<div data-layout="title-bento" class="lasca-theme-warm" style="display:flex; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:var(--lasca-texture-warm-url) repeat, #faf9f5; padding:40px 56px;"><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:16px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:42px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:68px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div><div style="position:absolute;pointer-events:none;z-index:1;left:0;top:94px;width:8px;height:8px;background:#d97757;opacity:0.55;clip-path:polygon(0 0,100% 50%,0 100%);"></div>
+  <div style="flex:0 0 40%; display:flex; flex-direction:column; justify-content:center; padding-right:32px;">
+    <p data-field="label" style="font-size:13px; color:#b0aea5; margin-bottom:12px; font-weight:500; word-break:break-word; overflow-wrap:anywhere;">Key dynamics</p>
+    <h2 data-field="title" style="font-size:44px; color:#141413; line-height:1.15; word-break:break-word; overflow-wrap:anywhere; font-family:'Fraunces','Poppins','Noto Sans SC',serif; font-weight:600; letter-spacing:-0.01em; font-feature-settings:'dlig';font-variation-settings:'WONK' 1, 'SOFT' 100;">华东是压舱石，
+西南是变量</h2>
+    <p data-field="footer" style="font-size:14px; color:#b0aea5; margin-top:auto; line-height:1.6; word-break:break-word; overflow-wrap:anywhere;">数据来源：内部 CRM + Nielsen 2024Q4</p>
+  </div>
+  <div style="flex:1; min-height:0; min-width:0; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; align-content:center;">
+    
+    <div style="background:#ffffff; border-radius:12px; padding:20px 24px; box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;">
+      <div style="margin-bottom:8px; overflow:hidden; border-radius:8px;">
+<div class="lasca-theme-warm" style="display:flex; flex-direction:column; font-family:'Plus Jakarta Sans','Poppins','Noto Sans SC',sans-serif; font-optical-sizing:auto; position:relative; overflow:hidden; height:100%; background:transparent; padding:6px 8px;">
+  
+  <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="70 0 840 360" style="width:100%; max-height:100%;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="272" x2="900" y2="272" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="204" x2="900" y2="204" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="136" x2="900" y2="136" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="68" x2="900" y2="68" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+<line x1="80" y1="0" x2="900" y2="0" stroke="#b0aea5" stroke-width="0.5" stroke-opacity="0.35" stroke-dasharray="3,3"/>
+      <line x1="80" y1="340" x2="900" y2="340" stroke="#e8e6dc" stroke-width="1"/>
+      
+      
+      <rect x="121" y="61.19999999999999" width="115" height="278.8" rx="8" fill="#d97757"/>
+      
+      
+      <rect x="277" y="122.4" width="115" height="217.6" rx="8" fill="#6a9bcc"/>
+      
+      
+      <rect x="433" y="176.8" width="115" height="163.2" rx="8" fill="#788c5d"/>
+      
+      
+      <rect x="589" y="234.6" width="115" height="105.4" rx="8" fill="#b0aea5"/>
+      
+      
+      <rect x="745" y="275.4" width="115" height="64.6" rx="8" fill="#141413"/>
+      
+      
+      
+    </svg>
+  </div>
+  
+</div></div>
+      <div style=" flex:1;">
+        
+        <p data-field="cards.0.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">华东</p>
+        <p data-field="cards.0.body" style="font-size:13px; color:#000; margin-top:6px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">占比 38%，连续 6 季度正增长</p>
+      </div>
+    </div>
+
+    <div style="background:#ffffff; border-radius:12px; padding:20px 24px; box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;">
+      
+      <div style=" flex:1;">
+        
+        <p data-field="cards.1.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">西南</p>
+        <p data-field="cards.1.body" style="font-size:13px; color:#000; margin-top:6px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">首次出现负增长，需要专项</p>
+      </div>
+    </div>
+
+    <div style="background:#ffffff; border-radius:12px; padding:20px 24px; box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;">
+      
+      <div style=" flex:1;">
+        
+        <p data-field="cards.2.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">华北</p>
+        <p data-field="cards.2.body" style="font-size:13px; color:#000; margin-top:6px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">持续掉队，原因待深挖</p>
+      </div>
+    </div>
+
+    <div style="background:#ffffff; border-radius:12px; padding:20px 24px; box-shadow:0 1px 4px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;">
+      
+      <div style=" flex:1;">
+        
+        <p data-field="cards.3.heading" style="font-size:16px; color:#141413; font-weight:600; margin:0; line-height:1.3; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">东北</p>
+        <p data-field="cards.3.body" style="font-size:13px; color:#000; margin-top:6px; line-height:1.5; word-break:break-word; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">规模小，策略按市场收缩处理</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </section>
+</body></html>

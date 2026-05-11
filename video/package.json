@@ -1,0 +1,35 @@
+{
+  "name": "@lasca/video",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Remotion-based 60s product demo video for Lasca",
+  "scripts": {
+    "prerender": "tsx scripts/sync-tokens.ts",
+    "dev": "remotion studio",
+    "render": "npm run prerender && remotion render LascaDemo out/lasca-demo-1080p.mp4 --codec=h264 --crf=18",
+    "render:sq": "remotion render LascaDemoSquare out/lasca-demo-square.mp4 --codec=h264 --crf=18",
+    "render:v": "remotion render LascaDemoVertical out/lasca-demo-vertical.mp4 --codec=h264 --crf=18",
+    "render:gif": "remotion render LascaDemo out/lasca-demo-readme.gif --codec=gif --width=720",
+    "render:webm": "remotion render LascaDemo out/lasca-demo.webm --codec=vp8 --width=960 --crf=24",
+    "thumbnail": "remotion still LascaDemo out/thumbnail.png --frame=0",
+    "vo": "tsx scripts/gen-vo.ts",
+    "captions": "tsx scripts/transcribe.ts",
+    "all": "npm run prerender && npm run vo && npm run captions && npm run render && npm run render:sq && npm run render:v && npm run render:webm"
+  },
+  "dependencies": {
+    "remotion": "^4.0.292",
+    "@remotion/cli": "^4.0.292",
+    "@remotion/captions": "^4.0.292",
+    "@remotion/google-fonts": "^4.0.292",
+    "@remotion/media-utils": "^4.0.292",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0"
+  }
+}

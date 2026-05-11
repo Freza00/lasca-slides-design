@@ -1,0 +1,17 @@
+{
+  "brand": "apple",
+  "category": "consumer",
+  "aesthetic": "Moonlight — invisible design, micron-level precision, soft studio lighting",
+  "colors": { "primary": "#1d1d1f", "accent": "#0071e3", "bg": "#fbfbfd", "text": "#1d1d1f" },
+  "typography": { "display": "var(--font-body-sans)", "body": "var(--font-body-sans)" },
+  "principles": [
+    "Invisible design: observer remembers content, not style",
+    "One focal point per page — never two competing elements",
+    "Whitespace ≥50%, symmetrically distributed",
+    "Blue #0071e3 only for CTA/links, ≤5 times per deck",
+    "Product copy: one sentence per value, no adjective stacking"
+  ],
+  "preferLayouts": ["cover", "big-number", "image", "quote"],
+  "avoidLayouts": ["grid-cards", "stacked-bars"],
+  "promptGuide": "Apply the Moonlight aesthetic: Plus Jakarta Sans weight 600 display (letter-spacing -0.02em), weight 400 body (line-height 1.6), strict font-size ratio 1/0.67/0.5/0.42, bg #fbfbfd (not pure white), text #1d1d1f (not pure black), blue #0071e3 for CTA only (≤5 per deck), 1px border #d2d2d7 + 2px blur shadow rgba(0,0,0,0.04), 16px border-radius, symmetric whitespace ≥50%, one focal point per page, product tone: confident but understated, one adjective max per sentence."
+}
