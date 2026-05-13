@@ -503,6 +503,40 @@ export function LandingHero() {
           }
         `}</style>
 
+        {/* 66s demo video — Remotion-rendered, autoplay muted loop.
+            Sits between the hero copy and the action cards so visitors
+            see what Lasca does before choosing a path. */}
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 960,
+            aspectRatio: '16 / 9',
+            marginBottom: 40,
+            borderRadius: 14,
+            overflow: 'hidden',
+            background: '#f5f5f0',
+            boxShadow: '0 18px 60px rgba(20,20,19,0.12)',
+            position: 'relative',
+          }}
+        >
+          <video
+            src="/demo/lasca-demo.webm"
+            poster="/demo/lasca-demo-thumbnail.png"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-label="66-second Lasca product demo"
+            style={{
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
+
         {/* Two large cards — 一键生成 / 一键优化.
             Content-type pills at the bottom of each card show PPT + 报告
             support; 报告 under 生成 is marked "即将上线" (see CARDS def). */}
