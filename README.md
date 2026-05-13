@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="./docs/demo/lasca-demo.mp4">
-    <img src="./docs/demo/lasca-demo-thumbnail.png" alt="Lasca 66-second product demo — click to watch" width="820">
+    <img src="./docs/demo/lasca-demo.gif" alt="Lasca 66-second product demo — click for full-quality MP4" width="820">
   </a>
   <br/>
   <em>66-second product demo · <a href="./docs/demo/lasca-demo.mp4">▶ MP4 (7 MB)</a> · <a href="./docs/demo/lasca-demo.webm">WebM (1.8 MB)</a></em>
