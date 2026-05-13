@@ -8,6 +8,14 @@
 [![Status: Public beta](https://img.shields.io/badge/Status-Public_beta-orange.svg)](#status)
 [![Node 20+](https://img.shields.io/badge/Node-20%2B-green.svg)](./.nvmrc)
 
+<p align="center">
+  <a href="./docs/demo/lasca-demo.mp4">
+    <img src="./docs/demo/lasca-demo-thumbnail.png" alt="Lasca 66-second product demo — click to watch" width="820">
+  </a>
+  <br/>
+  <em>66-second product demo · <a href="./docs/demo/lasca-demo.mp4">▶ MP4 (7 MB)</a> · <a href="./docs/demo/lasca-demo.webm">WebM (1.8 MB)</a></em>
+</p>
+
 > **"AI is editor, not author."** Bring the content. Lasca restructures,
 > lays out, polishes, and presents it.
 
