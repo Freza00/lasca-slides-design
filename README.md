@@ -2,7 +2,7 @@
 
 **Open-source AI studio for slides and print-quality reports. HTML-native, local-first, and refuses to make data up.**
 
-**Live demo → [lasca.ai](https://lasca.ai)**
+**Live demo → [lasca.vercel.app](https://lasca.vercel.app)**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Status: Public beta](https://img.shields.io/badge/Status-Public_beta-orange.svg)](#status)
